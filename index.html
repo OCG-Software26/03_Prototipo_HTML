@@ -1,0 +1,4888 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0B0F17">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>TRACCIATO — Studio Tecnico OS</title>
+
+  <!-- Font Google: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & CSS VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-base: #0B0F17;
+      --bg-surface: #141A24;
+      --bg-elevated: #1E2638;
+      --bg-hover: #263147;
+      --border-subtle: #242E40;
+      --border-focus: #00B4D8;
+
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --text-faint: #64748B;
+
+      --cyan: #00B4D8;
+      --cyan-glow: rgba(0, 180, 216, 0.15);
+      --emerald: #10B981;
+      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --amber: #F59E0B;
+      --coral: #EF4444;
+      --purple: #8B5CF6;
+
+      /* Ruoli Utente */
+      --user-andrea: #00D2FF;
+      --user-socio2: #6366F1;
+      --user-tu: #F59E0B;
+      --user-marco: #10B981;
+      --user-luca: #A855F7;
+      --user-condomini: #F97316;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+      --shadow-modal: 0 20px 40px -10px rgba(0, 0, 0, 0.8);
+      --transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="light"] {
+      --bg-base: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-elevated: #F1F5F9;
+      --bg-hover: #E2E8F0;
+      --border-subtle: #CBD5E1;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-faint: #94A3B8;
+      --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+      --shadow-modal: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-ui);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* LAYOUT BASE */
+    .app-container {
+      display: flex;
+      flex: 1;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* SIDEBAR SINISTRA */
+    .sidebar {
+      width: 240px;
+      background-color: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      flex-shrink: 0;
+      z-index: 20;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 16px;
+      cursor: pointer;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+
+    .brand-logo svg {
+      width: 22px;
+      height: 22px;
+      stroke: #FFFFFF;
+    }
+
+    .brand-name {
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      color: var(--text-main);
+    }
+
+    .brand-badge {
+      font-size: 0.65rem;
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      display: block;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.90rem;
+      font-weight: 500;
+      transition: var(--transition);
+      user-select: none;
+      position: relative;
+    }
+
+    .nav-item:hover {
+      background-color: var(--bg-hover);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background-color: var(--bg-elevated);
+      color: var(--cyan);
+      font-weight: 600;
+      border-left: 3px solid var(--cyan);
+    }
+
+    .nav-badge-count {
+      margin-left: auto;
+      background: rgba(0, 180, 216, 0.15);
+      color: var(--cyan);
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+
+    .nav-item svg {
+      width: 19px;
+      height: 19px;
+      stroke-width: 2;
+    }
+
+    .voice-btn-sidebar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 119, 182, 0.25) 100%);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: auto;
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    .voice-btn-sidebar:hover {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 180, 216, 0.4);
+    }
+
+    /* MAIN WRAPPER */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background-color: var(--bg-base);
+    }
+
+    /* TOP HEADER */
+    .top-header {
+      height: 64px;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+
+    /* RICERCA DIRETTA SENZA PROMPT */
+    .search-omnibar-container {
+      position: relative;
+      width: 360px;
+    }
+
+    .search-omnibar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      padding: 6px 14px;
+      transition: var(--transition);
+    }
+
+    .search-omnibar:focus-within {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan-glow);
+    }
+
+    .search-omnibar input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+    }
+
+    .search-omnibar input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-kbd {
+      background-color: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 0.70rem;
+      font-family: var(--font-mono);
+      color: var(--text-faint);
+      flex-shrink: 0;
+    }
+
+    .search-results-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-modal);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 1000;
+    }
+
+    .search-results-dropdown.show {
+      display: flex;
+    }
+
+    .search-result-item {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.85rem;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background-color: var(--bg-elevated);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* LIVE TIMER DOCK */
+    .live-timer-dock {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .live-timer-dock.running {
+      background: rgba(16, 185, 129, 0.10);
+      border: 1.5px solid var(--emerald);
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
+    }
+
+    .live-timer-dock.running .pulse-dot {
+      background-color: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse-ring 1.6s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+
+    .live-timer-dock.running .timer-digits {
+      color: var(--emerald);
+      font-weight: 700;
+    }
+
+    .live-timer-dock.paused {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1.5px solid var(--amber);
+      box-shadow: none;
+    }
+
+    .live-timer-dock.paused .pulse-dot {
+      background-color: var(--amber);
+      box-shadow: none;
+      animation: none;
+    }
+
+    .live-timer-dock.paused .timer-digits {
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scale(1.35);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+    }
+
+    .timer-practice {
+      color: var(--text-muted);
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      max-width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .timer-ctrl-btn {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+      margin-left: 2px;
+    }
+
+    .timer-ctrl-btn:hover {
+      background-color: var(--cyan);
+      color: #000;
+      border-color: var(--cyan);
+    }
+
+    .theme-toggle-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .theme-toggle-btn:hover {
+      color: var(--cyan);
+      border-color: var(--cyan);
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 8px;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00D2FF 0%, #0077B6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: #000;
+    }
+
+    .user-info-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .user-role {
+      font-size: 0.70rem;
+      color: var(--user-andrea);
+      font-family: var(--font-mono);
+    }
+
+    /* VIEWPORT CONTENUTI */
+    .content-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .view-container {
+      display: none;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeIn 0.22s ease;
+    }
+
+    .view-container.active-view {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* KPI CARDS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .kpi-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .kpi-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.80rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      margin-bottom: 10px;
+    }
+
+    .kpi-value {
+      font-size: 1.85rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .kpi-subtext {
+      font-size: 0.78rem;
+      color: var(--emerald);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* PANNELLI */
+    .panel-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .panel-title-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dashboard-split {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+    }
+
+    .presence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .presence-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background-color: var(--bg-elevated);
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    .status-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--emerald);
+      box-shadow: 0 0 8px var(--emerald);
+    }
+
+    .status-badge-dot.offline {
+      background-color: var(--text-faint);
+      box-shadow: none;
+    }
+
+    .presence-details {
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .presence-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .presence-task {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 150px;
+    }
+
+    .presence-time {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+    }
+
+    /* TIMELINE & RIGHELLO */
+    .timeline-wrapper {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+
+    .timeline-ruler {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      margin-bottom: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      position: relative;
+    }
+
+    .timeline-ruler span {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timeline-ruler span::after {
+      content: "";
+      width: 1px;
+      height: 6px;
+      background: var(--border-subtle);
+      margin-top: 2px;
+    }
+
+    .timeline-bar-track {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 8px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      position: relative;
+      overflow-x: auto;
+    }
+
+    .timeline-block {
+      height: 52px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 12px;
+      color: #FFF;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .timeline-block:hover {
+      transform: scaleY(1.04);
+      filter: brightness(1.15);
+    }
+
+    .tb-cila {
+      background: linear-gradient(135deg, #0077B6 0%, #00B4D8 100%);
+      flex: 3;
+    }
+
+    .tb-catasto {
+      background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+      flex: 2;
+    }
+
+    .timeline-gap {
+      height: 52px;
+      border: 2px dashed var(--amber);
+      border-radius: var(--radius-sm);
+      background-color: rgba(245, 158, 11, 0.05);
+      flex: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--amber);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .timeline-gap:hover {
+      background: rgba(245, 158, 11, 0.15);
+      transform: scaleY(1.04);
+    }
+
+    /* ELENCO MIE ATTIVITÀ NELLA DASHBOARD (SENZA SPUNTA/CHECKBOX) */
+    .my-tasks-dashboard-container {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-top: 8px;
+    }
+
+    .my-tasks-dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.80rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .task-item-clean-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      padding: 8px 12px;
+      background: var(--bg-surface);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 8px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .task-item-clean-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .task-item-clean-row:hover {
+      border-color: var(--cyan);
+    }
+
+    .task-deadline-badge {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    .dl-urgent {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--coral);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .dl-normal {
+      background: rgba(0, 180, 216, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    /* TABELLA ATTIVITÀ CON START/STOP */
+    .task-table-wrapper {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .task-table th {
+      padding: 12px 18px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .task-table td {
+      padding: 14px 18px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      vertical-align: middle;
+    }
+
+    .task-table tr:hover td {
+      background-color: var(--bg-elevated);
+    }
+
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .prio-urgent {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--coral);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .prio-high {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .prio-normal {
+      background: rgba(0, 180, 216, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .btn-timer-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    .btn-timer-row.btn-start {
+      background-color: rgba(0, 180, 216, 0.12);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    .btn-timer-row.btn-start:hover {
+      background-color: var(--cyan);
+      color: #000;
+    }
+
+    .btn-timer-row.btn-active {
+      background-color: rgba(16, 185, 129, 0.15);
+      border-color: var(--emerald);
+      color: var(--emerald);
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    }
+
+    .btn-timer-row.btn-active:hover {
+      background-color: var(--coral);
+      border-color: var(--coral);
+      color: #FFF;
+    }
+
+    /* CLIENT CARD */
+    .clients-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .client-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .client-card:hover {
+      border-color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .client-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+
+    .client-name-box h3 {
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .client-type-tag {
+      font-size: 0.70rem;
+      font-family: var(--font-mono);
+      color: var(--cyan);
+    }
+
+    .client-contacts {
+      display: flex;
+      gap: 14px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .client-practices-list {
+      background-color: var(--bg-elevated);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .client-practice-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      padding: 6px 8px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* TABELLA COMMESSE */
+    .practices-table-container {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .table-toolbar {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-family: var(--font-ui);
+      cursor: pointer;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .filter-select:hover,
+    .filter-select:focus {
+      border-color: var(--cyan);
+    }
+
+    .filter-input-search {
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-family: var(--font-ui);
+      width: 220px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .filter-input-search:focus {
+      border-color: var(--cyan);
+    }
+
+    .practices-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .practices-table th {
+      padding: 12px 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-subtle);
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .practices-table td {
+      padding: 14px 20px;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border-subtle);
+      transition: var(--transition);
+    }
+
+    .practices-table tr {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .practices-table tr:hover td {
+      background-color: var(--bg-elevated);
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+    }
+
+    .pill-blue {
+      background: rgba(0, 180, 216, 0.12);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+
+    .pill-green {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .pill-amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .action-btn-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-icon-soft {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-icon-soft:hover {
+      background-color: var(--cyan);
+      color: #000;
+      border-color: var(--cyan);
+    }
+
+    .table-footer-action {
+      padding: 14px 20px;
+      background: var(--bg-surface);
+      border-top: 1px dashed var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-add-commessa-footer {
+      background: transparent;
+      border: 1px dashed var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 24px;
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .btn-add-commessa-footer:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: var(--cyan-glow);
+    }
+
+    /* CASSETTI LATERALI AMPLIATI (960px) */
+    .drawer-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: -1000px;
+      width: 960px;
+      max-width: 96vw;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-subtle);
+      z-index: 501;
+      box-shadow: var(--shadow-modal);
+      display: flex;
+      flex-direction: column;
+      transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .drawer-backdrop.open .drawer-panel {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 24px 30px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .drawer-content {
+      padding: 24px 30px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .practice-notes-box {
+      width: 100%;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .practice-notes-box:focus {
+      border-color: var(--cyan);
+    }
+
+    /* TABELLA SOTTOATTIVITÀ */
+    .subtask-table-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .subtask-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .subtask-table th {
+      padding: 12px 16px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .subtask-table td {
+      padding: 14px 16px;
+      font-size: 0.86rem;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: middle;
+    }
+
+    .subtask-table tr:hover td {
+      background-color: var(--bg-hover);
+    }
+
+    .billed-toggle-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.80rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+      user-select: none;
+    }
+
+    .billed-toggle-label.is-billed {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .billed-toggle-label.not-billed {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .billed-toggle-label input {
+      display: none;
+    }
+
+    .drawer-footer-actions {
+      padding: 18px 30px;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .btn-print-report {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 119, 182, 0.25) 100%);
+      border: 1.5px solid var(--cyan);
+      color: var(--cyan);
+      padding: 10px 22px;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: var(--transition);
+      box-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    .btn-print-report:hover {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    #practiceDrawer {
+      z-index: 600;
+    }
+
+    #practiceDrawer .drawer-panel {
+      z-index: 601;
+    }
+
+    .client-practice-card {
+      background: var(--bg-surface);
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .client-practice-card:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 4px 18px rgba(0, 180, 216, 0.16);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       STILI CALENDARIO DELLO STUDIO TECNICO
+       ========================================================================== */
+    .calendar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .calendar-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px 22px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+    }
+
+    .calendar-nav-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .calendar-month-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-main);
+      min-width: 190px;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    .calendar-view-split {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .calendar-grid-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .calendar-weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      background: var(--bg-elevated);
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .calendar-weekday-cell {
+      padding: 12px 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .calendar-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: minmax(110px, auto);
+      border-collapse: collapse;
+    }
+
+    .calendar-day-box {
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: var(--transition);
+      min-height: 110px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .calendar-day-box:nth-child(7n) {
+      border-right: none;
+    }
+
+    .calendar-day-box:hover {
+      background: var(--bg-elevated);
+    }
+
+    .calendar-day-box.other-month {
+      opacity: 0.35;
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .calendar-day-box.is-today {
+      background: rgba(0, 180, 216, 0.06);
+      box-shadow: inset 0 0 0 1.5px var(--cyan);
+    }
+
+    .calendar-day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+
+    .calendar-day-num {
+      font-size: 0.85rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .calendar-day-box.is-today .calendar-day-num {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    .calendar-today-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.04em;
+    }
+
+    .calendar-event-item {
+      font-size: 0.70rem;
+      padding: 3px 6px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+
+    .calendar-event-item:hover {
+      filter: brightness(1.2);
+      transform: scale(1.02);
+    }
+
+    .ev-rilievo {
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--emerald);
+      border-left: 2.5px solid var(--emerald);
+    }
+
+    .ev-scadenza {
+      background: rgba(239, 68, 68, 0.2);
+      color: var(--coral);
+      border-left: 2.5px solid var(--coral);
+    }
+
+    .ev-incontro {
+      background: rgba(0, 180, 216, 0.18);
+      color: var(--cyan);
+      border-left: 2.5px solid var(--cyan);
+    }
+
+    .ev-catasto {
+      background: rgba(139, 92, 246, 0.2);
+      color: var(--purple);
+      border-left: 2.5px solid var(--purple);
+    }
+
+    .ev-condominio {
+      background: rgba(249, 115, 22, 0.2);
+      color: var(--user-condomini);
+      border-left: 2.5px solid var(--user-condomini);
+    }
+
+    /* AGENDA LATERALE */
+    .calendar-agenda-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .agenda-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .agenda-card-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .agenda-item-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 10px 12px;
+      border-radius: var(--radius-md);
+      background: var(--bg-elevated);
+      border-left: 3.5px solid var(--cyan);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .agenda-item-row:hover {
+      border-color: var(--emerald);
+      transform: translateX(3px);
+    }
+
+    .agenda-item-row.is-urgent {
+      border-left-color: var(--coral);
+      background: rgba(239, 68, 68, 0.08);
+    }
+
+    .agenda-item-row.is-survey {
+      border-left-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    /* MODALE DETTAGLIO & MODIFICA SOTTOATTIVITÀ */
+    .edit-subtask-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .edit-subtask-modal.open {
+      display: flex;
+    }
+
+    .edit-subtask-panel {
+      width: 550px;
+      max-width: 90vw;
+      background: var(--bg-surface);
+      border: 1px solid var(--cyan);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+      box-shadow: var(--shadow-modal);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      outline: none;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      border-color: var(--cyan);
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--cyan);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      color: var(--text-main);
+      font-size: 0.88rem;
+      box-shadow: var(--shadow-modal);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: toast-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: auto;
+    }
+
+    @keyframes toast-in {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* MODALE VOCALE */
+    .voice-modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(11, 15, 23, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .voice-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .voice-modal-panel {
+      width: 90%;
+      max-width: 520px;
+      background: var(--bg-surface);
+      border: 1px solid var(--cyan);
+      border-radius: var(--radius-lg);
+      padding: 36px 28px;
+      box-shadow: 0 0 50px rgba(0, 180, 216, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .voice-modal-backdrop.open .voice-modal-panel {
+      transform: scale(1);
+    }
+
+    .waveform-visualizer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 60px;
+      margin: 24px 0;
+      width: 100%;
+    }
+
+    .wave-bar {
+      width: 6px;
+      height: 12px;
+      background: linear-gradient(180deg, var(--cyan) 0%, #0077B6 100%);
+      border-radius: var(--radius-full);
+      transition: height 0.1s ease;
+    }
+
+    .waveform-visualizer.active .wave-bar {
+      animation: wave-bounce 0.8s ease-in-out infinite alternate;
+    }
+
+    .wave-bar:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+
+    .wave-bar:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+
+    .wave-bar:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+
+    .wave-bar:nth-child(5) {
+      animation-delay: 0.15s;
+    }
+
+    .wave-bar:nth-child(6) {
+      animation-delay: 0.25s;
+    }
+
+    .wave-bar:nth-child(7) {
+      animation-delay: 0.05s;
+    }
+
+    @keyframes wave-bounce {
+      0% {
+        height: 8px;
+      }
+
+      100% {
+        height: 48px;
+      }
+    }
+
+    .voice-transcript-box {
+      min-height: 52px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-card {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid var(--emerald);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      width: 100%;
+      text-align: left;
+      font-size: 0.85rem;
+      display: none;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-card.show {
+      display: block;
+      animation: slide-up 0.3s ease;
+    }
+
+    @keyframes slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-btn-row {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .btn-action {
+      flex: 1;
+      padding: 12px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+    }
+
+    .btn-cancel {
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+    }
+
+    .btn-confirm {
+      background: var(--cyan);
+      color: #000;
+    }
+
+    /* MOBILE (< 768px) */
+    .mobile-bottom-bar {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .top-header {
+        padding: 0 16px;
+      }
+
+      .search-omnibar-container {
+        width: 160px;
+      }
+
+      .timer-practice {
+        display: none;
+      }
+
+      .user-info-text {
+        display: none;
+      }
+
+      .content-viewport {
+        padding: 16px;
+        padding-bottom: 90px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .dashboard-split {
+        grid-template-columns: 1fr;
+      }
+
+      .clients-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-bottom-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        height: 68px;
+        background: var(--bg-surface);
+        border-top: 1px solid var(--border-subtle);
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        z-index: 100;
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+
+      .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        color: var(--text-muted);
+        font-size: 0.70rem;
+        cursor: pointer;
+      }
+
+      .mobile-nav-item.active {
+        color: var(--cyan);
+      }
+
+      .mobile-nav-item svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .mobile-voice-fab {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--cyan) 0%, #0077B6 100%);
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: -24px;
+        box-shadow: 0 4px 20px rgba(0, 180, 216, 0.5);
+        border: 3px solid var(--bg-surface);
+        cursor: pointer;
+        transition: transform 0.2s;
+      }
+
+    }
+
+    /* STILI STAMPA PDF REPORT PRATICA E CLIENTE */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+
+      .sidebar,
+      .top-header,
+      .mobile-bottom-bar,
+      .toast-container,
+      .btn-print-report,
+      .btn-action,
+      .btn-icon-soft,
+      .timer-ctrl-btn,
+      .table-footer-action,
+      .voice-modal-backdrop,
+      .edit-subtask-modal,
+      .filter-group,
+      .kpi-grid,
+      .dashboard-split {
+        display: none !important;
+      }
+
+      .app-container,
+      .main-wrapper,
+      .content-viewport {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+        padding: 0 !important;
+      }
+
+      .drawer-backdrop.open {
+        position: static !important;
+        background: none !important;
+        backdrop-filter: none !important;
+        opacity: 1 !important;
+      }
+
+      .drawer-backdrop.open .drawer-panel {
+        position: static !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: #FFFFFF !important;
+        color: #000000 !important;
+      }
+
+      .drawer-backdrop:not(.open) {
+        display: none !important;
+      }
+
+      .drawer-content,
+      .drawer-header,
+      .drawer-footer-actions {
+        background: #FFFFFF !important;
+        color: #000000 !important;
+        border-color: #CCCCCC !important;
+        padding: 12px 0 !important;
+      }
+
+      * {
+        color: #000000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+      }
+
+      .subtask-table,
+      .practices-table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+      }
+
+      .subtask-table th,
+      .practices-table th {
+        background-color: #F1F5F9 !important;
+        border-bottom: 2px solid #333333 !important;
+        color: #000000 !important;
+      }
+
+      .subtask-table td,
+      .practices-table td {
+        border-bottom: 1px solid #E2E8F0 !important;
+      }
+
+      .pill-badge {
+        border: 1px solid #64748B !important;
+        background: #F8FAFC !important;
+        color: #0F172A !important;
+      }
+
+      .billed-toggle-label {
+        border: 1px solid #64748B !important;
+        background: #F8FAFC !important;
+        color: #0F172A !important;
+      }
+
+      .practice-notes-box {
+        background: #F8FAFC !important;
+        border: 1px solid #CCCCCC !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="app-container">
+
+    <!-- SIDEBAR DESKTOP -->
+    <aside class="sidebar">
+      <div class="brand" onclick="switchView('dashboard')">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <line x1="12" y1="3" x2="12" y2="7"></line>
+            <line x1="12" y1="17" x2="12" y2="21"></line>
+            <line x1="3" y1="12" x2="7" y2="12"></line>
+            <line x1="17" y1="12" x2="21" y2="12"></line>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-name">TRACCIATO</div>
+          <span class="brand-badge">STUDIO OS v1.0</span>
+        </div>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active" id="nav-dashboard" onclick="switchView('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Dashboard Generale
+        </li>
+
+        <li class="nav-item" id="nav-mie-attivita" onclick="switchView('mie-attivita')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <polyline points="16 11 18 13 22 9"></polyline>
+          </svg>
+          Le Mie Attività
+          <span class="nav-badge-count">3</span>
+        </li>
+
+        <li class="nav-item" id="nav-commesse" onclick="switchView('commesse')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Tutte le Commesse
+        </li>
+
+        <li class="nav-item" id="nav-clienti" onclick="switchView('clienti')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Anagrafica Clienti
+        </li>
+
+        <li class="nav-item" id="nav-calendario" onclick="switchView('calendario')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          Calendario Studio
+        </li>
+      </ul>
+
+      <button class="voice-btn-sidebar" onclick="openVoiceAssistant()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+          <line x1="12" y1="19" x2="12" y2="23"></line>
+          <line x1="8" y1="23" x2="16" y2="23"></line>
+        </svg>
+        Parla con l'AI
+      </button>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <main class="main-wrapper">
+
+      <!-- TOP HEADER -->
+      <header class="top-header">
+
+        <!-- RICERCA DIRETTA SENZA POPUP -->
+        <div class="search-omnibar-container">
+          <div class="search-omnibar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="globalSearchInput" placeholder="Digita per cercare pratica, cliente..."
+              oninput="handleGlobalSearch(this.value)">
+            <span class="search-kbd">Ctrl K</span>
+          </div>
+
+          <div class="search-results-dropdown" id="searchResultsDropdown"></div>
+        </div>
+
+        <div class="header-actions">
+
+          <!-- LIVE TIMER DOCK -->
+          <div class="live-timer-dock running" id="liveTimerDock">
+            <div class="pulse-dot"></div>
+            <span class="timer-digits" id="timerDisplay">01:24:10</span>
+            <span class="timer-practice" id="timerPracticeLabel">CILA Via Roma 14</span>
+            <button class="timer-ctrl-btn" id="timerToggleBtn" title="Metti in Pausa / Avvia" onclick="toggleTimer()">
+              <svg id="timerIconSvg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+            </button>
+          </div>
+
+          <!-- THEME TOGGLE -->
+          <button class="theme-toggle-btn" onclick="toggleTheme()" title="Cambia tema chiaro/scuro">
+            <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+
+          <!-- PROFILO UTENTE -->
+          <div class="user-profile-badge">
+            <div class="avatar">AN</div>
+            <div class="user-info-text">
+              <span class="user-name">Andrea (Geom.)</span>
+              <span class="user-role">SOCIO TITOLARE</span>
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- VIEWPORT CONTENUTI -->
+      <div class="content-viewport">
+
+        <!-- ====================================================================
+             VISTA 1: DASHBOARD GENERALE (COMPLETA: KPI + SPLIT + TABELLA COMMESSE SOTTO)
+             ==================================================================== -->
+        <div class="view-container active-view" id="view-dashboard">
+
+          <!-- 4 KPI CARDS -->
+          <section class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>PRATICHE ATTIVE</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <div class="kpi-value">28</div>
+              <div class="kpi-subtext">🟢 4 in consegna questa settimana</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>SCADENZE SUE IMMINENTI</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="kpi-value" style="color: var(--amber);">3</div>
+              <div class="kpi-subtext" style="color: var(--amber);">⚠️ Integrazione Cuneo entro 48h</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>LE MIE ORE OGGI</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path
+                    d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83">
+                  </path>
+                </svg>
+              </div>
+              <div class="kpi-value">06h 30m <span style="font-size: 1rem; color: var(--text-muted);">/ 8h</span></div>
+              <div class="kpi-subtext">Studio totale: 24.5h registrate</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-header">
+                <span>CASSAFORTE BACKUP R2</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <div class="kpi-value" style="color: var(--emerald); font-size: 1.4rem;">OK 03:00</div>
+              <div class="kpi-subtext">Backup automatico notturno salvato</div>
+            </div>
+          </section>
+
+          <!-- DASHBOARD SPLIT: PRESENZE + TIMELINE CON MIE ATTIVITÀ PULITE (SENZA SPUNTA) -->
+          <section class="dashboard-split">
+
+            <!-- PRESENZE LIVE -->
+            <div class="panel-card">
+              <div class="panel-title">
+                <span class="panel-title-text">Presenze Live Studio</span>
+                <span
+                  style="font-size: 0.75rem; color: var(--emerald); font-family: var(--font-mono); flex-shrink: 0;">● 4
+                  ATTIVI</span>
+              </div>
+              <div class="presence-list">
+                <div class="presence-item">
+                  <span class="status-badge-dot"></span>
+                  <div class="presence-details">
+                    <div class="presence-name" style="color: var(--user-andrea);">Andrea (Socio)</div>
+                    <div class="presence-task">Rilievo quota Fraz. Tetti</div>
+                  </div>
+                  <span class="presence-time">01:24:10</span>
+                </div>
+
+                <div class="presence-item">
+                  <span class="status-badge-dot"></span>
+                  <div class="presence-details">
+                    <div class="presence-name" style="color: var(--user-marco);">Marco (CAD)</div>
+                    <div class="presence-task">Disegno Tavole Variante CILA</div>
+                  </div>
+                  <span class="presence-time">03:10:45</span>
+                </div>
+
+                <div class="presence-item">
+                  <span class="status-badge-dot"></span>
+                  <div class="presence-details">
+                    <div class="presence-name" style="color: var(--user-luca);">Luca (Tecnico)</div>
+                    <div class="presence-task">Accesso Atti Comune Mondovì</div>
+                  </div>
+                  <span class="presence-time">00:45:12</span>
+                </div>
+
+                <div class="presence-item">
+                  <span class="status-badge-dot offline"></span>
+                  <div class="presence-details">
+                    <div class="presence-name" style="color: var(--text-faint);">Addetto Condomini</div>
+                    <div class="presence-task">Fuori studio / Uscito ore 17:30</div>
+                  </div>
+                  <span class="presence-time" style="color: var(--text-faint);">--:--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- TIMELINE CON RIGHELLO + ELENCO ATTIVITÀ PULITO (SENZA SPUNTE) -->
+            <div class="panel-card">
+              <div class="panel-title">
+                <span class="panel-title-text">Timeline Personale Oggi</span>
+                <button class="btn-action btn-cancel" style="padding: 5px 12px; font-size: 0.75rem; flex-shrink: 0;"
+                  onclick="switchView('mie-attivita')">
+                  Apri Schermata Completa ➔
+                </button>
+              </div>
+
+              <div class="timeline-wrapper">
+                <div class="timeline-ruler">
+                  <span>08:30</span>
+                  <span>10:00</span>
+                  <span>11:30</span>
+                  <span>13:00</span>
+                  <span>14:30</span>
+                  <span>16:00</span>
+                  <span>17:30</span>
+                </div>
+
+                <div class="timeline-bar-track">
+                  <div class="timeline-block tb-cila"
+                    onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30 | 4h 00m)')">
+                    <strong>Pratica 2026-084</strong>
+                    <span>CILA Rossi (4h 00m)</span>
+                  </div>
+                  <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
+                    PAUSA</div>
+                  <div class="timeline-block tb-catasto"
+                    onclick="showToast('Pratica 2026-015: Frazionamento Terreni (13:30 - 16:00 | 2h 30m)')">
+                    <strong>Pratica 2026-015</strong>
+                    <span>Catasto (2h 30m)</span>
+                  </div>
+                  <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span>BUCO 1h 30m (+ Inserisci)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ELENCO ATTIVITÀ PULITO (SENZA SPUNTE, CON CLICK PER MODIFICA) -->
+              <div class="my-tasks-dashboard-container">
+                <div class="my-tasks-dashboard-header">
+                  <span>Le Mie Attività Assegnate (In Corso)</span>
+                  <span style="color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem;">1 URGENTE</span>
+                </div>
+
+                <div class="task-item-clean-row"
+                  onclick="openSubtaskDetailModal('subtask-3', 'Redazione relazione tecnica asseverata CILA', 'Verifica quote di altezza sottotetto e aerazione', 'Andrea', '03h 00m', 'In Lavorazione', false, 'Immobile con altezza media ponderale sottotetto al limite dei 2.40m.')">
+                  <div>
+                    <span style="color: var(--coral); font-weight: bold; margin-right: 6px;">●</span>
+                    <strong>CILA Rossi:</strong> Redazione relazione tecnica asseverata
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Verifica quote di
+                      altezza sottotetto e aerazione</div>
+                  </div>
+                  <span class="task-deadline-badge dl-urgent">Scade Domani</span>
+                </div>
+
+                <div class="task-item-clean-row"
+                  onclick="openSubtaskDetailModal('subtask-2', 'Controllo libretto misure e calcolo superfici', 'Verifica coordinate topografiche stazione totale', 'Andrea', '02h 00m', 'In Corso', false, 'Coordinate verificate con GPS Leica')">
+                  <div>
+                    <span style="color: var(--amber); font-weight: bold; margin-right: 6px;">●</span>
+                    <strong>Catasto Bianchi:</strong> Controllo libretto delle misure pregeo
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Verifica coordinate
+                      topografiche stazione totale</div>
+                  </div>
+                  <span class="task-deadline-badge dl-normal">18 Ott</span>
+                </div>
+
+                <div class="task-item-clean-row"
+                  onclick="openSubtaskDetailModal('subtask-4', 'Telefonata a tecnico comunale per protocollo', 'Sollecito visione fascicolo edilizio 1985', 'Andrea', '00h 45m', 'In Attesa', false, 'Sollecito ricerca fascicolo archivio storico')">
+                  <div>
+                    <span style="color: var(--cyan); font-weight: bold; margin-right: 6px;">●</span>
+                    <strong>Accesso Atti:</strong> Contatto telefonico con geom. comunale
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Sollecito visione
+                      fascicolo edilizio 1985</div>
+                  </div>
+                  <span class="task-deadline-badge dl-normal">20 Ott</span>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ELENCO TOTALE COMMESSE SOTTO LA DASHBOARD (COME INIZIO PER RIEMPIRE IL VUOTO) -->
+          <section class="practices-table-container">
+            <div class="table-toolbar">
+              <div class="filter-group">
+                <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">Tutte le Attività &
+                  Commesse dello Studio:</label>
+                <input type="text" class="filter-input-search" id="filterClienteInputDash"
+                  placeholder="🔍 Cerca cliente o commessa..." onkeyup="applyFiltersDash()">
+              </div>
+              <div style="font-size: 0.80rem; color: var(--text-muted);">
+                Totale: <strong>4</strong> commesse aperte
+              </div>
+            </div>
+
+            <table class="practices-table">
+              <thead>
+                <tr>
+                  <th>Codice</th>
+                  <th>Oggetto Commessa & Indirizzo</th>
+                  <th>Cliente</th>
+                  <th>Addetto Assegnato</th>
+                  <th>Stato Lavori</th>
+                  <th>Azioni Rapide</th>
+                </tr>
+              </thead>
+              <tbody id="dashTableBody">
+                <tr onclick="openDrawer('2026-084')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-084</td>
+                  <td>
+                    <div style="font-weight: 600;">CILA Ristrutturazione Alloggio & Sottotetto</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Corso Nizza 45, Cuneo (CN)</div>
+                  </td>
+                  <td>Dott. Mario Rossi</td>
+                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/084_Rossi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr onclick="openDrawer('2026-079')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-079</td>
+                  <td>
+                    <div style="font-weight: 600;">Accesso agli Atti Pratiche Edilizie Storiche</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Comune di Mondovì (CN)</div>
+                  </td>
+                  <td>Immobiliare Alpi S.r.l.</td>
+                  <td><span style="color: var(--user-marco); font-weight: 600;">● Marco</span></td>
+                  <td><span class="pill-badge pill-amber">🟡 Attesa Riscontro</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/079_Immobiliare')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr onclick="openDrawer('2026-065')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-065</td>
+                  <td>
+                    <div style="font-weight: 600;">Frazionamento Catastale Terreni & Confinazione</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Frazione Tetti, Boves (CN)</div>
+                  </td>
+                  <td>Fam. Bianchi Giovanni</td>
+                  <td><span style="color: var(--user-luca); font-weight: 600;">● Luca</span></td>
+                  <td><span class="pill-badge pill-green">✅ Completata</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/065_Bianchi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr onclick="openDrawer('2026-091')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-091</td>
+                  <td>
+                    <div style="font-weight: 600;">Perizia Estimativa Asseverata Fabbricato Rurale</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Via Val Maira 12, Dronero (CN)</div>
+                  </td>
+                  <td>Sig. Paolo Verdi</td>
+                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/091_Verdi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+        </div>
+
+        <!-- ====================================================================
+             VISTA 2: SCHERMATA DEDICATA "LE MIE ATTIVITÀ" (CON MODIFICA SOTTOATTIVITÀ)
+             ==================================================================== -->
+        <div class="view-container" id="view-mie-attivita">
+
+          <div class="panel-card">
+            <div class="panel-title">
+              <div>
+                <span style="font-size: 1.15rem;">Le Mie Attività & Gestione Giornata</span>
+                <div style="font-size: 0.80rem; color: var(--text-muted); font-weight: 400; margin-top: 2px;">
+                  Operatore: <strong>Andrea (Geom. Titolare)</strong> | Clicca su un'attività per modificarla o sul
+                  timer per avviare il conteggio
+                </div>
+              </div>
+            </div>
+
+            <!-- TIMELINE A TUTTA LARGHEZZA CON RIGHELLO -->
+            <div class="timeline-wrapper">
+              <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 0.82rem;">
+                <span style="font-weight: 600;">Timeline Registrazione Ore (08:30 - 17:30)</span>
+                <span style="font-family: var(--font-mono); color: var(--emerald);">Registrate: 06h 30m | 1h 30m da
+                  assegnare</span>
+              </div>
+
+              <div class="timeline-ruler">
+                <span>08:30</span>
+                <span>10:00</span>
+                <span>11:30</span>
+                <span>13:00</span>
+                <span>14:30</span>
+                <span>16:00</span>
+                <span>17:30</span>
+              </div>
+
+              <div class="timeline-bar-track">
+                <div class="timeline-block tb-cila" onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30)')">
+                  <strong>Pratica 2026-084</strong>
+                  <span>08:30 - 12:30 (4h 00m)</span>
+                </div>
+                <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
+                  PAUSA</div>
+                <div class="timeline-block tb-catasto"
+                  onclick="showToast('Pratica 2026-015: Catasto Bianchi (13:30 - 16:00)')">
+                  <strong>Pratica 2026-015</strong>
+                  <span>13:30 - 16:00 (2h 30m)</span>
+                </div>
+                <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>BUCO 1h 30m (+ Inserisci attività)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- TABELLA DELLE MIE ATTIVITÀ CON DETTAGLIO MODIFICABILE -->
+            <div class="task-table-wrapper">
+              <table class="task-table">
+                <thead>
+                  <tr>
+                    <th>Priorità</th>
+                    <th>Scadenza</th>
+                    <th>Attività da Svolgere (Clicca per Dettaglio/Modifica)</th>
+                    <th>Commessa / Cliente</th>
+                    <th>Tempo Stimato</th>
+                    <th style="text-align: right;">Timer Live</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    onclick="openSubtaskDetailModal('subtask-3', 'Redazione relazione tecnica asseverata CILA', 'Verifica quote di altezza sottotetto e aerazione', 'Andrea', '03h 00m', 'In Lavorazione', false, 'Verifica quote di altezza sottotetto al limite dei 2.40m.')">
+                    <td><span class="priority-badge prio-urgent">🔴 Urgente</span></td>
+                    <td><strong style="color: var(--coral);">Domani (08 Set)</strong></td>
+                    <td>
+                      <div style="font-weight: 600; color: var(--cyan);">Redazione relazione tecnica asseverata CILA ✏️
+                      </div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted);">Verifica quote di altezza sottotetto e
+                        aerazione</div>
+                    </td>
+                    <td>
+                      <span style="font-family: var(--font-mono); color: var(--cyan);">2026-084</span> — Dott. Mario
+                      Rossi
+                    </td>
+                    <td style="font-family: var(--font-mono);">03h 00m</td>
+                    <td style="text-align: right;" onclick="event.stopPropagation()">
+                      <button class="btn-timer-row btn-active" id="timer-btn-1"
+                        onclick="toggleTaskTimer(1, 'CILA Via Roma 14 (Relazione)')">
+                        <span>⏹ Ferma</span>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr
+                    onclick="openSubtaskDetailModal('subtask-2', 'Controllo libretto misure e calcolo superfici', 'Verifica coordinate topografiche stazione totale', 'Andrea', '02h 00m', 'In Corso', false, 'Coordinate verificate con GPS Leica')">
+                    <td><span class="priority-badge prio-high">🟡 Alta</span></td>
+                    <td><span>18 Ottobre 2026</span></td>
+                    <td>
+                      <div style="font-weight: 600; color: var(--cyan);">Controllo libretto misure e calcolo superfici
+                        ✏️</div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted);">Verifica coordinate topografiche
+                        stazione totale</div>
+                    </td>
+                    <td>
+                      <span style="font-family: var(--font-mono); color: var(--cyan);">2026-015</span> — Fam. Bianchi
+                    </td>
+                    <td style="font-family: var(--font-mono);">02h 00m</td>
+                    <td style="text-align: right;" onclick="event.stopPropagation()">
+                      <button class="btn-timer-row btn-start" id="timer-btn-2"
+                        onclick="toggleTaskTimer(2, 'Catasto Bianchi (Misure)')">
+                        <span>▶ Avvia</span>
+                      </button>
+                    </td>
+                  </tr>
+
+                  <tr
+                    onclick="openSubtaskDetailModal('subtask-4', 'Telefonata a tecnico comunale per protocollo', 'Sollecito visione fascicolo edilizio 1985', 'Andrea', '00h 45m', 'In Attesa', false, 'Sollecito ricerca fascicolo archivio storico')">
+                    <td><span class="priority-badge prio-normal">🔵 Normale</span></td>
+                    <td><span>20 Ottobre 2026</span></td>
+                    <td>
+                      <div style="font-weight: 600; color: var(--cyan);">Telefonata a tecnico comunale per protocollo ✏️
+                      </div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted);">Sollecito visione fascicolo edilizio
+                        1985</div>
+                    </td>
+                    <td>
+                      <span style="font-family: var(--font-mono); color: var(--cyan);">2026-079</span> — Immobiliare
+                      Alpi
+                    </td>
+                    <td style="font-family: var(--font-mono);">00h 45m</td>
+                    <td style="text-align: right;" onclick="event.stopPropagation()">
+                      <button class="btn-timer-row btn-start" id="timer-btn-3"
+                        onclick="toggleTaskTimer(3, 'Accesso Atti Mondovì (Sollecito)')">
+                        <span>▶ Avvia</span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="table-footer-action">
+                <button class="btn-add-commessa-footer" onclick="openNewTaskModal()">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  Aggiungi Mia Attività
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- ====================================================================
+             VISTA 3: TUTTE LE COMMESSE
+             ==================================================================== -->
+        <div class="view-container" id="view-commesse">
+          <section class="practices-table-container">
+            <div class="table-toolbar">
+              <div class="filter-group">
+                <label style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted);">Filtra per
+                  Addetto:</label>
+                <select class="filter-select" id="filterAddettoSelect" onchange="applyFilters()">
+                  <option value="ALL">Tutti i Componenti dello Studio</option>
+                  <option value="Andrea" selected>Solo le Mie Commesse (Andrea)</option>
+                  <option value="Marco">Solo Marco (CAD)</option>
+                  <option value="Luca">Solo Luca (Tecnico)</option>
+                </select>
+
+                <input type="text" class="filter-input-search" id="filterClienteInput" placeholder="🔍 Cerca cliente..."
+                  onkeyup="applyFilters()">
+              </div>
+
+              <div style="font-size: 0.80rem; color: var(--text-muted);" id="tableCountLabel">
+                Mostrate <strong>2</strong> commesse assegnate ad Andrea
+              </div>
+            </div>
+
+            <table class="practices-table" id="practicesTable">
+              <thead>
+                <tr>
+                  <th>Codice</th>
+                  <th>Oggetto Commessa & Indirizzo</th>
+                  <th>Cliente</th>
+                  <th>Addetto Assegnato</th>
+                  <th>Stato Lavori</th>
+                  <th>Azioni Rapide</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="practice-row" data-addetto="Andrea" data-cliente="Rossi Mario"
+                  onclick="openDrawer('2026-084')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-084</td>
+                  <td>
+                    <div style="font-weight: 600;">CILA Ristrutturazione Alloggio & Sottotetto</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Corso Nizza 45, Cuneo (CN)</div>
+                  </td>
+                  <td class="client-cell">Dott. Mario Rossi</td>
+                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/084_Rossi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="practice-row" data-addetto="Marco" data-cliente="Immobiliare Alpi"
+                  onclick="openDrawer('2026-079')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-079</td>
+                  <td>
+                    <div style="font-weight: 600;">Accesso agli Atti Pratiche Edilizie Storiche</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Comune di Mondovì (CN)</div>
+                  </td>
+                  <td class="client-cell">Immobiliare Alpi S.r.l.</td>
+                  <td><span style="color: var(--user-marco); font-weight: 600;">● Marco</span></td>
+                  <td><span class="pill-badge pill-amber">🟡 Attesa Riscontro</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/079_Immobiliare')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="practice-row" data-addetto="Luca" data-cliente="Bianchi Giovanni"
+                  onclick="openDrawer('2026-065')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-065</td>
+                  <td>
+                    <div style="font-weight: 600;">Frazionamento Catastale Terreni & Confinazione</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Frazione Tetti, Boves (CN)</div>
+                  </td>
+                  <td class="client-cell">Fam. Bianchi Giovanni</td>
+                  <td><span style="color: var(--user-luca); font-weight: 600;">● Luca</span></td>
+                  <td><span class="pill-badge pill-green">✅ Completata</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/065_Bianchi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="practice-row" data-addetto="Andrea" data-cliente="Verdi Paolo"
+                  onclick="openDrawer('2026-091')">
+                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-091</td>
+                  <td>
+                    <div style="font-weight: 600;">Perizia Estimativa Asseverata Fabbricato Rurale</div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Via Val Maira 12, Dronero (CN)</div>
+                  </td>
+                  <td class="client-cell">Sig. Paolo Verdi</td>
+                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
+                  <td>
+                    <div class="action-btn-row" onclick="event.stopPropagation()">
+                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
+                        onclick="openProjectFolder('2026/091_Verdi')">📁</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="table-footer-action">
+              <button class="btn-add-commessa-footer" onclick="openNewPracticeModal()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Aggiungi Nuova Commessa
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <!-- ====================================================================
+             VISTA 4: SCHERMATA CLIENTI (CON DETTAGLIO APRIBILE E TASTO IN BASSO)
+             ==================================================================== -->
+        <div class="view-container" id="view-clienti">
+          <div class="panel-card">
+            <div class="panel-title">
+              <div>
+                <span style="font-size: 1.15rem;">Anagrafica Clienti dello Studio</span>
+                <div style="font-size: 0.80rem; color: var(--text-muted); font-weight: 400; margin-top: 2px;">
+                  Clicca su una scheda cliente per visualizzare il fascicolo completo e stampare il report complessivo
+                </div>
+              </div>
+            </div>
+
+            <div class="clients-grid">
+
+              <!-- CLIENTE 1 -->
+              <div class="client-card"
+                onclick="openClientDetail('Dott. Mario Rossi', 'Privato', '348 1234567', 'mario.rossi@email.it', 'Cuneo (CN)', 'RSSMRA75C12D205X', '15h 30m')">
+                <div class="client-header">
+                  <div class="client-name-box">
+                    <h3>Dott. Mario Rossi ➔</h3>
+                    <span class="client-type-tag">COMMITTENTE PRIVATO</span>
+                  </div>
+                  <span class="pill-badge pill-blue">1 Commessa Attiva</span>
+                </div>
+
+                <div class="client-contacts">
+                  <span>📞 348 1234567</span>
+                  <span>✉️ mario.rossi@email.it</span>
+                  <span>📍 Cuneo (CN)</span>
+                </div>
+
+                <div class="client-practices-list">
+                  <div
+                    style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Commesse & Attività Correnti:</div>
+                  <div class="client-practice-row">
+                    <div>
+                      <strong style="color: var(--cyan);">2026-084:</strong> CILA Ristrutturazione Alloggio
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">15h 30m lavorate • Relazione Tecnica in
+                        corso</div>
+                    </div>
+                    <span class="pill-badge pill-blue">In Corso</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CLIENTE 2 -->
+              <div class="client-card"
+                onclick="openClientDetail('Immobiliare Alpi S.r.l.', 'Società Impresa', '0174 556677', 'info@immobiliarealpi.it', 'Mondovì (CN)', 'P.IVA 01234567890', '08h 45m')">
+                <div class="client-header">
+                  <div class="client-name-box">
+                    <h3>Immobiliare Alpi S.r.l. ➔</h3>
+                    <span class="client-type-tag">SOCIETÀ IMMOBILIARE</span>
+                  </div>
+                  <span class="pill-badge pill-amber">1 In Istruttoria</span>
+                </div>
+
+                <div class="client-contacts">
+                  <span>📞 0174 556677</span>
+                  <span>✉️ info@immobiliarealpi.it</span>
+                  <span>📍 Mondovì (CN)</span>
+                </div>
+
+                <div class="client-practices-list">
+                  <div
+                    style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Commesse & Attività Correnti:</div>
+                  <div class="client-practice-row">
+                    <div>
+                      <strong style="color: var(--cyan);">2026-079:</strong> Accesso agli Atti Edilizi
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">08h 45m lavorate • Sollecito archivio
+                        storico</div>
+                    </div>
+                    <span class="pill-badge pill-amber">In Attesa</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CLIENTE 3 -->
+              <div class="client-card"
+                onclick="openClientDetail('Fam. Bianchi Giovanni', 'Privato', '335 9876543', 'g.bianchi@gmail.com', 'Boves (CN)', 'BNCGNN60A01A000Y', '22h 00m')">
+                <div class="client-header">
+                  <div class="client-name-box">
+                    <h3>Fam. Bianchi Giovanni ➔</h3>
+                    <span class="client-type-tag">COMMITTENTE PRIVATO</span>
+                  </div>
+                  <span class="pill-badge pill-green">Completata</span>
+                </div>
+
+                <div class="client-contacts">
+                  <span>📞 335 9876543</span>
+                  <span>✉️ g.bianchi@gmail.com</span>
+                  <span>📍 Boves (CN)</span>
+                </div>
+
+                <div class="client-practices-list">
+                  <div
+                    style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Commesse & Attività Correnti:</div>
+                  <div class="client-practice-row">
+                    <div>
+                      <strong style="color: var(--cyan);">2026-065:</strong> Frazionamento Terreni
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">22h 00m lavorate • Registrazione
+                        catasto chiusa</div>
+                    </div>
+                    <span class="pill-badge pill-green">Chiusa</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CLIENTE 4 -->
+              <div class="client-card"
+                onclick="openClientDetail('Sig. Paolo Verdi', 'Privato', '340 5544332', 'paolo.verdi@libero.it', 'Dronero (CN)', 'VRDPLA80T05D205Z', '05h 15m')">
+                <div class="client-header">
+                  <div class="client-name-box">
+                    <h3>Sig. Paolo Verdi ➔</h3>
+                    <span class="client-type-tag">COMMITTENTE PRIVATO</span>
+                  </div>
+                  <span class="pill-badge pill-blue">1 Commessa Attiva</span>
+                </div>
+
+                <div class="client-contacts">
+                  <span>📞 340 5544332</span>
+                  <span>✉️ paolo.verdi@libero.it</span>
+                  <span>📍 Dronero (CN)</span>
+                </div>
+
+                <div class="client-practices-list">
+                  <div
+                    style="font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">
+                    Commesse & Attività Correnti:</div>
+                  <div class="client-practice-row">
+                    <div>
+                      <strong style="color: var(--cyan);">2026-091:</strong> Perizia Estimativa Fabbricato
+                      <div style="font-size: 0.75rem; color: var(--text-muted);">05h 15m lavorate • Redazione perizia
+                        estimativa</div>
+                    </div>
+                    <span class="pill-badge pill-blue">In Corso</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- PULSANTE "+ NUOVO CLIENTE" SPOSTATO SOTTO L'ELENCO -->
+            <div class="table-footer-action" style="margin-top: 20px;">
+              <button class="btn-add-commessa-footer" onclick="showToast('+ Apertura scheda creazione Nuovo Cliente')">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Aggiungi Nuovo Cliente
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====================================================================
+             VISTA 5: CALENDARIO DELLO STUDIO & SCADENZIARIO TECNICO
+             ==================================================================== -->
+        <div class="view-container" id="view-calendario">
+          <div class="calendar-container">
+
+            <!-- TOOLBAR CALENDARIO -->
+            <div class="calendar-toolbar">
+              <div class="calendar-nav-group">
+                <button class="btn-icon-soft" onclick="showToast('Visualizzazione mese precedente')"
+                  title="Mese Precedente">◀</button>
+                <div class="calendar-month-title" id="calCurrentMonthLabel">Settembre 2026</div>
+                <button class="btn-icon-soft" onclick="showToast('Visualizzazione mese successivo')"
+                  title="Mese Successivo">▶</button>
+                <button class="btn-action btn-cancel" style="padding: 6px 14px; font-size: 0.80rem; margin-left: 8px;"
+                  onclick="showToast('📅 Posizionato su OGGI: 07 Settembre 2026')">
+                  Oggi
+                </button>
+              </div>
+
+              <!-- FILTRI CALENDARIO -->
+              <div class="filter-group">
+                <select class="filter-select" id="calFilterAddetto" onchange="filterCalendarEvents()">
+                  <option value="ALL">Tutto lo Studio (Tutti)</option>
+                  <option value="Andrea" selected>Solo Andrea (Socio)</option>
+                  <option value="Marco">Solo Marco (CAD)</option>
+                  <option value="Luca">Solo Luca (Tecnico)</option>
+                  <option value="Condomini">Condomini</option>
+                </select>
+
+                <select class="filter-select" id="calFilterTipo" onchange="filterCalendarEvents()">
+                  <option value="ALL">Tutti gli Eventi & Scadenze</option>
+                  <option value="Sopralluogo">📐 Solo Sopralluoghi & Rilievi</option>
+                  <option value="Scadenza">⚠️ Solo Scadenze Perentorie</option>
+                  <option value="Appuntamento">🤝 Solo Incontri & Appuntamenti</option>
+                </select>
+              </div>
+
+              <div>
+                <button class="btn-action btn-confirm"
+                  style="padding: 8px 18px; font-size: 0.85rem; display: flex; align-items: center; gap: 8px;"
+                  onclick="openNewCalendarEventModal()">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  Nuovo Impegno / Scadenza
+                </button>
+              </div>
+            </div>
+
+            <!-- LAYOUT SPLIT: GRIGLIA MESE + AGENDA PROSSIMI GIORNI -->
+            <div class="calendar-view-split">
+
+              <!-- GRIGLIA MENSILE -->
+              <div class="calendar-grid-card">
+                <div class="calendar-weekdays-row">
+                  <div class="calendar-weekday-cell">Lun</div>
+                  <div class="calendar-weekday-cell">Mar</div>
+                  <div class="calendar-weekday-cell">Mer</div>
+                  <div class="calendar-weekday-cell">Gio</div>
+                  <div class="calendar-weekday-cell">Ven</div>
+                  <div class="calendar-weekday-cell" style="color: var(--text-faint);">Sab</div>
+                  <div class="calendar-weekday-cell" style="color: var(--text-faint);">Dom</div>
+                </div>
+
+                <div class="calendar-days-grid" id="calendarDaysGrid">
+                  <!-- SETTIMANA 1 (31 Ago - 6 Set) -->
+                  <div class="calendar-day-box other-month">
+                    <div class="calendar-day-header"><span class="calendar-day-num">31</span></div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-1')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">1</span></div>
+                    <div class="calendar-event-item ev-incontro" title="10:00 Incontro preliminare Dott. Rossi">
+                      <span>🤝 10:00 Rossi (Andrea)</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-2')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">2</span></div>
+                    <div class="calendar-event-item ev-rilievo" title="14:00 Sopralluogo fabbricato rurale Dronero">
+                      <span>📐 14:00 Rilievo Dronero</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-3')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">3</span></div>
+                    <div class="calendar-event-item ev-incontro" title="10:00 Istanza Mondovì (Marco)">
+                      <span>🏛️ 10:00 Istanza Mondovì</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-4')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">4</span></div>
+                    <div class="calendar-event-item ev-catasto" title="15:30 Catasto Boves">
+                      <span>🟣 15:30 Confini Boves</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">5</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">6</span></div>
+                  </div>
+
+                  <!-- SETTIMANA 2 (7 - 13 Set) -->
+                  <div class="calendar-day-box is-today" onclick="showEventDetail('ev-5')">
+                    <div class="calendar-day-header">
+                      <span class="calendar-day-num">7</span>
+                      <span class="calendar-today-badge">OGGI</span>
+                    </div>
+                    <div class="calendar-event-item ev-scadenza" title="09:00 Consegna relazione tecnica CILA Rossi">
+                      <span>⚠️ 09:00 Deposito CILA Rossi</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-6')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">8</span></div>
+                    <div class="calendar-event-item ev-rilievo" title="08:30 Rilievo laser scanner Fraz. Tetti (Luca)">
+                      <span>📐 08:30 Laser Scanner (Luca)</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-7')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">9</span></div>
+                    <div class="calendar-event-item ev-scadenza" title="18:00 Scadenza integrazione SUE Comune Cuneo">
+                      <span>⚠️ 18:00 Integrazione Cuneo</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-8')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">10</span></div>
+                    <div class="calendar-event-item ev-rilievo" title="08:30 Battuta GPS Boves (Luca)">
+                      <span>📐 08:30 Punti GPS Boves</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-9')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">11</span></div>
+                    <div class="calendar-event-item ev-incontro" title="16:00 Rogito Fam. Bianchi (Studio Garelli)">
+                      <span>🤝 16:00 Rogito Bianchi</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">12</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">13</span></div>
+                  </div>
+
+                  <!-- SETTIMANA 3 (14 - 20 Set) -->
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-10')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">14</span></div>
+                    <div class="calendar-event-item ev-incontro" title="11:00 Incontro Tecnico Mondovì (Andrea)">
+                      <span>🤝 11:00 Tecnico Mondovì</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">15</span></div>
+                    <div class="calendar-event-item ev-catasto" title="Tavole Variante CILA Marco">
+                      <span>📐 Tavole CILA (Marco)</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-11')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">16</span></div>
+                    <div class="calendar-event-item ev-rilievo" title="14:30 Verifica quote altezza velux Corso Nizza">
+                      <span>📐 14:30 Sopralluogo Cuneo</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">17</span></div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-12')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">18</span></div>
+                    <div class="calendar-event-item ev-scadenza" title="12:00 Scadenza Pregeo Catasto">
+                      <span>⚠️ 12:00 Scadenza Pregeo</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">19</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">20</span></div>
+                  </div>
+
+                  <!-- SETTIMANA 4 (21 - 27 Set) -->
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-13')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">21</span></div>
+                    <div class="calendar-event-item ev-rilievo" title="09:00 Inizio Cantiere Corso Nizza">
+                      <span>📐 09:00 Cantiere Nizza</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-14')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">22</span></div>
+                    <div class="calendar-event-item ev-condominio" title="17:30 Assemblea Condominio Giolitti">
+                      <span>📋 17:30 Cond. Giolitti</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">23</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">24</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">25</span></div>
+                    <div class="calendar-event-item ev-incontro" title="Ritiro provvedimento edilizio">
+                      <span>🏛️ Ritiro Provvedimento</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">26</span></div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num"
+                        style="color: var(--text-faint);">27</span></div>
+                  </div>
+
+                  <!-- SETTIMANA 5 (28 - 30 Set + 1-4 Ott) -->
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-15')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">28</span></div>
+                    <div class="calendar-event-item ev-incontro" title="10:00 Giuramento Tribunale Cuneo (Andrea)">
+                      <span>⚖️ 10:00 Tribunale Cuneo</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box">
+                    <div class="calendar-day-header"><span class="calendar-day-num">29</span></div>
+                  </div>
+
+                  <div class="calendar-day-box" onclick="showEventDetail('ev-16')">
+                    <div class="calendar-day-header"><span class="calendar-day-num">30</span></div>
+                    <div class="calendar-event-item ev-scadenza" title="18:00 Chiusura Mensile Contabilità & Ore">
+                      <span>⚠️ 18:00 Chiusura Fogli Ore</span>
+                    </div>
+                  </div>
+
+                  <div class="calendar-day-box other-month">
+                    <div class="calendar-day-header"><span class="calendar-day-num">1</span></div>
+                  </div>
+                  <div class="calendar-day-box other-month">
+                    <div class="calendar-day-header"><span class="calendar-day-num">2</span></div>
+                  </div>
+                  <div class="calendar-day-box other-month">
+                    <div class="calendar-day-header"><span class="calendar-day-num">3</span></div>
+                  </div>
+                  <div class="calendar-day-box other-month">
+                    <div class="calendar-day-header"><span class="calendar-day-num">4</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PANNELLO AGENDA LATERALE -->
+              <div class="calendar-agenda-panel">
+
+                <!-- CARD SCADENZE PERENTORIE -->
+                <div class="agenda-card">
+                  <div class="agenda-card-title">
+                    <span style="color: var(--coral);">⚠️ Scadenze Perentorie</span>
+                    <span class="pill-badge pill-amber" style="font-size: 0.65rem;">Entro 7 Giorni</span>
+                  </div>
+
+                  <div class="agenda-item-row is-urgent" onclick="showEventDetail('ev-5')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--coral);">Deposito CILA Alloggio</strong>
+                      <span
+                        style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--coral); font-weight: 700;">DOMANI
+                        09:00</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Pratica 2026-084 • Dott. Rossi • Resp:
+                      Andrea</div>
+                  </div>
+
+                  <div class="agenda-item-row is-urgent" onclick="showEventDetail('ev-7')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--coral);">Integrazione Documentale SUE</strong>
+                      <span
+                        style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--coral); font-weight: 700;">MER
+                        09 SET</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Comune di Cuneo • Termine perentorio 48h
+                    </div>
+                  </div>
+
+                  <div class="agenda-item-row is-urgent" onclick="showEventDetail('ev-12')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--coral);">Deposito Catastale Pregeo</strong>
+                      <span
+                        style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--coral); font-weight: 700;">VEN
+                        18 SET</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Pratica 2026-065 • Fam. Bianchi • Resp:
+                      Luca</div>
+                  </div>
+                </div>
+
+                <!-- CARD SOPRALLUOGHI PROGRAMMATI -->
+                <div class="agenda-card">
+                  <div class="agenda-card-title">
+                    <span style="color: var(--emerald);">📐 Sopralluoghi & Rilievi</span>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">3 In Programma</span>
+                  </div>
+
+                  <div class="agenda-item-row is-survey" onclick="showEventDetail('ev-6')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--emerald);">Rilievo Laser Scanner 3D</strong>
+                      <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted);">MAR 08
+                        (08:30)</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Fraz. Tetti, Boves • Operatore: Luca
+                    </div>
+                  </div>
+
+                  <div class="agenda-item-row is-survey" onclick="showEventDetail('ev-8')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--emerald);">Battuta Coordinate GPS</strong>
+                      <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted);">GIO 10
+                        (08:30)</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Punti Fiduciali Leica • Operatore: Luca
+                    </div>
+                  </div>
+
+                  <div class="agenda-item-row is-survey" onclick="showEventDetail('ev-11')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--emerald);">Verifica Quote Sottotetto</strong>
+                      <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted);">MER 16
+                        (14:30)</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Corso Nizza 45, Cuneo • Operatore: Andrea
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CARD INCONTRI E APPUNTAMENTI -->
+                <div class="agenda-card">
+                  <div class="agenda-card-title">
+                    <span style="color: var(--cyan);">🤝 Incontri & Riunioni</span>
+                    <span style="font-size: 0.72rem; color: var(--text-muted);">Studio / Esterno</span>
+                  </div>
+
+                  <div class="agenda-item-row" onclick="showEventDetail('ev-9')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--cyan);">Rogito Notarile Bianchi</strong>
+                      <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted);">VEN 11
+                        (16:00)</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Studio Notarile Garelli, Cuneo • Andrea
+                    </div>
+                  </div>
+
+                  <div class="agenda-item-row" onclick="showEventDetail('ev-10')">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                      <strong style="font-size: 0.84rem; color: var(--cyan);">Riunione Ufficio Tecnico</strong>
+                      <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--text-muted);">LUN 14
+                        (11:00)</span>
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted);">Comune di Mondovì • Accesso Atti Alpi
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==========================================================================
+       BOTTOM BAR SMARTPHONE
+       ========================================================================== -->
+      <nav class="mobile-bottom-bar">
+        <div class="mobile-nav-item active" id="mob-dashboard" onclick="switchView('dashboard')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          <span>Bacheca</span>
+        </div>
+        <div class="mobile-nav-item" id="mob-mie-attivita" onclick="switchView('mie-attivita')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <polyline points="16 11 18 13 22 9"></polyline>
+          </svg>
+          <span>Mie Attività</span>
+        </div>
+
+        <div class="mobile-voice-fab" onclick="openVoiceAssistant()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+        </div>
+
+        <div class="mobile-nav-item" id="mob-commesse" onclick="switchView('commesse')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
+          <span>Commesse</span>
+        </div>
+        <div class="mobile-nav-item" id="mob-clienti" onclick="switchView('clienti')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+          </svg>
+          <span>Clienti</span>
+        </div>
+      </nav>
+
+      <!-- ==========================================================================
+       CASSETTO DETTAGLIO PRATICA AMPLIATO (960px):
+       - NOTE GENERALI
+       - SOTTOATTIVITÀ APRIBILI & MODIFICABILI CON SPUNTA DIRETTA FATTURATA
+       - PULSANTE "+ NUOVA" IN BASSO
+       - PULSANTE "STAMPA REPORT PDF"
+       ========================================================================== -->
+      <div class="drawer-backdrop" id="practiceDrawer" onclick="closeDrawer()">
+        <div class="drawer-panel" onclick="event.stopPropagation()">
+          <div class="drawer-header">
+            <div>
+              <span class="pill-badge pill-blue" style="margin-bottom: 8px;" id="drawerPracticeCodeBadge">PRATICA
+                2026-084</span>
+              <h2 style="font-size: 1.35rem;" id="drawerPracticeHeading">CILA Ristrutturazione Alloggio & Sottotetto
+              </h2>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;" id="drawerPracticeMeta">
+                Committente: Dott. Mario Rossi | Responsabile: Andrea</p>
+            </div>
+            <button class="timer-ctrl-btn" onclick="closeDrawer()" style="font-size: 1.2rem;">✕</button>
+          </div>
+
+          <div class="drawer-content">
+
+            <div style="display: flex; gap: 10px;">
+              <button class="btn-action btn-cancel" id="drawerFolderBtn"
+                style="display: flex; align-items: center; justify-content: center; gap: 6px;"
+                onclick="openProjectFolder('2026/084_Rossi')">
+                📁 Apri Cartella Documenti
+              </button>
+            </div>
+
+            <div>
+              <label
+                style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                Note Generali & Riferimenti Pratica
+              </label>
+              <textarea class="practice-notes-box" id="drawerPracticeNotes"
+                placeholder="Inserisci note di sopralluogo, accordi con il cliente o annotazioni tecniche...">Immobile con altezza media ponderale sottotetto al limite dei 2.40m. Accordato con il committente l'apertura di due nuovi velux lato cortile interno. Consegna prevista per fine mese.</textarea>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 0.80rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+                Sotto-attività & Incarichi (Clicca su una riga per aprire il dettaglio e modificare)
+              </div>
+
+              <div class="subtask-table-box">
+                <table class="subtask-table">
+                  <thead>
+                    <tr>
+                      <th>Sotto-attività (Clicca per Modificare)</th>
+                      <th>Addetto</th>
+                      <th>Ore Impiegate</th>
+                      <th>Stato Lavoro</th>
+                      <th style="text-align: right;">Stato Fatturazione</th>
+                    </tr>
+                  </thead>
+                  <tbody id="drawerSubtasksBody">
+                    <tr
+                      onclick="openSubtaskDetailModal('sub-1', '1. Rilievo con laser scanner 3D', 'Sopralluogo quote e nuvola di punti', 'Andrea', '04h 30m', 'Eseguita', true, 'Rilievo eseguito con laser scanner')">
+                      <td>
+                        <div style="font-weight: 600; color: var(--cyan);">1. Rilievo con laser scanner 3D ✏️</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Sopralluogo quote e nuvola di punti
+                        </div>
+                      </td>
+                      <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                      <td style="font-family: var(--font-mono);">04h 30m</td>
+                      <td><span class="pill-badge pill-green">Eseguita</span></td>
+                      <td style="text-align: right;" onclick="event.stopPropagation()">
+                        <label class="billed-toggle-label is-billed" onclick="toggleBilledState(this)">
+                          <input type="checkbox" checked>
+                          <span class="billed-text">✅ Fatturata</span>
+                        </label>
+                      </td>
+                    </tr>
+
+                    <tr
+                      onclick="openSubtaskDetailModal('sub-2', '2. Restituzione grafica AutoCAD', 'Piante stato di fatto e sezioni', 'Marco', '08h 00m', 'Eseguita', false, 'Disegnate piante e sezioni')">
+                      <td>
+                        <div style="font-weight: 600; color: var(--cyan);">2. Restituzione grafica AutoCAD ✏️</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Piante stato di fatto e sezioni</div>
+                      </td>
+                      <td><span style="color: var(--user-marco); font-weight: 600;">● Marco</span></td>
+                      <td style="font-family: var(--font-mono);">08h 00m</td>
+                      <td><span class="pill-badge pill-green">Eseguita</span></td>
+                      <td style="text-align: right;" onclick="event.stopPropagation()">
+                        <label class="billed-toggle-label not-billed" onclick="toggleBilledState(this)">
+                          <input type="checkbox">
+                          <span class="billed-text">🟡 Da Fatturare</span>
+                        </label>
+                      </td>
+                    </tr>
+
+                    <tr
+                      onclick="openSubtaskDetailModal('sub-3', '3. Redazione Relazione Tecnica Asseverata', 'Verifica parametri urbanistici Cuneo', 'Andrea', '03h 00m', 'In Lavorazione', false, 'Verifica quote di altezza')">
+                      <td>
+                        <div style="font-weight: 600; color: var(--cyan);">3. Redazione Relazione Tecnica Asseverata ✏️
+                        </div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Verifica parametri urbanistici Cuneo
+                        </div>
+                      </td>
+                      <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
+                      <td style="font-family: var(--font-mono);">03h 00m</td>
+                      <td><span class="pill-badge pill-blue">In Lavorazione</span></td>
+                      <td style="text-align: right;" onclick="event.stopPropagation()">
+                        <label class="billed-toggle-label not-billed" onclick="toggleBilledState(this)">
+                          <input type="checkbox">
+                          <span class="billed-text">🟡 Da Fatturare</span>
+                        </label>
+                      </td>
+                    </tr>
+
+                    <tr
+                      onclick="openSubtaskDetailModal('sub-4', '4. Caricamento istanza portale SUE', 'Invio telematico documentazione', 'Luca', '00h 00m', 'In Attesa', false, 'In attesa firme')">
+                      <td>
+                        <div style="font-weight: 600; color: var(--cyan);">4. Caricamento istanza portale SUE ✏️</div>
+                        <div style="font-size: 0.75rem; color: var(--text-muted);">Invio telematico documentazione</div>
+                      </td>
+                      <td><span style="color: var(--user-luca); font-weight: 600;">● Luca</span></td>
+                      <td style="font-family: var(--font-mono);">00h 00m</td>
+                      <td><span class="pill-badge pill-amber">In Attesa</span></td>
+                      <td style="text-align: right;" onclick="event.stopPropagation()">
+                        <label class="billed-toggle-label not-billed" onclick="toggleBilledState(this)">
+                          <input type="checkbox">
+                          <span class="billed-text">🟡 Da Fatturare</span>
+                        </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="table-footer-action" style="padding: 10px;">
+                  <button class="btn-add-commessa-footer" style="padding: 6px 18px; font-size: 0.80rem;"
+                    onclick="openNewSubtaskModal()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2.5">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    + Nuova Sotto-attività
+                  </button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="drawer-footer-actions">
+            <div style="font-size: 0.82rem; color: var(--text-muted);">
+              Ore complessive commessa: <strong
+                style="color: var(--text-main); font-family: var(--font-mono); font-size: 1rem;"
+                id="drawerPracticeTotalHours">15h 30m</strong>
+            </div>
+
+            <button class="btn-print-report" onclick="printPracticeReport(currentPracticeViewing)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              Stampa Report PDF (Ore & Attività)
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+       CASSETTO DETTAGLIO CLIENTE & REPORT COMPLESSIVO (850px)
+       ========================================================================== -->
+      <div class="drawer-backdrop" id="clientDrawer" onclick="closeClientDrawer()">
+        <div class="drawer-panel" onclick="event.stopPropagation()">
+          <div class="drawer-header">
+            <div>
+              <span class="pill-badge pill-blue" style="margin-bottom: 8px;" id="clientDrawerType">COMMITTENTE
+                PRIVATO</span>
+              <h2 style="font-size: 1.35rem;" id="clientDrawerName">Dott. Mario Rossi</h2>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;" id="clientDrawerContacts">Cuneo
+                (CN)
+                | Tel: 348 1234567 | CF: RSSMRA75C12D205X</p>
+            </div>
+            <button class="timer-ctrl-btn" onclick="closeClientDrawer()" style="font-size: 1.2rem;">✕</button>
+          </div>
+
+          <div class="drawer-content">
+
+            <div>
+              <label
+                style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                Note Generali sul Committente
+              </label>
+              <textarea class="practice-notes-box" id="clientDrawerNotes"
+                style="min-height: 60px;">Cliente storico dello studio. Reperibile preferibilmente al mattino via telefono. Pagamenti sempre puntuali tramite bonifico bancario.</textarea>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 0.80rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 10px;">
+                Fascicolo Completo Pratiche, Commesse & Ore Lavorate per questo Cliente
+              </div>
+
+              <div class="client-practices-list" id="clientDrawerPracticesList" style="padding: 16px; gap: 14px;">
+
+                <!-- Commessa 1 del cliente -->
+                <div class="client-practice-card" onclick="openDrawer('2026-084')"
+                  title="Clicca per aprire la scheda commessa 2026-084">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div>
+                      <div style="display: flex; align-items: center; gap: 8px;">
+                        <span
+                          style="font-family: var(--font-mono); color: var(--cyan); font-weight: 700; font-size: 1.05rem;">2026-084</span>
+                        <strong style="font-size: 0.95rem; color: var(--text-main);">CILA Ristrutturazione Alloggio &
+                          Sottotetto</strong>
+                      </div>
+                      <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">Corso Nizza 45, Cuneo
+                        (CN) • Responsabile: Andrea</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                      <span class="pill-badge pill-blue">In Corso</span>
+                      <button class="btn-action btn-confirm"
+                        style="padding: 5px 14px; font-size: 0.78rem; border-radius: var(--radius-sm);"
+                        onclick="event.stopPropagation(); openDrawer('2026-084');">
+                        Apri Scheda Commessa ➔
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Dettaglio Sotto-attività -->
+                  <div
+                    style="font-size: 0.80rem; display: flex; flex-direction: column; gap: 6px; padding-left: 12px; border-left: 2px solid var(--border-subtle); margin-bottom: 10px;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>• <strong>1. Rilievo laser scanner:</strong> <span
+                          style="color: var(--text-muted);">Sopralluogo quote e nuvola di punti</span> (Andrea)</span>
+                      <span style="font-family: var(--font-mono); color: var(--emerald);">04h 30m [✅ Fatturata]</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>• <strong>2. Restituzione grafica AutoCAD:</strong> <span
+                          style="color: var(--text-muted);">Piante stato di fatto e sezioni</span> (Marco)</span>
+                      <span style="font-family: var(--font-mono); color: var(--amber);">08h 00m [🟡 Da Fatturare]</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>• <strong>3. Relazione Asseverata CILA:</strong> <span
+                          style="color: var(--text-muted);">Verifica parametri urbanistici Cuneo</span> (Andrea)</span>
+                      <span style="font-family: var(--font-mono); color: var(--amber);">03h 00m [🟡 Da Fatturare]</span>
+                    </div>
+                  </div>
+
+                  <div
+                    style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 8px; font-size: 0.80rem; color: var(--text-muted);">
+                    <span style="color: var(--cyan); font-size: 0.75rem; font-weight: 600;">👆 Clicca su questo riquadro
+                      per aprire il cassetto della commessa</span>
+                    <span>Subtotale Commessa: <strong
+                        style="font-family: var(--font-mono); color: var(--text-main);">15h 30m</strong></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <div class="drawer-footer-actions">
+            <div style="font-size: 0.84rem; color: var(--text-muted);">
+              Monte Ore Totale per il Cliente: <strong
+                style="color: var(--text-main); font-family: var(--font-mono); font-size: 1.1rem;"
+                id="clientDrawerTotalHours">15h 30m</strong>
+            </div>
+
+            <button class="btn-print-report" onclick="printClientReport()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+              </svg>
+              Stampa Report Cliente Completo (PDF)
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+       MODALE MODIFICA SOTTOATTIVITÀ (RICHIAMABILE DA PRATICA E DA MIE ATTIVITÀ)
+       ========================================================================== -->
+      <div class="edit-subtask-modal" id="subtaskDetailModal" onclick="closeSubtaskDetailModal()">
+        <div class="edit-subtask-panel" onclick="event.stopPropagation()">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <h3 style="font-size: 1.1rem;">Dettaglio & Modifica Sotto-attività</h3>
+            <button class="timer-ctrl-btn" onclick="closeSubtaskDetailModal()">✕</button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Titolo Sotto-attività</label>
+            <input type="text" class="form-input" id="editSubtaskTitle" value="Redazione Relazione Tecnica Asseverata">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Dettaglio Operativo / Sottotitolo (Testo Grigio Elenco)</label>
+            <input type="text" class="form-input" id="editSubtaskSubtitle"
+              value="Verifica quote di altezza sottotetto e aerazione"
+              placeholder="Specificare il dettaglio sintetico dell'incarico...">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Addetto Assegnato</label>
+              <select class="form-select" id="editSubtaskAssignee">
+                <option value="Andrea" selected>Andrea (Socio)</option>
+                <option value="Marco">Marco (CAD)</option>
+                <option value="Luca">Luca (Tecnico)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Ore Impiegate / Consuntivo</label>
+              <input type="text" class="form-input" id="editSubtaskHours" value="03h 00m"
+                style="font-family: var(--font-mono);">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Stato Avanzamento</label>
+              <select class="form-select" id="editSubtaskStatus">
+                <option value="In Lavorazione" selected>🔵 In Lavorazione</option>
+                <option value="Eseguita">✅ Eseguita / Conclusa</option>
+                <option value="In Attesa">🟡 In Attesa</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Fatturazione</label>
+              <select class="form-select" id="editSubtaskBilled">
+                <option value="false" selected>🟡 Da Fatturare</option>
+                <option value="true">✅ Già Fatturata</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Note Operative della Sotto-attività</label>
+            <textarea class="form-textarea" rows="3" id="editSubtaskNotes"
+              placeholder="Dettagli sulle misurazioni, note di calcolo o appunti per i colleghi...">Parametri aero-illuminanti verificati e conformi al regolamento edilizio.</textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button class="btn-action btn-cancel" onclick="closeSubtaskDetailModal()">Annulla</button>
+            <button class="btn-action btn-confirm" onclick="saveSubtaskModifications()">Salva Modifiche</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+       MODALE DETTAGLIO EVENTO CALENDARIO
+       ========================================================================== -->
+      <div class="edit-subtask-modal" id="eventDetailModal" onclick="closeEventDetailModal()">
+        <div class="edit-subtask-panel" onclick="event.stopPropagation()">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <h3 style="font-size: 1.15rem;" id="eventModalTitle">Dettaglio Impegno Studio</h3>
+            <button class="timer-ctrl-btn" onclick="closeEventDetailModal()">✕</button>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <span class="pill-badge pill-blue" id="eventModalTypeTag">SOPRALLUOGO</span>
+              <h4 style="font-size: 1.15rem; margin-top: 8px; color: var(--text-main);" id="eventModalHeading">Rilievo
+                Laser Scanner 3D</h4>
+            </div>
+
+            <div
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: var(--bg-elevated); padding: 12px; border-radius: var(--radius-md);">
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">
+                  Data & Orario</div>
+                <div style="font-size: 0.88rem; font-weight: 600;" id="eventModalDateTime">📅 Mar 08 Set • 08:30</div>
+              </div>
+              <div>
+                <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">
+                  Addetto Incaricato</div>
+                <div style="font-size: 0.88rem; font-weight: 600;" id="eventModalAssignee">👤 Luca (Tecnico)</div>
+              </div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+                Luogo / Cantiere</div>
+              <div style="font-size: 0.88rem;" id="eventModalLocation">📍 Fraz. Tetti, Boves (CN)</div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+                Commessa / Cliente Collegato</div>
+              <div style="font-size: 0.88rem; font-family: var(--font-mono); color: var(--cyan);"
+                id="eventModalPractice">2026-065 — Fam. Bianchi Giovanni</div>
+            </div>
+
+            <div>
+              <div
+                style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">
+                Note Operative</div>
+              <div
+                style="background: var(--bg-elevated); padding: 10px 14px; border-radius: var(--radius-md); font-size: 0.85rem; color: var(--text-main);"
+                id="eventModalNotes">
+                Portare stazione totale e prisma topografico. Contattare committente prima di partire dallo studio.
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 6px;">
+              <button class="btn-action btn-cancel" onclick="closeEventDetailModal()">Chiudi</button>
+              <button class="btn-action btn-confirm" id="eventModalOpenPracticeBtn" onclick="openPracticeFromEvent()">📁
+                Apri Scheda Commessa</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+       MODALE CREAZIONE NUOVO IMPEGNO CALENDARIO
+       ========================================================================== -->
+      <div class="edit-subtask-modal" id="newEventModal" onclick="closeNewEventModal()">
+        <div class="edit-subtask-panel" onclick="event.stopPropagation()">
+          <div
+            style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+            <h3 style="font-size: 1.15rem;">+ Inserisci Nuovo Impegno / Scadenza</h3>
+            <button class="timer-ctrl-btn" onclick="closeNewEventModal()">✕</button>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Titolo o Oggetto dell'Impegno</label>
+            <input type="text" class="form-input" id="newCalTitle"
+              placeholder="Es. Sopralluogo quote sottotetto, Consegna CILA, Rogito...">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Data Impegno</label>
+              <input type="date" class="form-input" id="newCalDate" value="2026-09-08">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Orario (Inizio)</label>
+              <input type="time" class="form-input" id="newCalTime" value="09:00">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label">Tipologia Evento</label>
+              <select class="form-select" id="newCalType">
+                <option value="Sopralluogo">📐 Sopralluogo & Rilievo</option>
+                <option value="Scadenza">⚠️ Scadenza Perentoria</option>
+                <option value="Appuntamento" selected>🤝 Appuntamento / Riunione</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Addetto Assegnato</label>
+              <select class="form-select" id="newCalAssignee">
+                <option value="Andrea" selected>Andrea (Socio)</option>
+                <option value="Marco">Marco (CAD)</option>
+                <option value="Luca">Luca (Tecnico)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Commessa o Cliente Collegato</label>
+            <select class="form-select" id="newCalPractice">
+              <option value="2026-084">2026-084 — CILA Alloggio (Dott. Mario Rossi)</option>
+              <option value="2026-079">2026-079 — Accesso Atti (Immobiliare Alpi)</option>
+              <option value="2026-065">2026-065 — Frazionamento Catasto (Fam. Bianchi)</option>
+              <option value="2026-091">2026-091 — Perizia Fabbricato (Sig. Verdi)</option>
+              <option value="NONE">Nessuna commessa (Impegno Generale)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Luogo / Indirizzo</label>
+            <input type="text" class="form-input" id="newCalLocation"
+              placeholder="Es. Corso Nizza 45, Cuneo o Sede Studio">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Note Operative / Promemoria</label>
+            <textarea class="form-textarea" rows="2" id="newCalNotes"
+              placeholder="Dettagli, documenti da portare o riferimenti telefonici..."></textarea>
+          </div>
+
+          <div style="display: flex; gap: 12px; margin-top: 8px;">
+            <button class="btn-action btn-cancel" onclick="closeNewEventModal()">Annulla</button>
+            <button class="btn-action btn-confirm" onclick="saveNewCalendarEvent()">Aggiungi al Calendario</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALE VOCALE -->
+      <div class="voice-modal-backdrop" id="voiceModal">
+        <div class="voice-modal-panel">
+          <h3 style="font-size: 1.25rem; font-weight: 700;">Assistente Vocale TRACCIATO</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">
+            Parla liberamente. Esempio: <em>"Ho finito il sopralluogo da Rossi, segna 2 ore"</em>
+          </p>
+
+          <div class="waveform-visualizer" id="waveVisualizer">
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+            <div class="wave-bar"></div>
+          </div>
+
+          <div class="voice-transcript-box" id="transcriptText">
+            In ascolto... Parla pure al microfono!
+          </div>
+
+          <div class="confirmation-card" id="confirmationCard">
+            <div style="font-weight: 700; color: var(--emerald); margin-bottom: 6px;">✨ HO CAPITO QUESTO:</div>
+            <div>• <strong>Azione:</strong> Registrazione Ore & Attività</div>
+            <div>• <strong>Pratica Riconosciuta:</strong> 2026-084 (CILA Dott. Rossi)</div>
+            <div>• <strong>Durata Stimata:</strong> 2 ore e 00 minuti</div>
+            <div>• <strong>Descrizione:</strong> Sopralluogo di cantiere e verifica quote</div>
+          </div>
+
+          <div class="modal-btn-row">
+            <button class="btn-action btn-cancel" onclick="closeVoiceAssistant()">Annulla</button>
+            <button class="btn-action btn-confirm" id="voiceActionBtn" onclick="toggleVoiceRecognition()">
+              ⏹ Ferma Registrazione
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================================================
+       LOGICA JAVASCRIPT
+       ========================================================================== -->
+      <script>
+        function switchView(viewName) {
+          document.querySelectorAll('.view-container').forEach(v => v.classList.remove('active-view'));
+          const targetView = document.getElementById('view-' + viewName);
+          if (targetView) targetView.classList.add('active-view');
+
+          document.querySelectorAll('.sidebar .nav-item').forEach(el => el.classList.remove('active'));
+          const activeNav = document.getElementById('nav-' + viewName);
+          if (activeNav) activeNav.classList.add('active');
+
+          document.querySelectorAll('.mobile-bottom-bar .mobile-nav-item').forEach(el => el.classList.remove('active'));
+          const activeMob = document.getElementById('mob-' + viewName);
+          if (activeMob) activeMob.classList.add('active');
+
+          showToast(`Passato a: ${viewName.toUpperCase()}`);
+        }
+
+        function showToast(message) {
+          const container = document.getElementById('toastContainer');
+          const toast = document.createElement('div');
+          toast.className = 'toast-card';
+          toast.innerHTML = `<span>${message}</span>`;
+          container.appendChild(toast);
+
+          setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(10px)';
+            toast.style.transition = 'all 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+          }, 3200);
+        }
+
+        function toggleTheme() {
+          const html = document.documentElement;
+          const currentTheme = html.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', newTheme);
+
+          const themeIcon = document.getElementById('themeIcon');
+          if (newTheme === 'light') {
+            themeIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+            showToast('☀️ Tema Chiaro attivato');
+          } else {
+            themeIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+            showToast('🌙 Tema Scuro attivato');
+          }
+        }
+
+        // RICERCA DIRETTA
+        const searchData = [
+          { code: '2026-084', title: 'CILA Ristrutturazione Alloggio', client: 'Dott. Mario Rossi', type: 'Pratica' },
+          { code: '2026-079', title: 'Accesso agli Atti Edilizi', client: 'Immobiliare Alpi S.r.l.', type: 'Pratica' },
+          { code: '2026-065', title: 'Frazionamento Terreni', client: 'Fam. Bianchi Giovanni', type: 'Pratica' },
+          { code: '2026-091', title: 'Perizia Estimativa Fabbricato', client: 'Sig. Paolo Verdi', type: 'Pratica' },
+          { code: 'CLI-01', title: 'Dott. Mario Rossi', client: 'Cuneo (CN) - Tel: 348 1234567', type: 'Cliente' },
+          { code: 'CLI-02', title: 'Immobiliare Alpi S.r.l.', client: 'Mondovì (CN) - Tel: 0174 556677', type: 'Cliente' }
+        ];
+
+        function handleGlobalSearch(query) {
+          const dropdown = document.getElementById('searchResultsDropdown');
+          const q = query.toLowerCase().trim();
+
+          if (!q) {
+            dropdown.classList.remove('show');
+            dropdown.innerHTML = '';
+            return;
+          }
+
+          const matches = searchData.filter(item =>
+            item.title.toLowerCase().includes(q) ||
+            item.client.toLowerCase().includes(q) ||
+            item.code.toLowerCase().includes(q)
+          );
+
+          if (matches.length === 0) {
+            dropdown.innerHTML = '<div style="padding: 12px; color: var(--text-muted); font-size: 0.85rem; text-align: center;">Nessun risultato trovato</div>';
+            dropdown.classList.add('show');
+            return;
+          }
+
+          dropdown.innerHTML = matches.map(m => `
+        <div class="search-result-item" onclick="selectSearchResult('${m.code}', '${m.type}')">
+          <div>
+            <span style="font-family: var(--font-mono); color: var(--cyan); font-weight: 600;">[${m.code}]</span>
+            <strong style="margin-left: 6px;">${m.title}</strong>
+            <div style="font-size: 0.75rem; color: var(--text-muted);">${m.client}</div>
+          </div>
+          <span class="pill-badge pill-blue" style="font-size: 0.65rem;">${m.type}</span>
+        </div>
+      `).join('');
+
+          dropdown.classList.add('show');
+        }
+
+        function selectSearchResult(code, type) {
+          document.getElementById('searchResultsDropdown').classList.remove('show');
+          document.getElementById('globalSearchInput').value = '';
+          if (type === 'Pratica') {
+            openDrawer(code);
+          } else {
+            openClientDetail('Dott. Mario Rossi', 'Privato', '348 1234567', 'mario.rossi@email.it', 'Cuneo (CN)', 'RSSMRA75C12D205X', '15h 30m');
+          }
+        }
+
+        document.addEventListener('click', (e) => {
+          if (!e.target.closest('.search-omnibar-container')) {
+            document.getElementById('searchResultsDropdown').classList.remove('show');
+          }
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            document.getElementById('globalSearchInput').focus();
+          }
+          if (e.key === 'Escape') {
+            document.getElementById('searchResultsDropdown').classList.remove('show');
+          }
+        });
+
+        // TIMER LIVE
+        let timerSeconds = 5050; // 01:24:10
+        let timerInterval = null;
+        let timerRunning = true;
+        let currentActiveTaskId = 1;
+
+        function formatTime(s) {
+          const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+          const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+          const secs = String(s % 60).padStart(2, '0');
+          return `${hrs}:${mins}:${secs}`;
+        }
+
+        function startTimerLoop() {
+          timerInterval = setInterval(() => {
+            timerSeconds++;
+            document.getElementById('timerDisplay').innerText = formatTime(timerSeconds);
+          }, 1000);
+        }
+        startTimerLoop();
+
+        function toggleTimer() {
+          const dock = document.getElementById('liveTimerDock');
+          const iconSvg = document.getElementById('timerIconSvg');
+          const practiceLabel = document.getElementById('timerPracticeLabel');
+
+          if (timerRunning) {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            dock.classList.remove('running');
+            dock.classList.add('paused');
+            iconSvg.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+            practiceLabel.innerText = 'IN PAUSA';
+            showToast('⏸️ Timer generale in pausa');
+          } else {
+            startTimerLoop();
+            timerRunning = true;
+            dock.classList.remove('paused');
+            dock.classList.add('running');
+            iconSvg.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>';
+            practiceLabel.innerText = 'CILA Via Roma 14';
+            showToast('▶️ Timer riavviato');
+          }
+        }
+
+        function toggleTaskTimer(taskId, taskName) {
+          const dock = document.getElementById('liveTimerDock');
+          const practiceLabel = document.getElementById('timerPracticeLabel');
+          const btn = document.getElementById('timer-btn-' + taskId);
+
+          document.querySelectorAll('.btn-timer-row').forEach(b => {
+            b.className = 'btn-timer-row btn-start';
+            b.innerHTML = '<span>▶ Avvia</span>';
+          });
+
+          if (currentActiveTaskId === taskId && timerRunning) {
+            clearInterval(timerInterval);
+            timerRunning = false;
+            dock.classList.remove('running');
+            dock.classList.add('paused');
+            practiceLabel.innerText = 'IN PAUSA';
+            currentActiveTaskId = null;
+            showToast(`⏹ Fermato timer: ${taskName}`);
+          } else {
+            timerSeconds = 0;
+            if (!timerRunning) startTimerLoop();
+            timerRunning = true;
+            dock.classList.remove('paused');
+            dock.classList.add('running');
+            practiceLabel.innerText = taskName;
+            currentActiveTaskId = taskId;
+
+            btn.className = 'btn-timer-row btn-active';
+            btn.innerHTML = '<span>⏹ Ferma</span>';
+            showToast(`▶ Avviato timer su: ${taskName}`);
+          }
+        }
+
+        function toggleBilledState(labelEl) {
+          const checkbox = labelEl.querySelector('input');
+          const textSpan = labelEl.querySelector('.billed-text');
+
+          setTimeout(() => {
+            if (checkbox.checked) {
+              labelEl.className = 'billed-toggle-label is-billed';
+              textSpan.innerText = '✅ Fatturata';
+              showToast('Sotto-attività impostata su: FATTURATA');
+            } else {
+              labelEl.className = 'billed-toggle-label not-billed';
+              textSpan.innerText = '🟡 Da Fatturare';
+              showToast('Sotto-attività impostata su: DA FATTURARE');
+            }
+          }, 10);
+        }
+
+        // ==========================================================================
+        // MODALE DETTAGLIO & MODIFICA SOTTOATTIVITÀ
+        // ==========================================================================
+        // ==========================================================================
+        // DATA MODEL: PRATICHE & SOTTO-ATTIVITÀ DELLO STUDIO
+        // ==========================================================================
+        const practicesData = {
+          '2026-084': {
+            code: '2026-084',
+            title: 'CILA Ristrutturazione Alloggio & Sottotetto',
+            client: 'Dott. Mario Rossi',
+            address: 'Corso Nizza 45, Cuneo (CN)',
+            assignee: 'Andrea',
+            statusText: 'In Corso',
+            statusBadge: 'pill-blue',
+            folder: '2026/084_Rossi',
+            notes: "Immobile con altezza media ponderale sottotetto al limite dei 2.40m. Accordato con il committente l'apertura di due nuovi velux lato cortile interno. Consegna prevista per fine mese.",
+            totalHours: '15h 30m',
+            subtasks: [
+              { id: 'sub-1', title: '1. Rilievo con laser scanner 3D', subtitle: 'Sopralluogo quote e nuvola di punti', assignee: 'Andrea', hours: '04h 30m', status: 'Eseguita', billed: true, notes: 'Rilievo eseguito con laser scanner BLK360. Nuvola di punti esportata in formato E57.' },
+              { id: 'sub-2', title: '2. Restituzione grafica AutoCAD', subtitle: 'Piante stato di fatto e sezioni', assignee: 'Marco', hours: '08h 00m', status: 'Eseguita', billed: false, notes: 'Disegnate piante piano terzo e sezioni longitudinali A-A e B-B.' },
+              { id: 'sub-3', title: '3. Redazione Relazione Tecnica Asseverata', subtitle: 'Verifica parametri urbanistici Cuneo', assignee: 'Andrea', hours: '03h 00m', status: 'In Lavorazione', billed: false, notes: 'Verifica parametri aero-illuminanti e altezze ponderali sottotetto.' },
+              { id: 'sub-4', title: '4. Invio telematico documentazione CILA', subtitle: 'Caricamento istanza e asseverazioni', assignee: 'Luca', hours: '00h 00m', status: 'In Attesa', billed: false, notes: 'In attesa firme digitali dei committenti e bonifico diritti segreteria.' }
+            ]
+          },
+          '2026-079': {
+            code: '2026-079',
+            title: 'Accesso agli Atti Pratiche Edilizie Storiche',
+            client: 'Immobiliare Alpi S.r.l.',
+            address: 'Comune di Mondovì (CN)',
+            assignee: 'Marco',
+            statusText: 'Attesa Riscontro',
+            statusBadge: 'pill-amber',
+            folder: '2026/079_Immobiliare',
+            notes: 'Accesso agli atti per il recupero dei fascicoli edilizi originali anni 1980. Sollecitata visione fascicolo archivio storico per accertamento titoli legittimanti compravendita.',
+            totalHours: '08h 45m',
+            subtasks: [
+              { id: 'sub-79-1', title: '1. Istanza di accesso formale agli atti', subtitle: 'Compilazione modello e invio PEC protocollo', assignee: 'Marco', hours: '02h 00m', status: 'Eseguita', billed: true, notes: 'Inviata PEC al protocollo generale del Comune di Mondovì.' },
+              { id: 'sub-79-2', title: '2. Contatto con tecnico comunale', subtitle: 'Sollecito visione fascicolo archivio storico 1985', assignee: 'Andrea', hours: '00h 45m', status: 'In Attesa', billed: false, notes: 'Fissato appuntamento con il responsabile dell\'archivio cartaceo.' },
+              { id: 'sub-79-3', title: '3. Visione e scansione tavole storiche', subtitle: 'Esame licenza edilizia e stato legittimato', assignee: 'Marco', hours: '06h 00m', status: 'In Lavorazione', billed: false, notes: 'Recupero elaborati grafici di progetto originario e variante.' }
+            ]
+          },
+          '2026-065': {
+            code: '2026-065',
+            title: 'Frazionamento Catastale Terreni & Confinazione',
+            client: 'Fam. Bianchi Giovanni',
+            address: 'Frazione Tetti, Boves (CN)',
+            assignee: 'Luca',
+            statusText: 'Completata',
+            statusBadge: 'pill-green',
+            folder: '2026/065_Bianchi',
+            notes: 'Tipo di frazionamento con riconfinamento lotti agricoli e inserimento nuovi termini di confine in pietra. Atto notarile fissato per l\'11 Settembre 2026.',
+            totalHours: '22h 00m',
+            subtasks: [
+              { id: 'sub-65-1', title: '1. Battute GPS & Stazione Totale', subtitle: 'Rilevamento punti fiduciali Leica', assignee: 'Luca', hours: '08h 00m', status: 'Eseguita', billed: true, notes: 'Collegate 6 stazioni celerimetriche e 3 punti fiduciali.' },
+              { id: 'sub-65-2', title: '2. Elaborazione Pregeo 10', subtitle: 'Redazione proposta di aggiornamento cartografico', assignee: 'Luca', hours: '06h 00m', status: 'Eseguita', billed: true, notes: 'Approvazione automatica Sister superata con successo.' },
+              { id: 'sub-65-3', title: '3. Redazione Tipi di Frazionamento', subtitle: 'Stampa tavole e raccolta firme aventi diritto', assignee: 'Andrea', hours: '05h 00m', status: 'Eseguita', billed: true, notes: 'Firme raccolte presso lo studio da parte dei comproprietari.' },
+              { id: 'sub-65-4', title: '4. Consegna fascicolo al notaio', subtitle: 'Invio relazione tecnica Studio Notarile Garelli', assignee: 'Andrea', hours: '03h 00m', status: 'Eseguita', billed: false, notes: 'Inviata relazione di regolarità catastale per rogito.' }
+            ]
+          },
+          '2026-091': {
+            code: '2026-091',
+            title: 'Perizia Estimativa Asseverata Fabbricato Rurale',
+            client: 'Sig. Paolo Verdi',
+            address: 'Via Val Maira 12, Dronero (CN)',
+            assignee: 'Andrea',
+            statusText: 'In Corso',
+            statusBadge: 'pill-blue',
+            folder: '2026/091_Verdi',
+            notes: 'Stima del più probabile valore venale di mercato di rustico montano con terreni pertinenziali ai fini di compravendita tra coeredi e divisione patrimoniale.',
+            totalHours: '05h 15m',
+            subtasks: [
+              { id: 'sub-91-1', title: '1. Sopralluogo e rilievo metrico fabbricato', subtitle: 'Verifica stato conservativo, impianti e pertinenze', assignee: 'Andrea', hours: '03h 00m', status: 'Eseguita', billed: true, notes: 'Rilievo fotografico e rilievo a vista dello stato di manutenzione delle murature.' },
+              { id: 'sub-91-2', title: '2. Indagine OMI e stima sintetica', subtitle: 'Analisi comparativa banca dati quotazioni immobiliari', assignee: 'Andrea', hours: '02h 15m', status: 'In Lavorazione', billed: false, notes: 'Applicazione coefficienti di merito per rustici da ristrutturare in valle alpina.' }
+            ]
+          }
+        };
+
+        // ==========================================================================
+        // DATA MODEL: CLIENTI DELLO STUDIO
+        // ==========================================================================
+        const clientsData = {
+          'Dott. Mario Rossi': {
+            name: 'Dott. Mario Rossi',
+            type: 'COMMITTENTE PRIVATO',
+            tel: '348 1234567',
+            mail: 'mario.rossi@email.it',
+            city: 'Cuneo (CN)',
+            cf: 'RSSMRA75C12D205X',
+            hours: '15h 30m',
+            notes: 'Cliente storico dello studio. Reperibile preferibilmente al mattino via telefono. Pagamenti sempre puntuali tramite bonifico bancario.',
+            practices: ['2026-084']
+          },
+          'Immobiliare Alpi S.r.l.': {
+            name: 'Immobiliare Alpi S.r.l.',
+            type: 'SOCIETÀ IMMOBILIARE',
+            tel: '0174 556677',
+            mail: 'info@immobiliarealpi.it',
+            city: 'Mondovì (CN)',
+            cf: 'P.IVA 01234567890',
+            hours: '08h 45m',
+            notes: 'Società di sviluppo immobiliare. Referente geom. Barberis. Richieste frequenti di verifiche di conformità e accessi agli atti.',
+            practices: ['2026-079']
+          },
+          'Fam. Bianchi Giovanni': {
+            name: 'Fam. Bianchi Giovanni',
+            type: 'COMMITTENTE PRIVATO',
+            tel: '335 9876543',
+            mail: 'g.bianchi@gmail.com',
+            city: 'Boves (CN)',
+            cf: 'BNCGNN60A01A000Y',
+            hours: '22h 00m',
+            notes: 'Pratica successione e frazionamento terreni ereditari con rogito notarile fissato per Settembre 2026.',
+            practices: ['2026-065']
+          },
+          'Sig. Paolo Verdi': {
+            name: 'Sig. Paolo Verdi',
+            type: 'COMMITTENTE PRIVATO',
+            tel: '340 5544332',
+            mail: 'paolo.verdi@libero.it',
+            city: 'Dronero (CN)',
+            cf: 'VRDPLA80T05D205Z',
+            hours: '05h 15m',
+            notes: 'Perizia per divisione ereditaria fabbricato rurale e terreni in valle Maira.',
+            practices: ['2026-091']
+          }
+        };
+
+        // ==========================================================================
+        // DATA MODEL: EVENTI DEL CALENDARIO STUDIO
+        // ==========================================================================
+        const calendarEvents = {
+          'ev-1': {
+            title: 'CILA Alloggio Rossi (Andrea)',
+            type: 'COMMESSA',
+            badgeClass: 'pill-blue',
+            date: 'Lun 07 Set 2026',
+            time: '08:30 - 12:30',
+            assignee: 'Andrea (Socio)',
+            location: 'Studio / Corso Nizza 45, Cuneo',
+            practice: '2026-084 — CILA Ristrutturazione Alloggio',
+            practiceCode: '2026-084',
+            notes: 'Sessione di redazione relazione asseverata e controllo altezze minime abitabili.'
+          },
+          'ev-2': {
+            title: 'Misure Pregeo Catasto (Andrea)',
+            type: 'CATASTO',
+            badgeClass: 'pill-amber',
+            date: 'Lun 07 Set 2026',
+            time: '13:30 - 16:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Frazione Tetti, Boves (CN)',
+            practice: '2026-065 — Frazionamento Terreni Bianchi',
+            practiceCode: '2026-065',
+            notes: 'Elaborazione rilievo con stazione totale Leica e predisposizione estratto di mappa.'
+          },
+          'ev-3': {
+            title: 'Tavole Variante CILA (Marco)',
+            type: 'CAD',
+            badgeClass: 'pill-blue',
+            date: 'Lun 07 Set 2026',
+            time: 'Tutto il giorno',
+            assignee: 'Marco (CAD)',
+            location: 'Sede Studio Cuneo',
+            practice: '2026-084 — CILA Ristrutturazione Alloggio',
+            practiceCode: '2026-084',
+            notes: 'Completamento sezioni architettoniche e prospetti per deposito variante.'
+          },
+          'ev-4': {
+            title: 'Accesso Atti Edilizi (Luca)',
+            type: 'ISTRUTTORIA',
+            badgeClass: 'pill-amber',
+            date: 'Lun 07 Set 2026',
+            time: '11:00 - 12:30',
+            assignee: 'Luca (Tecnico)',
+            location: 'Comune di Mondovì (CN)',
+            practice: '2026-079 — Accesso Atti Immobiliare Alpi',
+            practiceCode: '2026-079',
+            notes: 'Sollecito fascicolo edilizio licenza di costruzione anno 1985.'
+          },
+          'ev-5': {
+            title: 'Deposito CILA Alloggio',
+            type: 'SCADENZA PERENTORIA',
+            badgeClass: 'pill-coral',
+            date: 'Mar 08 Set 2026',
+            time: '09:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Comune di Cuneo',
+            practice: '2026-084 — CILA Ristrutturazione Alloggio',
+            practiceCode: '2026-084',
+            notes: 'Termine per il deposito della CILA prima dell\'inizio lavori programmato per il 21 Settembre.'
+          },
+          'ev-6': {
+            title: 'Rilievo Laser Scanner 3D',
+            type: 'SOPRALLUOGO',
+            badgeClass: 'pill-green',
+            date: 'Mar 08 Set 2026',
+            time: '08:30 - 12:30',
+            assignee: 'Luca (Tecnico)',
+            location: 'Fraz. Tetti, Boves (CN)',
+            practice: '2026-065 — Frazionamento Fam. Bianchi',
+            practiceCode: '2026-065',
+            notes: 'Portare stazione totale, prismi topografici e laser scanner con treppiede.'
+          },
+          'ev-7': {
+            title: 'Integrazione Documentale Edilizia',
+            type: 'SCADENZA PERENTORIA',
+            badgeClass: 'pill-coral',
+            date: 'Mer 09 Set 2026',
+            time: 'Entro le 18:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Comune di Cuneo',
+            practice: '2026-084 — Dott. Mario Rossi',
+            practiceCode: '2026-084',
+            notes: 'Riscontro a richiesta chiarimenti su parametri aeroilluminanti sottotetto.'
+          },
+          'ev-8': {
+            title: 'Battuta Coordinate GPS Leica',
+            type: 'SOPRALLUOGO',
+            badgeClass: 'pill-green',
+            date: 'Gio 10 Set 2026',
+            time: '08:30 - 11:30',
+            assignee: 'Luca (Tecnico)',
+            location: 'Boves (CN)',
+            practice: '2026-065 — Frazionamento Terreni',
+            practiceCode: '2026-065',
+            notes: 'Battuta capisaldi e punti fiduciali catastali con strumentazione satellitare.'
+          },
+          'ev-9': {
+            title: 'Rogito Notarile Bianchi',
+            type: 'APPUNTAMENTO',
+            badgeClass: 'pill-blue',
+            date: 'Ven 11 Set 2026',
+            time: '16:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Studio Notarile Garelli, Corso Dante 12, Cuneo',
+            practice: '2026-065 — Fam. Bianchi Giovanni',
+            practiceCode: '2026-065',
+            notes: 'Consegna tipo di frazionamento approvato dall\'Agenzia Entrate e conformità catastale.'
+          },
+          'ev-10': {
+            title: 'Riunione Ufficio Tecnico Mondovì',
+            type: 'APPUNTAMENTO',
+            badgeClass: 'pill-blue',
+            date: 'Lun 14 Set 2026',
+            time: '11:00',
+            assignee: 'Marco (CAD) & Andrea',
+            location: 'Palazzo Municipale, Mondovì',
+            practice: '2026-079 — Immobiliare Alpi',
+            practiceCode: '2026-079',
+            notes: 'Incontro con il responsabile del procedimento per sblocco accesso atti archivio.'
+          },
+          'ev-11': {
+            title: 'Verifica Quote Altezza Velux',
+            type: 'SOPRALLUOGO',
+            badgeClass: 'pill-green',
+            date: 'Mer 16 Set 2026',
+            time: '14:30',
+            assignee: 'Andrea (Socio)',
+            location: 'Corso Nizza 45, Cuneo',
+            practice: '2026-084 — CILA Dott. Rossi',
+            practiceCode: '2026-084',
+            notes: 'Rilievo dell\'orditura del tetto per posizionamento finestre da tetto.'
+          },
+          'ev-12': {
+            title: 'Deposito Catastale Pregeo',
+            type: 'SCADENZA PERENTORIA',
+            badgeClass: 'pill-coral',
+            date: 'Ven 18 Set 2026',
+            time: 'Entro le 12:00',
+            assignee: 'Luca (Tecnico)',
+            location: 'Agenzia delle Entrate - Territorio (Cuneo)',
+            practice: '2026-065 — Fam. Bianchi',
+            practiceCode: '2026-065',
+            notes: 'Invio telematico tipo di frazionamento con firma digitale.'
+          },
+          'ev-13': {
+            title: 'Inizio Lavori Cantiere CILA',
+            type: 'SOPRALLUOGO',
+            badgeClass: 'pill-green',
+            date: 'Lun 21 Set 2026',
+            time: '09:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Corso Nizza 45, Cuneo',
+            practice: '2026-084 — Dott. Mario Rossi',
+            practiceCode: '2026-084',
+            notes: 'Verifica allestimento cantiere e cartello lavori con l\'impresa esecutrice.'
+          },
+          'ev-14': {
+            title: 'Assemblea Condominio Giolitti',
+            type: 'APPUNTAMENTO',
+            badgeClass: 'pill-blue',
+            date: 'Mar 22 Set 2026',
+            time: '17:30',
+            assignee: 'Andrea (Socio)',
+            location: 'Sala Condominiale, Cuneo',
+            practice: 'CONDOMINIO — Giolitti 18',
+            practiceCode: 'NONE',
+            notes: 'Presentazione computo metrico per manutenzione straordinaria facciate.'
+          },
+          'ev-15': {
+            title: 'Giuramento CTU Tribunale Cuneo',
+            type: 'APPUNTAMENTO',
+            badgeClass: 'pill-blue',
+            date: 'Lun 28 Set 2026',
+            time: '10:00',
+            assignee: 'Andrea (Socio)',
+            location: 'Tribunale di Cuneo, Piazza Galimberti',
+            practice: 'CTU — Causa Civile N. 1420/2026',
+            practiceCode: 'NONE',
+            notes: 'Giuramento di rito dinanzi al Giudice Istruttore per perizia estimativa di stima.'
+          },
+          'ev-16': {
+            title: 'Chiusura Mensile Contabilità & Ore',
+            type: 'SCADENZA STUDIO',
+            badgeClass: 'pill-coral',
+            date: 'Mer 30 Set 2026',
+            time: 'Entro le 18:00',
+            assignee: 'Tutto lo Studio',
+            location: 'Studio Cuneo',
+            practice: 'GESTIONALE STUDIO',
+            practiceCode: 'NONE',
+            notes: 'Consuntivazione ore del mese di Settembre per emissione fatture e notule.'
+          }
+        };
+
+        function escapeAttr(str) {
+          if (!str) return '';
+          return String(str).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        }
+
+        // ==========================================================================
+        // MODALE DETTAGLIO & MODIFICA SOTTOATTIVITÀ (CON SOTTOTITOLO E NOTE)
+        // ==========================================================================
+        function openSubtaskDetailModal(id, title, subtitle, assignee, hours, status, billed, notes) {
+          document.getElementById('editSubtaskTitle').value = title || 'Attività';
+          document.getElementById('editSubtaskSubtitle').value = subtitle || '';
+          document.getElementById('editSubtaskAssignee').value = assignee || 'Andrea';
+          document.getElementById('editSubtaskHours').value = hours || '02h 00m';
+          document.getElementById('editSubtaskStatus').value = status || 'In Lavorazione';
+          document.getElementById('editSubtaskBilled').value = billed ? 'true' : 'false';
+          document.getElementById('editSubtaskNotes').value = notes || '';
+
+          document.getElementById('subtaskDetailModal').classList.add('open');
+        }
+
+        function closeSubtaskDetailModal() {
+          document.getElementById('subtaskDetailModal').classList.remove('open');
+        }
+
+        function saveSubtaskModifications() {
+          const title = document.getElementById('editSubtaskTitle').value;
+          const subtitle = document.getElementById('editSubtaskSubtitle').value;
+          closeSubtaskDetailModal();
+          showToast(`✅ Modifiche salvate con successo per: "${title}"`);
+        }
+
+        // ==========================================================================
+        // CASSETTO DETTAGLIO COMMESSA DINAMICO (APRIBILE ANCHE DAL CLIENTE)
+        // ==========================================================================
+        let currentPracticeViewing = '2026-084';
+
+        function openDrawer(code) {
+          const p = practicesData[code] || practicesData['2026-084'];
+          currentPracticeViewing = p.code;
+
+          const codeBadge = document.getElementById('drawerPracticeCodeBadge');
+          if (codeBadge) codeBadge.innerText = `PRATICA ${p.code}`;
+
+          const heading = document.getElementById('drawerPracticeHeading');
+          if (heading) heading.innerText = p.title;
+
+          const meta = document.getElementById('drawerPracticeMeta');
+          if (meta) meta.innerText = `Committente: ${p.client} | Responsabile: ${p.assignee} | ${p.address}`;
+
+          const notesBox = document.getElementById('drawerPracticeNotes');
+          if (notesBox) notesBox.value = p.notes;
+
+          const hoursBox = document.getElementById('drawerPracticeTotalHours');
+          if (hoursBox) hoursBox.innerText = p.totalHours;
+
+          const folderBtn = document.getElementById('drawerFolderBtn');
+          if (folderBtn) folderBtn.setAttribute('onclick', `openProjectFolder('${p.folder}')`);
+
+          // Render sotto-attività della commessa nella tabella
+          const tbody = document.getElementById('drawerSubtasksBody');
+          if (tbody && p.subtasks) {
+            tbody.innerHTML = p.subtasks.map(st => {
+              const statusBadge = st.status === 'Eseguita' ? 'pill-green' : (st.status === 'In Attesa' ? 'pill-amber' : 'pill-blue');
+              const billedClass = st.billed ? 'is-billed' : 'not-billed';
+              const billedText = st.billed ? '✅ Fatturata' : '🟡 Da Fatturare';
+              const assigneeColor = st.assignee === 'Andrea' ? 'var(--user-andrea)' : (st.assignee === 'Marco' ? 'var(--user-marco)' : 'var(--user-luca)');
+
+              return `
+            <tr onclick="openSubtaskDetailModal('${st.id}', '${escapeAttr(st.title)}', '${escapeAttr(st.subtitle)}', '${st.assignee}', '${st.hours}', '${st.status}', ${st.billed}, '${escapeAttr(st.notes)}')">
+              <td>
+                <div style="font-weight: 600; color: var(--cyan);">${st.title} ✏️</div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">${st.subtitle}</div>
+              </td>
+              <td><span style="color: ${assigneeColor}; font-weight: 600;">● ${st.assignee}</span></td>
+              <td style="font-family: var(--font-mono);">${st.hours}</td>
+              <td><span class="pill-badge ${statusBadge}">${st.status}</span></td>
+              <td style="text-align: right;" onclick="event.stopPropagation()">
+                <label class="billed-toggle-label ${billedClass}" onclick="toggleBilledState(this)">
+                  <input type="checkbox" ${st.billed ? 'checked' : ''}>
+                  <span class="billed-text">${billedText}</span>
+                </label>
+              </td>
+            </tr>
+          `;
+            }).join('');
+          }
+
+          document.getElementById('practiceDrawer').classList.add('open');
+        }
+
+        function closeDrawer() {
+          document.getElementById('practiceDrawer').classList.remove('open');
+        }
+
+        // ==========================================================================
+        // CASSETTO DETTAGLIO CLIENTE CON APERTURA DIRETTA DELLE COMMESSE
+        // ==========================================================================
+        let currentClientViewing = 'Dott. Mario Rossi';
+
+        function openClientDetail(name, type, tel, mail, city, cf, hours) {
+          currentClientViewing = name;
+          const clientObj = clientsData[name] || {
+            name: name,
+            type: type || 'COMMITTENTE PRIVATO',
+            tel: tel || '',
+            mail: mail || '',
+            city: city || '',
+            cf: cf || '',
+            hours: hours || '15h 30m',
+            notes: 'Cliente registrato nello studio.',
+            practices: ['2026-084']
+          };
+
+          document.getElementById('clientDrawerName').innerText = clientObj.name;
+          document.getElementById('clientDrawerType').innerText = clientObj.type.toUpperCase();
+          document.getElementById('clientDrawerContacts').innerText = `${clientObj.city} | Tel: ${clientObj.tel} | Email: ${clientObj.mail} | ${clientObj.cf}`;
+          document.getElementById('clientDrawerTotalHours').innerText = clientObj.hours;
+
+          const notesBox = document.getElementById('clientDrawerNotes');
+          if (notesBox) notesBox.value = clientObj.notes;
+
+          // Popola l'elenco pratiche e commesse del cliente con click per aprire il cassetto commessa
+          const practicesListEl = document.getElementById('clientDrawerPracticesList');
+          if (practicesListEl) {
+            const list = clientObj.practices.map(code => practicesData[code]).filter(Boolean);
+            practicesListEl.innerHTML = list.map(p => `
+          <div class="client-practice-card" onclick="openDrawer('${p.code}')" title="Clicca per aprire la scheda commessa ${p.code}">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="font-family: var(--font-mono); color: var(--cyan); font-weight: 700; font-size: 1.05rem;">${p.code}</span>
+                  <strong style="font-size: 0.95rem; color: var(--text-main);">${p.title}</strong>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">${p.address} • Responsabile: ${p.assignee}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span class="pill-badge ${p.statusBadge}">${p.statusText}</span>
+                <button class="btn-action btn-confirm" style="padding: 5px 14px; font-size: 0.78rem; border-radius: var(--radius-sm);" onclick="event.stopPropagation(); openDrawer('${p.code}');">
+                  Apri Scheda Commessa ➔
+                </button>
+              </div>
+            </div>
+
+            <!-- Dettaglio Sotto-attività -->
+            <div style="font-size: 0.80rem; display: flex; flex-direction: column; gap: 6px; padding-left: 12px; border-left: 2px solid var(--border-subtle); margin-bottom: 10px;">
+              ${p.subtasks.map(st => `
+                <div style="display: flex; justify-content: space-between;">
+                  <span>• <strong>${st.title}:</strong> <span style="color: var(--text-muted);">${st.subtitle}</span> (${st.assignee})</span>
+                  <span style="font-family: var(--font-mono); color: ${st.billed ? 'var(--emerald)' : 'var(--amber)'};">${st.hours} [${st.billed ? '✅ Fatturata' : '🟡 Da Fatturare'}]</span>
+                </div>
+              `).join('')}
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 8px; font-size: 0.80rem; color: var(--text-muted);">
+              <span style="color: var(--cyan); font-size: 0.75rem; font-weight: 600;">👆 Clicca su questo riquadro per aprire il cassetto della commessa</span>
+              <span>Subtotale Commessa: <strong style="font-family: var(--font-mono); color: var(--text-main);">${p.totalHours}</strong></span>
+            </div>
+          </div>
+        `).join('');
+          }
+
+          document.getElementById('clientDrawer').classList.add('open');
+        }
+
+        function closeClientDrawer() {
+          document.getElementById('clientDrawer').classList.remove('open');
+        }
+
+        function printClientReport() {
+          showToast(`🖨️ Generazione Report Completo per Cliente [${currentClientViewing}]...`);
+          setTimeout(() => {
+            window.print();
+          }, 600);
+        }
+
+        function printPracticeReport(code) {
+          const prCode = code || currentPracticeViewing;
+          showToast(`🖨️ Generazione Report PDF per Commessa [${prCode}]...`);
+          setTimeout(() => {
+            window.print();
+          }, 600);
+        }
+
+        // ==========================================================================
+        // LOGICA CALENDARIO STUDIO & DETTAGLIO EVENTI
+        // ==========================================================================
+        let currentViewingEventPractice = '2026-084';
+
+        function showEventDetail(eventId) {
+          const ev = calendarEvents[eventId];
+          if (!ev) return;
+
+          document.getElementById('eventModalHeading').innerText = ev.title;
+          document.getElementById('eventModalTypeTag').innerText = ev.type;
+          document.getElementById('eventModalTypeTag').className = `pill-badge ${ev.badgeClass}`;
+          document.getElementById('eventModalDateTime').innerText = `📅 ${ev.date} • ${ev.time}`;
+          document.getElementById('eventModalAssignee').innerText = `👤 ${ev.assignee}`;
+          document.getElementById('eventModalLocation').innerText = `📍 ${ev.location}`;
+          document.getElementById('eventModalPractice').innerText = ev.practice;
+          document.getElementById('eventModalNotes').innerText = ev.notes;
+
+          currentViewingEventPractice = ev.practiceCode;
+          const openBtn = document.getElementById('eventModalOpenPracticeBtn');
+          if (ev.practiceCode && ev.practiceCode !== 'NONE') {
+            openBtn.style.display = 'inline-block';
+            openBtn.innerText = `📁 Apri Scheda Commessa [${ev.practiceCode}]`;
+          } else {
+            openBtn.style.display = 'none';
+          }
+
+          document.getElementById('eventDetailModal').classList.add('open');
+        }
+
+        function closeEventDetailModal() {
+          document.getElementById('eventDetailModal').classList.remove('open');
+        }
+
+        function openPracticeFromEvent() {
+          closeEventDetailModal();
+          if (currentViewingEventPractice && currentViewingEventPractice !== 'NONE') {
+            openDrawer(currentViewingEventPractice);
+          }
+        }
+
+        function openNewCalendarEventModal() {
+          document.getElementById('newEventModal').classList.add('open');
+        }
+
+        function closeNewEventModal() {
+          document.getElementById('newEventModal').classList.remove('open');
+        }
+
+        function saveNewCalendarEvent() {
+          const title = document.getElementById('newCalTitle').value.trim();
+          const date = document.getElementById('newCalDate').value;
+          const time = document.getElementById('newCalTime').value;
+
+          if (!title) {
+            showToast('⚠️ Inserisci il titolo dell\'impegno');
+            return;
+          }
+
+          closeNewEventModal();
+          showToast(`📅 Impegno aggiunto al calendario: "${title}" (${date} ore ${time})`);
+        }
+
+        function filterCalendarEvents() {
+          const addetto = document.getElementById('calFilterAddetto').value;
+          const tipo = document.getElementById('calFilterTipo').value;
+          showToast(`Filtro Calendario applicato: Addetto [${addetto}], Tipo [${tipo}]`);
+        }
+
+        // FILTRI COMMESSE
+        function applyFilters() {
+          const selectedAddetto = document.getElementById('filterAddettoSelect').value;
+          const searchClient = document.getElementById('filterClienteInput').value.toLowerCase().trim();
+          const rows = document.querySelectorAll('#practicesTable .practice-row');
+          let visibleCount = 0;
+
+          rows.forEach(row => {
+            const rowAddetto = row.getAttribute('data-addetto');
+            const rowCliente = row.getAttribute('data-cliente').toLowerCase();
+
+            const matchAddetto = (selectedAddetto === 'ALL' || rowAddetto === selectedAddetto);
+            const matchCliente = (!searchClient || rowCliente.includes(searchClient));
+
+            if (matchAddetto && matchCliente) {
+              row.style.display = '';
+              visibleCount++;
+            } else {
+              row.style.display = 'none';
+            }
+          });
+
+          const label = document.getElementById('tableCountLabel');
+          if (selectedAddetto === 'ALL') {
+            label.innerHTML = `Mostrate <strong>${visibleCount}</strong> commesse dello studio`;
+          } else {
+            label.innerHTML = `Mostrate <strong>${visibleCount}</strong> commesse assegnate a <strong>${selectedAddetto}</strong>`;
+          }
+        }
+
+        function applyFiltersDash() {
+          const q = document.getElementById('filterClienteInputDash').value.toLowerCase().trim();
+          const rows = document.querySelectorAll('#dashTableBody tr');
+          rows.forEach(row => {
+            const text = row.innerText.toLowerCase();
+            row.style.display = (!q || text.includes(q)) ? '' : 'none';
+          });
+        }
+
+        function openProjectFolder(relPath) {
+          showToast(`📁 Aperta cartella documenti: ${relPath}`);
+        }
+
+        function openSueDirect(comune) {
+          showToast(`🏛️ Portale telematico Comune di ${comune.toUpperCase()}`);
+        }
+
+        function openQuickFillModal(from, to) {
+          showToast(`⏱️ Recupero buco (${from} - ${to}): registrate 1h 30m su "Redazione relazione asseverata CILA"`);
+        }
+
+        function openNewTaskModal() {
+          showToast('➕ Aperta finestra inserimento Nuova Attività assegnata ad Andrea');
+        }
+
+        function openNewSubtaskModal() {
+          showToast('➕ Aggiunta nuova riga sotto-attività alla commessa');
+        }
+
+        function openNewPracticeModal() {
+          showToast('➕ Aperta finestra creazione Nuova Commessa Studio');
+        }
+
+        // VOCALE NATIVO
+        let recognition = null;
+        let isRecording = false;
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        function openVoiceAssistant() {
+          const modal = document.getElementById('voiceModal');
+          const wave = document.getElementById('waveVisualizer');
+          const transcript = document.getElementById('transcriptText');
+          const card = document.getElementById('confirmationCard');
+
+          modal.classList.add('open');
+          card.classList.remove('show');
+          transcript.innerText = "In ascolto... Parla pure al microfono!";
+          wave.classList.add('active');
+          isRecording = true;
+
+          if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'it-IT';
+            recognition.continuous = true;
+            recognition.interimResults = true;
+
+            recognition.onresult = (event) => {
+              let currentTranscript = '';
+              for (let i = event.resultIndex; i < event.results.length; i++) {
+                currentTranscript += event.results[i][0].transcript;
+              }
+              transcript.innerText = `"${currentTranscript}"`;
+              if (currentTranscript.toLowerCase().includes('rossi') || currentTranscript.toLowerCase().includes('ore')) {
+                card.classList.add('show');
+              }
+            };
+
+            recognition.onerror = () => { transcript.innerText = "Microfono non attivo o non autorizzato."; };
+            recognition.onend = () => { wave.classList.remove('active'); isRecording = false; };
+            try { recognition.start(); } catch (e) { }
+          } else {
+            transcript.innerText = "Simulazione vocale: 'Ho finito il sopralluogo da Rossi, segna due ore...'";
+            setTimeout(() => { card.classList.add('show'); }, 1200);
+          }
+        }
+
+        function toggleVoiceRecognition() {
+          if (isRecording) {
+            if (recognition) recognition.stop();
+            document.getElementById('waveVisualizer').classList.remove('active');
+            document.getElementById('voiceActionBtn').innerText = "✅ Salva nel Gestionale";
+            document.getElementById('confirmationCard').classList.add('show');
+            isRecording = false;
+          } else {
+            showToast("✨ Attività registrata con successo nel database!");
+            closeVoiceAssistant();
+          }
+        }
+
+        function closeVoiceAssistant() {
+          if (recognition && isRecording) recognition.stop();
+          document.getElementById('voiceModal').classList.remove('open');
+          document.getElementById('waveVisualizer').classList.remove('active');
+          isRecording = false;
+        }
+      </script>
+</body>
+
+</html>
