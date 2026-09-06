@@ -3447,12 +3447,51 @@
 
           <div class="drawer-content">
 
-            <div style="display: flex; gap: 10px;">
+            <!-- PULSANTI AZIONI RAPIDE COMMESSA (CARTELLA + SUE) -->
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
               <button class="btn-action btn-cancel" id="drawerFolderBtn"
                 style="display: flex; align-items: center; justify-content: center; gap: 6px;"
-                onclick="openProjectFolder('2026/084_Rossi')">
+                onclick="openProjectFolderFromInput()">
                 📁 Apri Cartella Documenti
               </button>
+              <button class="btn-action btn-cancel" id="drawerSueTopBtn"
+                style="display: flex; align-items: center; justify-content: center; gap: 6px;"
+                onclick="openSueDirectFromInput()">
+                🏛️ Portale SUE / Istanza Telematica
+              </button>
+            </div>
+
+            <!-- CAMPI CONFIGURAZIONE PERCORSO CARTELLA & LINK ISTANZA SUE -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                  📁 Percorso Cartella Commessa (Locale o Rete)
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" class="form-input" id="drawerPracticeFolderInput"
+                    placeholder="Es. 2026/084_Rossi o G:\Commesse\2026-084"
+                    style="font-family: var(--font-mono); font-size: 0.82rem;">
+                  <button class="btn-action btn-cancel" style="padding: 6px 12px; font-size: 0.78rem; flex-shrink: 0;"
+                    onclick="openProjectFolderFromInput()" title="Apri cartella documenti commessa">
+                    📁 Apri
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                  🏛️ Link Istanza Telematica (Portale SUE)
+                </label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="text" class="form-input" id="drawerPracticeSueInput"
+                    placeholder="Es. https://cuneo.cportal.it/istanze/2026-084"
+                    style="font-family: var(--font-mono); font-size: 0.82rem;">
+                  <button class="btn-action btn-confirm" id="drawerSueBtn" style="padding: 6px 14px; font-size: 0.78rem; flex-shrink: 0;"
+                    onclick="openSueDirectFromInput()" title="Apri portale dell'istanza">
+                    🏛️ Accedi ➔
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div>
@@ -3609,6 +3648,22 @@
           </div>
 
           <div class="drawer-content">
+
+            <!-- CAMPO PERCORSO CARTELLA DOCUMENTI CLIENTE -->
+            <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;">
+              <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 6px;">
+                📁 Percorso Cartella Archivio Cliente (Locale o Rete)
+              </label>
+              <div style="display: flex; gap: 8px;">
+                <input type="text" class="form-input" id="clientDrawerFolderInput"
+                  placeholder="Es. Clienti/Rossi_Mario o G:\Clienti\Rossi_Mario"
+                  style="font-family: var(--font-mono); font-size: 0.82rem;">
+                <button class="btn-action btn-cancel" id="clientFolderBtn" style="white-space: nowrap; padding: 6px 14px; font-size: 0.78rem; flex-shrink: 0;"
+                  onclick="openClientFolderFromInput()">
+                  📁 Apri Cartella
+                </button>
+              </div>
+            </div>
 
             <div>
               <label
@@ -4195,6 +4250,7 @@
             statusText: 'In Corso',
             statusBadge: 'pill-blue',
             folder: '2026/084_Rossi',
+            sueUrl: 'https://cuneo.cportal.it/istanze/2026-084',
             notes: "Immobile con altezza media ponderale sottotetto al limite dei 2.40m. Accordato con il committente l'apertura di due nuovi velux lato cortile interno. Consegna prevista per fine mese.",
             totalHours: '15h 30m',
             subtasks: [
@@ -4213,6 +4269,7 @@
             statusText: 'Attesa Riscontro',
             statusBadge: 'pill-amber',
             folder: '2026/079_Immobiliare',
+            sueUrl: 'https://mondovi.cportal.it/istanze/2026-079',
             notes: 'Accesso agli atti per il recupero dei fascicoli edilizi originali anni 1980. Sollecitata visione fascicolo archivio storico per accertamento titoli legittimanti compravendita.',
             totalHours: '08h 45m',
             subtasks: [
@@ -4230,6 +4287,7 @@
             statusText: 'Completata',
             statusBadge: 'pill-green',
             folder: '2026/065_Bianchi',
+            sueUrl: 'https://sister.agenziaentrate.gov.it/Pregeo/2026-065',
             notes: 'Tipo di frazionamento con riconfinamento lotti agricoli e inserimento nuovi termini di confine in pietra. Atto notarile fissato per l\'11 Settembre 2026.',
             totalHours: '22h 00m',
             subtasks: [
@@ -4248,6 +4306,7 @@
             statusText: 'In Corso',
             statusBadge: 'pill-blue',
             folder: '2026/091_Verdi',
+            sueUrl: 'https://dronero.cportal.it/istanze/2026-091',
             notes: 'Stima del più probabile valore venale di mercato di rustico montano con terreni pertinenziali ai fini di compravendita tra coeredi e divisione patrimoniale.',
             totalHours: '05h 15m',
             subtasks: [
@@ -4269,6 +4328,7 @@
             city: 'Cuneo (CN)',
             cf: 'RSSMRA75C12D205X',
             hours: '15h 30m',
+            folder: 'Clienti/Rossi_Mario',
             notes: 'Cliente storico dello studio. Reperibile preferibilmente al mattino via telefono. Pagamenti sempre puntuali tramite bonifico bancario.',
             practices: ['2026-084']
           },
@@ -4280,6 +4340,7 @@
             city: 'Mondovì (CN)',
             cf: 'P.IVA 01234567890',
             hours: '08h 45m',
+            folder: 'Clienti/Immobiliare_Alpi',
             notes: 'Società di sviluppo immobiliare. Referente geom. Barberis. Richieste frequenti di verifiche di conformità e accessi agli atti.',
             practices: ['2026-079']
           },
@@ -4291,6 +4352,7 @@
             city: 'Boves (CN)',
             cf: 'BNCGNN60A01A000Y',
             hours: '22h 00m',
+            folder: 'Clienti/Bianchi_Giovanni',
             notes: 'Pratica successione e frazionamento terreni ereditari con rogito notarile fissato per Settembre 2026.',
             practices: ['2026-065']
           },
@@ -4302,6 +4364,7 @@
             city: 'Dronero (CN)',
             cf: 'VRDPLA80T05D205Z',
             hours: '05h 15m',
+            folder: 'Clienti/Verdi_Paolo',
             notes: 'Perizia per divisione ereditaria fabbricato rurale e terreni in valle Maira.',
             practices: ['2026-091']
           }
@@ -4560,8 +4623,14 @@
           const hoursBox = document.getElementById('drawerPracticeTotalHours');
           if (hoursBox) hoursBox.innerText = p.totalHours;
 
+          const folderInput = document.getElementById('drawerPracticeFolderInput');
+          if (folderInput) folderInput.value = p.folder || '';
+
+          const sueInput = document.getElementById('drawerPracticeSueInput');
+          if (sueInput) sueInput.value = p.sueUrl || '';
+
           const folderBtn = document.getElementById('drawerFolderBtn');
-          if (folderBtn) folderBtn.setAttribute('onclick', `openProjectFolder('${p.folder}')`);
+          if (folderBtn) folderBtn.setAttribute('onclick', `openProjectFolderFromInput()`);
 
           // Render sotto-attività della commessa nella tabella
           const tbody = document.getElementById('drawerSubtasksBody');
@@ -4622,6 +4691,9 @@
           document.getElementById('clientDrawerType').innerText = clientObj.type.toUpperCase();
           document.getElementById('clientDrawerContacts').innerText = `${clientObj.city} | Tel: ${clientObj.tel} | Email: ${clientObj.mail} | ${clientObj.cf}`;
           document.getElementById('clientDrawerTotalHours').innerText = clientObj.hours;
+
+          const folderInput = document.getElementById('clientDrawerFolderInput');
+          if (folderInput) folderInput.value = clientObj.folder || `Clienti/${clientObj.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
 
           const notesBox = document.getElementById('clientDrawerNotes');
           if (notesBox) notesBox.value = clientObj.notes;
@@ -4800,8 +4872,43 @@
           showToast(`📁 Aperta cartella documenti: ${relPath}`);
         }
 
-        function openSueDirect(comune) {
-          showToast(`🏛️ Portale telematico Comune di ${comune.toUpperCase()}`);
+        function openProjectFolderFromInput() {
+          const input = document.getElementById('drawerPracticeFolderInput');
+          const path = input ? input.value.trim() : '';
+          if (path) {
+            openProjectFolder(path);
+          } else {
+            showToast('⚠️ Inserisci il percorso della cartella commessa');
+          }
+        }
+
+        function openSueDirect(urlOrComune) {
+          if (urlOrComune && (urlOrComune.startsWith('http://') || urlOrComune.startsWith('https://'))) {
+            showToast(`🏛️ Apertura portale telematico / istanza: ${urlOrComune}`);
+            window.open(urlOrComune, '_blank');
+          } else {
+            showToast(`🏛️ Portale telematico / istanza: ${urlOrComune || 'Non configurato'}`);
+          }
+        }
+
+        function openSueDirectFromInput() {
+          const input = document.getElementById('drawerPracticeSueInput');
+          const url = input ? input.value.trim() : '';
+          if (url) {
+            openSueDirect(url);
+          } else {
+            showToast('⚠️ Inserisci il link dell\'istanza telematica o portale SUE');
+          }
+        }
+
+        function openClientFolderFromInput() {
+          const input = document.getElementById('clientDrawerFolderInput');
+          const path = input ? input.value.trim() : '';
+          if (path) {
+            showToast(`📁 Aperta cartella archivio cliente: ${path}`);
+          } else {
+            showToast('⚠️ Inserisci il percorso della cartella cliente');
+          }
         }
 
         function openQuickFillModal(from, to) {
