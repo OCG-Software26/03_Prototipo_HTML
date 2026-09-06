@@ -4046,17 +4046,13 @@
                 </div>
               </div>
 
-              <div style="background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+              <!-- CAMPO INSERIMENTO MANUALE SCADENZA FIRMA DIGITALE -->
+              <div class="profile-form-group">
+                <label class="profile-form-label">Scadenza Firma Digitale / Smart Card (Data)</label>
                 <div style="display: flex; align-items: center; gap: 10px;">
-                  <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.15); color: var(--emerald); display: flex; align-items: center; justify-content: center;">
-                    ✒️
-                  </div>
-                  <div>
-                    <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Firma Digitale Remota & CNS</div>
-                    <div style="font-size: 0.74rem; color: var(--text-muted);">Certificato Namirial/Aruba valido fino al 15/11/2027</div>
-                  </div>
+                  <input type="date" class="profile-input" id="profileFirmaScadenza" value="2027-11-15" style="font-family: var(--font-mono);">
+                  <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--emerald); font-weight: 700; white-space: nowrap; padding: 6px 10px; background: rgba(16, 185, 129, 0.12); border-radius: var(--radius-sm); border: 1px solid rgba(16, 185, 129, 0.25);">● VALIDA</span>
                 </div>
-                <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">● ATTIVA</span>
               </div>
             </div>
 
@@ -4084,15 +4080,9 @@
                 </div>
               </div>
 
-              <div class="profile-row-2col">
-                <div class="profile-form-group">
-                  <label class="profile-form-label">Monte Ore Giornaliero Previsto</label>
-                  <input type="text" class="profile-input" id="profileTargetHours" value="8h 00m (+ 1h Pausa Pranzo)">
-                </div>
-                <div class="profile-form-group">
-                  <label class="profile-form-label">Costo Orario Interno (Job Costing)</label>
-                  <input type="text" class="profile-input" id="profileHourlyRate" value="€ 65,00 / ora">
-                </div>
+              <div class="profile-form-group">
+                <label class="profile-form-label">Monte Ore Giornaliero Previsto</label>
+                <input type="text" class="profile-input" id="profileTargetHours" value="8h 00m (+ 1h Pausa Pranzo)">
               </div>
 
               <!-- BOX ESPLICATIVO LOGICA CONFLITTO 4 -->
@@ -4103,15 +4093,16 @@
                 Se il timer supera di oltre 1 ora il tuo orario di uscita nominale (ore 19:30), il sistema ferma automaticamente il conteggio e **congela la chiusura alle ore 18:30**. Al rientro (anche dopo 2 settimane di ferie), compare la notifica a schermo per confermare o rettificare l'orario.
               </div>
 
-              <div class="switch-row">
-                <div>
-                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Avviso Benessere Postazione (Pausa a 4h)</div>
-                  <div style="font-size: 0.74rem; color: var(--text-muted);">Mostra una notifica discreta dopo 4 ore di lavoro continuo su singolo compito</div>
+              <!-- SOGLIA LAVORO CONTINUO IMPOSTABILE MANUALMENTE -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 10px;">
+                <div style="flex: 1; min-width: 190px;">
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Notifica Lavoro Continuo su Attività</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Avviso automatico dopo un intervallo consecutivo sullo stesso compito</div>
                 </div>
-                <label class="switch-toggle">
-                  <input type="checkbox" id="switchBreakReminder" checked>
-                  <span class="switch-slider"></span>
-                </label>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <label class="profile-form-label" style="margin-bottom: 0; white-space: nowrap;">Tempo max:</label>
+                  <input type="text" class="profile-input" id="profileContinuousWorkThreshold" value="04h 00m" placeholder="es. 04h 00m" style="width: 105px; text-align: center; font-family: var(--font-mono); font-weight: 600;">
+                </div>
               </div>
             </div>
 
@@ -4125,11 +4116,10 @@
                   </svg>
                   <span>Credenziali Portali SUE (Technical Design)</span>
                 </div>
-                <span class="pill-badge pill-urgent">Riservato ai 3 Soci</span>
               </div>
 
               <div style="font-size: 0.80rem; color: var(--text-muted); line-height: 1.4;">
-                Accesso automatico single-click ai portali SUE comunali senza ridigitare ogni volta le credenziali. Questo box è visibile e configurabile esclusivamente dai 3 titolari abilitati.
+                Accesso rapido e autocompilazione delle credenziali per l'apertura e consultazione delle pratiche sui portali SUE comunali.
               </div>
 
               <div class="profile-row-2col">
@@ -4146,15 +4136,7 @@
                 </div>
               </div>
 
-              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
-                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Comune di Cuneo ✅</span>
-                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Savigliano ✅</span>
-                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Mondovì ✅</span>
-                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Borgo San Dalmazzo ✅</span>
-                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Dronero & Clavesana ✅</span>
-              </div>
-
-              <div style="display: flex; gap: 10px;">
+              <div style="display: flex; gap: 10px; margin-top: 4px;">
                 <button class="btn-action btn-confirm" style="flex: 1; justify-content: center;" onclick="testSueConnection()">
                   ⚡ Verifica Autologin SUE
                 </button>
@@ -4299,13 +4281,14 @@
                 </label>
               </div>
 
-              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-subtle);">
-                <div>
+              <!-- PULSANTE TEMA RIDOTTO CHE NON INVADE IL TESTO A SINISTRA -->
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-subtle); flex-wrap: wrap; gap: 10px;">
+                <div style="flex: 1; min-width: 170px;">
                   <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Tema Visivo Applicazione</div>
-                  <div style="font-size: 0.74rem; color: var(--text-muted);">Attualmente: Dark Ossidiana (Swiss Precision)</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Dark Ossidiana / Light Blueprint</div>
                 </div>
-                <button class="btn-action btn-cancel" onclick="toggleTheme()">
-                  🌓 Cambia Tema
+                <button class="btn-action btn-cancel" onclick="toggleTheme()" style="padding: 6px 12px; font-size: 0.75rem; flex-shrink: 0; min-width: auto; gap: 6px;" title="Cambia tema chiaro/scuro">
+                  <span style="font-size: 0.9rem;">🌓</span> <span>Cambia</span>
                 </button>
               </div>
 
@@ -5947,19 +5930,20 @@
           const piva = document.getElementById('profilePIVA')?.value || '';
           const phone = document.getElementById('profilePhone')?.value || '';
           const pec = document.getElementById('profilePEC')?.value || '';
+          const firmaScadenza = document.getElementById('profileFirmaScadenza')?.value || '2027-11-15';
+          const continuousThreshold = document.getElementById('profileContinuousWorkThreshold')?.value || '04h 00m';
           const sueUser = document.getElementById('profileSueUser')?.value || '';
           const startTime = document.getElementById('profileStartTime')?.value || '08:30';
           const endTime = document.getElementById('profileEndTime')?.value || '18:30';
-          const hourlyRate = document.getElementById('profileHourlyRate')?.value || '€ 65,00 / ora';
 
-          showToast(`💾 Profilo di ${nome} salvato! (Orario: ${startTime}–${endTime} | SUE: ${sueUser})`);
+          showToast(`💾 Profilo di ${nome} salvato! (Firma: ${firmaScadenza} | Notifica timer: ${continuousThreshold} | SUE: ${sueUser})`);
         }
 
         function testSueConnection() {
           const sueUser = document.getElementById('profileSueUser')?.value || 'andrea.cuneo';
           showToast(`⚡ Test connessione SUE per [${sueUser}] in corso sui portali comunali...`);
           setTimeout(() => {
-            showToast(`✅ Autologin SUE verificato: Token SSO attivo per Cuneo, Savigliano, Mondovì!`);
+            showToast(`✅ Autologin SUE verificato: credenziali attive e sincronizzate!`);
           }, 1000);
         }
 
