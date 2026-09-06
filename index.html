@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#0B0F17">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1904,7 +1904,364 @@
       color: #000;
     }
 
-    /* MOBILE (< 768px) */
+    /* ==========================================================================
+       STILI TIMELINE SCROLLABILE (DESKTOP & MOBILE)
+       ========================================================================== */
+    .timeline-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+    }
+
+    .timeline-scroll-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .timeline-scroll-container::-webkit-scrollbar-track {
+      background: var(--bg-surface);
+      border-radius: var(--radius-full);
+    }
+
+    .timeline-scroll-container::-webkit-scrollbar-thumb {
+      background: var(--border-subtle);
+      border-radius: var(--radius-full);
+    }
+
+    .timeline-inner-flow {
+      min-width: 620px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-scroll-hint {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.70rem;
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+      user-select: none;
+    }
+
+    /* ==========================================================================
+       STILI SCHERMATA PROFILO PERSONALE & IMPOSTAZIONI STUDIO
+       ========================================================================== */
+    .profile-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .profile-hero-card {
+      background: linear-gradient(135deg, rgba(0, 180, 216, 0.12) 0%, rgba(20, 26, 36, 0.95) 55%, var(--bg-surface) 100%);
+      border: 1px solid rgba(0, 180, 216, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .profile-hero-card::after {
+      content: "";
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .profile-hero-identity {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-avatar-large {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #00D2FF 0%, #0077B6 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #000;
+      box-shadow: 0 0 25px rgba(0, 210, 255, 0.45);
+      position: relative;
+      flex-shrink: 0;
+      border: 3px solid var(--bg-surface);
+    }
+
+    .profile-status-dot {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: var(--emerald);
+      border: 2.5px solid var(--bg-surface);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    .profile-hero-info h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .profile-hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .profile-tag {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .profile-tag.tag-role {
+      background: rgba(0, 210, 255, 0.15);
+      color: var(--user-andrea);
+      border: 1px solid rgba(0, 210, 255, 0.35);
+    }
+
+    .profile-tag.tag-albo {
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .profile-tag.tag-status {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .profile-grid-layout {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .profile-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: var(--transition);
+    }
+
+    .profile-card:hover {
+      border-color: rgba(0, 180, 216, 0.3);
+    }
+
+    .profile-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .profile-card-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--text-main);
+    }
+
+    .profile-card-title svg {
+      width: 20px;
+      height: 20px;
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .profile-form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .profile-form-label {
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .profile-input {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 9px 14px;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 0.88rem;
+      transition: var(--transition);
+      outline: none;
+      width: 100%;
+    }
+
+    .profile-input:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .profile-input-readonly {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      cursor: not-allowed;
+    }
+
+    .profile-row-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .security-device-item {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .security-device-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .security-device-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .switch-row:last-child {
+      border-bottom: none;
+    }
+
+    .switch-toggle {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .switch-toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: var(--border-subtle);
+      transition: .24s;
+      border-radius: var(--radius-full);
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .24s;
+      border-radius: 50%;
+    }
+
+    .switch-toggle input:checked + .switch-slider {
+      background-color: var(--cyan);
+    }
+
+    .switch-toggle input:checked + .switch-slider:before {
+      transform: translateX(20px);
+    }
+
+    .btn-danger-soft {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--coral);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .btn-danger-soft:hover {
+      background: var(--coral);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES RESPONSIVE MOBILE & SAFE AREA IOS
+       ========================================================================== */
     .mobile-bottom-bar {
       display: none;
     }
@@ -1914,37 +2271,236 @@
         display: none;
       }
 
+      /* TOP HEADER RESPONSIVO CON SAFE AREA IOS */
       .top-header {
-        padding: 0 16px;
+        padding: max(10px, env(safe-area-inset-top)) 12px 10px 12px;
+        height: auto;
+        min-height: calc(56px + env(safe-area-inset-top));
+        gap: 8px;
       }
 
       .search-omnibar-container {
-        width: 160px;
+        width: auto;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .search-omnibar {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+
+      .search-omnibar input {
+        font-size: 0.80rem;
+      }
+
+      .search-kbd {
+        display: none !important;
+      }
+
+      /* TIMER DOCK COMPATTO SU SMARTPHONE */
+      .live-timer-dock {
+        padding: 4px 8px;
+        gap: 6px;
+        font-size: 0.78rem;
+        flex-shrink: 0;
       }
 
       .timer-practice {
-        display: none;
+        display: none !important;
+      }
+
+      .timer-digits {
+        font-size: 0.78rem;
+      }
+
+      .timer-ctrl-btn {
+        width: 24px;
+        height: 24px;
+      }
+
+      .header-actions {
+        gap: 6px;
+        flex-shrink: 0;
+      }
+
+      .theme-toggle-btn {
+        width: 32px;
+        height: 32px;
+      }
+
+      .user-profile-badge {
+        padding-left: 6px;
+        gap: 6px;
+        cursor: pointer;
       }
 
       .user-info-text {
-        display: none;
+        display: none !important;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 0.78rem;
       }
 
       .content-viewport {
-        padding: 16px;
-        padding-bottom: 90px;
+        padding: 12px 10px;
+        padding-bottom: calc(85px + env(safe-area-inset-bottom));
       }
 
+      /* KPI CARDS SU 2 COLONNE COMPATTE */
       .kpi-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      .kpi-card {
+        padding: 12px 10px;
+      }
+
+      .kpi-value {
+        font-size: 1.18rem;
+        white-space: nowrap;
+      }
+
+      .kpi-target {
+        font-size: 0.68rem;
+        white-space: nowrap;
+      }
+
+      .kpi-card-header {
+        margin-bottom: 6px;
+      }
+
+      .kpi-label {
+        font-size: 0.65rem;
       }
 
       .dashboard-split {
         grid-template-columns: 1fr;
+        gap: 16px;
       }
 
       .clients-grid {
         grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .profile-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .profile-row-2col {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .profile-hero-card {
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .profile-hero-identity {
+        flex-direction: row;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .profile-avatar-large {
+        width: 56px;
+        height: 56px;
+        font-size: 1.4rem;
+      }
+
+      /* GUIDA SCROLL TOUCH PER LA TIMELINE */
+      .mobile-scroll-hint {
+        display: flex;
+      }
+
+      /* TABELLE SCORREVOLI ORIZZONTALMENTE SENZA SCHIACCIAMENTI */
+      .task-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .task-table {
+        min-width: 580px;
+      }
+
+      .table-container {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .table-container table {
+        min-width: 620px;
+      }
+
+      /* CASSETTI A SCHERMO INTERO SENZA MARGINI NERI SU MOBILE */
+      .drawer-panel {
+        width: 100vw !important;
+        max-width: 100vw !important;
+        right: -100vw;
+        border-left: none !important;
+        border-radius: 0 !important;
+      }
+
+      .drawer-backdrop.open .drawer-panel {
+        right: 0 !important;
+      }
+
+      .drawer-header {
+        padding: max(16px, env(safe-area-inset-top)) 16px 14px 16px;
+      }
+
+      .drawer-content {
+        padding: 14px 16px;
+      }
+
+      /* FOOTER CASSETTO POSIZIONATO SOPRA LA BARRA DEL BROWSER */
+      .drawer-footer-actions {
+        padding: 12px 16px calc(20px + env(safe-area-inset-bottom)) 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .drawer-footer-actions .btn-print-report {
+        width: 100%;
+        justify-content: center;
+        padding: 12px;
+      }
+
+      /* MODALI TOUCH COMFORT SU MOBILE */
+      .modal-card {
+        width: 94vw !important;
+        max-width: 94vw !important;
+        padding: 16px !important;
+        max-height: 85vh;
+        max-height: 85dvh;
+        overflow-y: auto;
+      }
+
+      .calendar-view-split {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .calendar-grid-card {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .calendar-weekdays-row,
+      .calendar-days-grid {
+        min-width: 540px;
       }
 
       .mobile-bottom-bar {
@@ -1952,7 +2508,7 @@
         bottom: 0;
         left: 0;
         width: 100vw;
-        height: 68px;
+        height: calc(64px + env(safe-area-inset-bottom));
         background: var(--bg-surface);
         border-top: 1px solid var(--border-subtle);
         display: flex;
@@ -1966,10 +2522,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 4px;
+        gap: 3px;
         color: var(--text-muted);
-        font-size: 0.70rem;
+        font-size: 0.68rem;
         cursor: pointer;
+        padding: 6px 4px;
+        flex: 1;
       }
 
       .mobile-nav-item.active {
@@ -1977,26 +2535,26 @@
       }
 
       .mobile-nav-item svg {
-        width: 20px;
-        height: 20px;
+        width: 19px;
+        height: 19px;
       }
 
       .mobile-voice-fab {
-        width: 52px;
-        height: 52px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--cyan) 0%, #0077B6 100%);
         color: #000;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: -24px;
-        box-shadow: 0 4px 20px rgba(0, 180, 216, 0.5);
+        margin-top: -20px;
+        box-shadow: 0 4px 18px rgba(0, 180, 216, 0.45);
         border: 3px solid var(--bg-surface);
         cursor: pointer;
         transition: transform 0.2s;
+        flex-shrink: 0;
       }
-
     }
 
     /* STILI STAMPA PDF REPORT PRATICA E CLIENTE */
@@ -2179,6 +2737,14 @@
           </svg>
           Calendario Studio
         </li>
+
+        <li class="nav-item" id="nav-profilo" onclick="switchView('profilo')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profilo Personale
+        </li>
       </ul>
 
       <button class="voice-btn-sidebar" onclick="openVoiceAssistant()">
@@ -2236,8 +2802,8 @@
             </svg>
           </button>
 
-          <!-- PROFILO UTENTE -->
-          <div class="user-profile-badge">
+          <!-- PROFILO UTENTE (CLICK APRE PROFILO PERSONALE) -->
+          <div class="user-profile-badge" id="headerProfileBadge" onclick="switchView('profilo')" title="Apri Profilo Personale & Impostazioni Studio">
             <div class="avatar">AN</div>
             <div class="user-info-text">
               <span class="user-name">Andrea (Geom.)</span>
@@ -2368,36 +2934,43 @@
               </div>
 
               <div class="timeline-wrapper">
-                <div class="timeline-ruler">
-                  <span>08:30</span>
-                  <span>10:00</span>
-                  <span>11:30</span>
-                  <span>13:00</span>
-                  <span>14:30</span>
-                  <span>16:00</span>
-                  <span>17:30</span>
+                <div class="mobile-scroll-hint">
+                  <span>👈 Scorri orizzontalmente la timeline 👉</span>
                 </div>
+                <div class="timeline-scroll-container">
+                  <div class="timeline-inner-flow">
+                    <div class="timeline-ruler">
+                      <span>08:30</span>
+                      <span>10:00</span>
+                      <span>11:30</span>
+                      <span>13:00</span>
+                      <span>14:30</span>
+                      <span>16:00</span>
+                      <span>17:30</span>
+                    </div>
 
-                <div class="timeline-bar-track">
-                  <div class="timeline-block tb-cila"
-                    onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30 | 4h 00m)')">
-                    <strong>Pratica 2026-084</strong>
-                    <span>CILA Rossi (4h 00m)</span>
-                  </div>
-                  <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
-                    PAUSA</div>
-                  <div class="timeline-block tb-catasto"
-                    onclick="showToast('Pratica 2026-015: Frazionamento Terreni (13:30 - 16:00 | 2h 30m)')">
-                    <strong>Pratica 2026-015</strong>
-                    <span>Catasto (2h 30m)</span>
-                  </div>
-                  <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="2.5">
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    <span>BUCO 1h 30m (+ Inserisci)</span>
+                    <div class="timeline-bar-track">
+                      <div class="timeline-block tb-cila"
+                        onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30 | 4h 00m)')">
+                        <strong>Pratica 2026-084</strong>
+                        <span>CILA Rossi (4h 00m)</span>
+                      </div>
+                      <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
+                        PAUSA</div>
+                      <div class="timeline-block tb-catasto"
+                        onclick="showToast('Pratica 2026-015: Frazionamento Terreni (13:30 - 16:00 | 2h 30m)')">
+                        <strong>Pratica 2026-015</strong>
+                        <span>Catasto (2h 30m)</span>
+                      </div>
+                      <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2.5">
+                          <line x1="12" y1="5" x2="12" y2="19"></line>
+                          <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>BUCO 1h 30m (+ Inserisci)</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2564,40 +3137,48 @@
             <!-- TIMELINE A TUTTA LARGHEZZA CON RIGHELLO -->
             <div class="timeline-wrapper">
               <div
-                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 0.82rem;">
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 0.82rem; flex-wrap: wrap; gap: 4px;">
                 <span style="font-weight: 600;">Timeline Registrazione Ore (08:30 - 17:30)</span>
                 <span style="font-family: var(--font-mono); color: var(--emerald);">Registrate: 06h 30m | 1h 30m da
                   assegnare</span>
               </div>
 
-              <div class="timeline-ruler">
-                <span>08:30</span>
-                <span>10:00</span>
-                <span>11:30</span>
-                <span>13:00</span>
-                <span>14:30</span>
-                <span>16:00</span>
-                <span>17:30</span>
+              <div class="mobile-scroll-hint">
+                <span>👈 Scorri orizzontalmente la timeline 👉</span>
               </div>
 
-              <div class="timeline-bar-track">
-                <div class="timeline-block tb-cila" onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30)')">
-                  <strong>Pratica 2026-084</strong>
-                  <span>08:30 - 12:30 (4h 00m)</span>
-                </div>
-                <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
-                  PAUSA</div>
-                <div class="timeline-block tb-catasto"
-                  onclick="showToast('Pratica 2026-015: Catasto Bianchi (13:30 - 16:00)')">
-                  <strong>Pratica 2026-015</strong>
-                  <span>13:30 - 16:00 (2h 30m)</span>
-                </div>
-                <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                  <span>BUCO 1h 30m (+ Inserisci attività)</span>
+              <div class="timeline-scroll-container">
+                <div class="timeline-inner-flow">
+                  <div class="timeline-ruler">
+                    <span>08:30</span>
+                    <span>10:00</span>
+                    <span>11:30</span>
+                    <span>13:00</span>
+                    <span>14:30</span>
+                    <span>16:00</span>
+                    <span>17:30</span>
+                  </div>
+
+                  <div class="timeline-bar-track">
+                    <div class="timeline-block tb-cila" onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30)')">
+                      <strong>Pratica 2026-084</strong>
+                      <span>08:30 - 12:30 (4h 00m)</span>
+                    </div>
+                    <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
+                      PAUSA</div>
+                    <div class="timeline-block tb-catasto"
+                      onclick="showToast('Pratica 2026-015: Catasto Bianchi (13:30 - 16:00)')">
+                      <strong>Pratica 2026-015</strong>
+                      <span>13:30 - 16:00 (2h 30m)</span>
+                    </div>
+                    <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                      </svg>
+                      <span>BUCO 1h 30m (+ Inserisci attività)</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3376,7 +3957,363 @@
           </div>
         </div>
 
-      </div>
+        <!-- ====================================================================
+             VISTA 6: PROFILO PERSONALE & IMPOSTAZIONI STUDIO (GEOM. ANDREA)
+             ==================================================================== -->
+        <div class="view-container" id="view-profilo">
+
+          <!-- HERO BANNER PROFILO PROFESSIONISTA -->
+          <div class="profile-hero-card">
+            <div class="profile-hero-identity">
+              <div class="profile-avatar-large">
+                AN
+                <div class="profile-status-dot" title="Timer attivo in studio"></div>
+              </div>
+              <div class="profile-hero-info">
+                <h2>
+                  <span>Geom. Andrea</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2.5" title="Account Verificato Admin">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </h2>
+                <div style="font-size: 0.88rem; color: var(--text-muted);">
+                  Studio Tecnico OS • Corso Nizza 45, Cuneo (CN)
+                </div>
+                <div class="profile-hero-badges">
+                  <span class="profile-tag tag-role">👑 Socio Titolare (Admin)</span>
+                  <span class="profile-tag tag-albo">Collegio Geometri Cuneo #2841</span>
+                  <span class="profile-tag tag-status">🟢 Live: Timer Attivo</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn-action btn-confirm" onclick="saveProfileSettings()">
+                💾 Salva Modifiche Profilo
+              </button>
+              <button class="btn-action btn-cancel" onclick="showToast('🔒 Tutti i protocolli di sicurezza sono attivi e verificati.')">
+                🛡️ Verifica Sicurezza
+              </button>
+            </div>
+          </div>
+
+          <!-- GRIGLIA SCHEDE PROFILO A 2 COLONNE RESPONSIVE -->
+          <div class="profile-grid-layout">
+
+            <!-- SCHEDA 1: ANAGRAFICA FISCALE, RECAPITI & FIRMA DIGITALE -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span>Anagrafica Fiscale & Recapiti Studio</span>
+                </div>
+                <span class="pill-badge pill-active">Dati Convalidati</span>
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Nome Professionista</label>
+                  <input type="text" class="profile-input" id="profileNome" value="Andrea">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Titolo & Ruolo</label>
+                  <input type="text" class="profile-input profile-input-readonly" value="Geometra — Socio Titolare" readonly>
+                </div>
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Codice Fiscale</label>
+                  <input type="text" class="profile-input" id="profileCF" value="BNCNDR82M14D205Z">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Partita IVA</label>
+                  <input type="text" class="profile-input" id="profilePIVA" value="03847290048">
+                </div>
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Cellulare Studio (Telegram / Bot)</label>
+                  <input type="tel" class="profile-input" id="profilePhone" value="+39 348 1234567">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">PEC Istituzionale</label>
+                  <input type="email" class="profile-input" id="profilePEC" value="andrea.studio@geopec.it">
+                </div>
+              </div>
+
+              <div style="background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <div style="width: 32px; height: 32px; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.15); color: var(--emerald); display: flex; align-items: center; justify-content: center;">
+                    ✒️
+                  </div>
+                  <div>
+                    <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Firma Digitale Remota & CNS</div>
+                    <div style="font-size: 0.74rem; color: var(--text-muted);">Certificato Namirial/Aruba valido fino al 15/11/2027</div>
+                  </div>
+                </div>
+                <span style="font-size: 0.72rem; font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">● ATTIVA</span>
+              </div>
+            </div>
+
+            <!-- SCHEDA 2: PARAMETRI LAVORATIVI, TARIFFE & REGOLE TIMER (CONFLITTO 4) -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span>Orari di Lavoro, Tariffe & Gestione Timer</span>
+                </div>
+                <span class="pill-badge pill-active">Regola +1h Attiva</span>
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Orario Inizio Nominale</label>
+                  <input type="time" class="profile-input" id="profileStartTime" value="08:30">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Orario Uscita Nominale</label>
+                  <input type="time" class="profile-input" id="profileEndTime" value="18:30">
+                </div>
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Monte Ore Giornaliero Previsto</label>
+                  <input type="text" class="profile-input" id="profileTargetHours" value="8h 00m (+ 1h Pausa Pranzo)">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Costo Orario Interno (Job Costing)</label>
+                  <input type="text" class="profile-input" id="profileHourlyRate" value="€ 65,00 / ora">
+                </div>
+              </div>
+
+              <!-- BOX ESPLICATIVO LOGICA CONFLITTO 4 -->
+              <div style="background: rgba(0, 180, 216, 0.06); border: 1px solid rgba(0, 180, 216, 0.25); border-radius: var(--radius-md); padding: 12px 14px; font-size: 0.80rem; line-height: 1.45; color: var(--text-muted);">
+                <div style="color: var(--cyan); font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                  ⏱️ Salvaguardia Timer Dimenticato (+1h Tolleranza)
+                </div>
+                Se il timer supera di oltre 1 ora il tuo orario di uscita nominale (ore 19:30), il sistema ferma automaticamente il conteggio e **congela la chiusura alle ore 18:30**. Al rientro (anche dopo 2 settimane di ferie), compare la notifica a schermo per confermare o rettificare l'orario.
+              </div>
+
+              <div class="switch-row">
+                <div>
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Avviso Benessere Postazione (Pausa a 4h)</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Mostra una notifica discreta dopo 4 ore di lavoro continuo su singolo compito</div>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="switchBreakReminder" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- SCHEDA 3: CREDENZIALI PORTALI SUE (TECHNICAL DESIGN PIEMONTE/LIGURIA) -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <span>Credenziali Portali SUE (Technical Design)</span>
+                </div>
+                <span class="pill-badge pill-urgent">Riservato ai 3 Soci</span>
+              </div>
+
+              <div style="font-size: 0.80rem; color: var(--text-muted); line-height: 1.4;">
+                Accesso automatico single-click ai portali SUE comunali senza ridigitare ogni volta le credenziali. Questo box è visibile e configurabile esclusivamente dai 3 titolari abilitati.
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Nome Utente SUE</label>
+                  <input type="text" class="profile-input" id="profileSueUser" value="andrea.cuneo">
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Password SUE Cifrata</label>
+                  <div style="position: relative;">
+                    <input type="password" class="profile-input" id="profileSuePass" value="StudioCuneo2026!">
+                    <button type="button" onclick="togglePasswordVisibility('profileSuePass')" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;">👁️</button>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;">
+                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Comune di Cuneo ✅</span>
+                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Savigliano ✅</span>
+                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Mondovì ✅</span>
+                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Borgo San Dalmazzo ✅</span>
+                <span style="font-size: 0.70rem; padding: 2px 8px; border-radius: var(--radius-sm); background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle);">Dronero & Clavesana ✅</span>
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button class="btn-action btn-confirm" style="flex: 1; justify-content: center;" onclick="testSueConnection()">
+                  ⚡ Verifica Autologin SUE
+                </button>
+              </div>
+            </div>
+
+            <!-- SCHEDA 4: BOT TELEGRAM STUDIO (NOTE VOCALI DA CANTIERE) -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                  <span>Telegram Bot Studio (Cantiere & Vocali)</span>
+                </div>
+                <span class="pill-badge pill-active">🟢 Collegato</span>
+              </div>
+
+              <div style="font-size: 0.80rem; color: var(--text-muted); line-height: 1.4;">
+                Permette di inviare messaggi vocali e appunti direttamente dal cantiere tramite l'iPhone. L'intelligenza artificiale trascrive l'audio, individua la commessa e aggiorna il gestionale.
+              </div>
+
+              <div class="profile-row-2col">
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Username Telegram</label>
+                  <input type="text" class="profile-input profile-input-readonly" value="@andrea_geo" readonly>
+                </div>
+                <div class="profile-form-group">
+                  <label class="profile-form-label">Chat ID Crittografico</label>
+                  <input type="text" class="profile-input profile-input-readonly" value="TG-84920481 (Abbinato)" readonly>
+                </div>
+              </div>
+
+              <div style="background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 10px 14px; font-size: 0.78rem; display: flex; flex-direction: column; gap: 4px;">
+                <div style="color: var(--cyan); font-weight: 600;">Funzionalità Telegram Attive:</div>
+                <div>• Trascrizione note vocali con associazione automatica commessa</div>
+                <div>• Avvio e stop rapido del timer su cantiere ("Ho finito da Rossi")</div>
+                <div>• Briefing mattutino scadenze del giorno alle ore 08:15</div>
+              </div>
+
+              <button class="btn-action btn-cancel" style="justify-content: center;" onclick="testTelegramBot()">
+                📲 Invia Notifica di Test a Telegram
+              </button>
+            </div>
+
+            <!-- SCHEDA 5: CYBERSECURITY, 2FA & SESSIONI ATTIVE -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                  </svg>
+                  <span>Sicurezza, 2FA & Sessioni Attive</span>
+                </div>
+                <span class="pill-badge pill-active">2FA Attiva</span>
+              </div>
+
+              <div style="font-size: 0.80rem; color: var(--text-muted); line-height: 1.4;">
+                Protezione con autenticazione a due fattori (TOTP Authenticator) e monitoraggio dei dispositivi connessi.
+              </div>
+
+              <!-- ELENCO DISPOSITIVI CONNESSI -->
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <div class="security-device-item">
+                  <div class="security-device-info">
+                    <div class="security-device-icon">💻</div>
+                    <div>
+                      <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">PC Fisso Studio (Windows 11)</div>
+                      <div style="font-size: 0.74rem; color: var(--text-muted);">Microsoft Edge • Cuneo (CN) • <strong>Questa sessione</strong></div>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.70rem; font-family: var(--font-mono); color: var(--emerald); font-weight: 700;">IN USO</span>
+                </div>
+
+                <div class="security-device-item">
+                  <div class="security-device-info">
+                    <div class="security-device-icon">📱</div>
+                    <div>
+                      <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">iPhone 15 Pro (Safari Mobile)</div>
+                      <div style="font-size: 0.74rem; color: var(--text-muted);">iOS 17.5 • In cantiere • Attivo 12 min fa</div>
+                    </div>
+                  </div>
+                  <span style="font-size: 0.70rem; font-family: var(--font-mono); color: var(--cyan);">CONNESSO</span>
+                </div>
+              </div>
+
+              <div style="border-top: 1px dashed var(--border-subtle); padding-top: 10px;">
+                <button class="btn-danger-soft" style="width: 100%; justify-content: center;" onclick="revokeAllSessions()">
+                  ⚠️ Revoca Tutte le Sessioni Attive (Disconnetti Altri Dispositivi)
+                </button>
+                <div style="font-size: 0.72rem; color: var(--text-faint); margin-top: 6px; text-align: center;">
+                  In caso di furto o smarrimento smartphone, disconnette istantaneamente tutte le sessioni in meno di 3 secondi.
+                </div>
+              </div>
+            </div>
+
+            <!-- SCHEDA 6: PREFERENZE INTERFACCIA & NOTIFICHE STUDIO -->
+            <div class="profile-card">
+              <div class="profile-card-header">
+                <div class="profile-card-title">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  </svg>
+                  <span>Preferenze Interfaccia & Notifiche</span>
+                </div>
+                <span class="pill-badge pill-active">Predefinite</span>
+              </div>
+
+              <div class="switch-row">
+                <div>
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Promemoria "Buchi nella Timeline" (Ore 17:00)</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Notifica se a fine giornata risultano periodi lavorativi non rendicontati</div>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="switchGapReminder" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="switch-row">
+                <div>
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Notifica per Assegnazione Nuove Deleghe</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Avviso istantaneo quando un socio ti assegna una commessa o sotto-attività</div>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="switchDelegationReminder" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="switch-row">
+                <div>
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Segnale Sonoro Cambio Stato Timer</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Feedback acustico discreto all'avvio o arresto del conteggio</div>
+                </div>
+                <label class="switch-toggle">
+                  <input type="checkbox" id="switchTimerSound" checked>
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border-subtle);">
+                <div>
+                  <div style="font-size: 0.84rem; font-weight: 600; color: var(--text-main);">Tema Visivo Applicazione</div>
+                  <div style="font-size: 0.74rem; color: var(--text-muted);">Attualmente: Dark Ossidiana (Swiss Precision)</div>
+                </div>
+                <button class="btn-action btn-cancel" onclick="toggleTheme()">
+                  🌓 Cambia Tema
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
 
       <!-- ==========================================================================
        BOTTOM BAR SMARTPHONE
@@ -3685,8 +4622,8 @@
                 <!-- Commessa 1 del cliente -->
                 <div class="client-practice-card" onclick="openDrawer('2026-084')"
                   title="Clicca per aprire la scheda commessa 2026-084">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                    <div>
+                  <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                    <div style="flex: 1; min-width: 180px;">
                       <div style="display: flex; align-items: center; gap: 8px;">
                         <span
                           style="font-family: var(--font-mono); color: var(--cyan); font-weight: 700; font-size: 1.05rem;">2026-084</span>
@@ -3696,10 +4633,10 @@
                       <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">Corso Nizza 45, Cuneo
                         (CN) • Responsabile: Andrea</div>
                     </div>
-                    <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                       <span class="pill-badge pill-blue">In Corso</span>
                       <button class="btn-action btn-confirm"
-                        style="padding: 5px 14px; font-size: 0.78rem; border-radius: var(--radius-sm);"
+                        style="padding: 5px 12px; font-size: 0.78rem; border-radius: var(--radius-sm);"
                         onclick="event.stopPropagation(); openDrawer('2026-084');">
                         Apri Scheda Commessa ➔
                       </button>
@@ -4032,6 +4969,17 @@
           document.querySelectorAll('.mobile-bottom-bar .mobile-nav-item').forEach(el => el.classList.remove('active'));
           const activeMob = document.getElementById('mob-' + viewName);
           if (activeMob) activeMob.classList.add('active');
+
+          const headerBadge = document.getElementById('headerProfileBadge');
+          if (headerBadge) {
+            if (viewName === 'profilo') {
+              headerBadge.style.boxShadow = '0 0 12px var(--cyan-glow)';
+              headerBadge.style.borderColor = 'var(--cyan)';
+            } else {
+              headerBadge.style.boxShadow = '';
+              headerBadge.style.borderColor = '';
+            }
+          }
 
           showToast(`Passato a: ${viewName.toUpperCase()}`);
         }
@@ -4704,33 +5652,33 @@
             const list = clientObj.practices.map(code => practicesData[code]).filter(Boolean);
             practicesListEl.innerHTML = list.map(p => `
           <div class="client-practice-card" onclick="openDrawer('${p.code}')" title="Clicca per aprire la scheda commessa ${p.code}">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-              <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+              <div style="flex: 1; min-width: 180px;">
                 <div style="display: flex; align-items: center; gap: 8px;">
                   <span style="font-family: var(--font-mono); color: var(--cyan); font-weight: 700; font-size: 1.05rem;">${p.code}</span>
                   <strong style="font-size: 0.95rem; color: var(--text-main);">${p.title}</strong>
                 </div>
                 <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">${p.address} • Responsabile: ${p.assignee}</div>
               </div>
-              <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                 <span class="pill-badge ${p.statusBadge}">${p.statusText}</span>
-                <button class="btn-action btn-confirm" style="padding: 5px 14px; font-size: 0.78rem; border-radius: var(--radius-sm);" onclick="event.stopPropagation(); openDrawer('${p.code}');">
+                <button class="btn-action btn-confirm" style="padding: 5px 12px; font-size: 0.78rem; border-radius: var(--radius-sm);" onclick="event.stopPropagation(); openDrawer('${p.code}');">
                   Apri Scheda Commessa ➔
                 </button>
               </div>
             </div>
 
             <!-- Dettaglio Sotto-attività -->
-            <div style="font-size: 0.80rem; display: flex; flex-direction: column; gap: 6px; padding-left: 12px; border-left: 2px solid var(--border-subtle); margin-bottom: 10px;">
+            <div style="font-size: 0.80rem; display: flex; flex-direction: column; gap: 6px; padding-left: 10px; border-left: 2px solid var(--border-subtle); margin-bottom: 10px;">
               ${p.subtasks.map(st => `
-                <div style="display: flex; justify-content: space-between;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px;">
                   <span>• <strong>${st.title}:</strong> <span style="color: var(--text-muted);">${st.subtitle}</span> (${st.assignee})</span>
-                  <span style="font-family: var(--font-mono); color: ${st.billed ? 'var(--emerald)' : 'var(--amber)'};">${st.hours} [${st.billed ? '✅ Fatturata' : '🟡 Da Fatturare'}]</span>
+                  <span style="font-family: var(--font-mono); color: ${st.billed ? 'var(--emerald)' : 'var(--amber)'}; font-size: 0.78rem; white-space: nowrap;">${st.hours} [${st.billed ? '✅ Fatturata' : '🟡 Da Fatturare'}]</span>
                 </div>
               `).join('')}
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 8px; font-size: 0.80rem; color: var(--text-muted);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-subtle); padding-top: 8px; font-size: 0.80rem; color: var(--text-muted); flex-wrap: wrap; gap: 4px;">
               <span style="color: var(--cyan); font-size: 0.75rem; font-weight: 600;">👆 Clicca su questo riquadro per aprire il cassetto della commessa</span>
               <span>Subtotale Commessa: <strong style="font-family: var(--font-mono); color: var(--text-main);">${p.totalHours}</strong></span>
             </div>
@@ -4988,6 +5936,54 @@
           document.getElementById('voiceModal').classList.remove('open');
           document.getElementById('waveVisualizer').classList.remove('active');
           isRecording = false;
+        }
+
+        // ==========================================================================
+        // FUNZIONALITÀ PROFILO PERSONALE & CYBERSECURITY (GEOM. ANDREA)
+        // ==========================================================================
+        function saveProfileSettings() {
+          const nome = document.getElementById('profileNome')?.value || 'Andrea';
+          const cf = document.getElementById('profileCF')?.value || '';
+          const piva = document.getElementById('profilePIVA')?.value || '';
+          const phone = document.getElementById('profilePhone')?.value || '';
+          const pec = document.getElementById('profilePEC')?.value || '';
+          const sueUser = document.getElementById('profileSueUser')?.value || '';
+          const startTime = document.getElementById('profileStartTime')?.value || '08:30';
+          const endTime = document.getElementById('profileEndTime')?.value || '18:30';
+          const hourlyRate = document.getElementById('profileHourlyRate')?.value || '€ 65,00 / ora';
+
+          showToast(`💾 Profilo di ${nome} salvato! (Orario: ${startTime}–${endTime} | SUE: ${sueUser})`);
+        }
+
+        function testSueConnection() {
+          const sueUser = document.getElementById('profileSueUser')?.value || 'andrea.cuneo';
+          showToast(`⚡ Test connessione SUE per [${sueUser}] in corso sui portali comunali...`);
+          setTimeout(() => {
+            showToast(`✅ Autologin SUE verificato: Token SSO attivo per Cuneo, Savigliano, Mondovì!`);
+          }, 1000);
+        }
+
+        function testTelegramBot() {
+          showToast(`📲 Invio messaggio di test a @andrea_geo (Chat ID: TG-84920481)...`);
+          setTimeout(() => {
+            showToast(`✅ Notifica Telegram recapitata con successo sul tuo iPhone!`);
+          }, 900);
+        }
+
+        function revokeAllSessions() {
+          if (confirm("⚠️ Procedere con la revoca immediata di tutte le sessioni attive su altri dispositivi (incluso iPhone smarrito)?")) {
+            showToast(`⚠️ Revoca token crittografici inviata a Supabase Auth...`);
+            setTimeout(() => {
+              showToast(`🔒 Tutte le sessioni esterne sono state disconnesse con successo in 2.4s!`);
+            }, 800);
+          }
+        }
+
+        function togglePasswordVisibility(fieldId) {
+          const field = document.getElementById(fieldId);
+          if (field) {
+            field.type = field.type === 'password' ? 'text' : 'password';
+          }
         }
       </script>
 </body>
