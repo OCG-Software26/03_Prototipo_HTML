@@ -18,60 +18,76 @@
 
   <style>
     /* ==========================================================================
-       DESIGN SYSTEM & CSS VARIABLES
+       DESIGN SYSTEM & CSS VARIABLES — MODERN MINIMAL ARCHITECTURAL SLATE
        ========================================================================== */
     :root {
-      --bg-base: #0B0F17;
-      --bg-surface: #141A24;
-      --bg-elevated: #1E2638;
-      --bg-hover: #263147;
-      --border-subtle: #242E40;
-      --border-focus: #00B4D8;
+      --bg-base: #0E1015;
+      --bg-surface: #15181E;
+      --bg-elevated: #1D212A;
+      --bg-hover: #262B36;
+      --border-subtle: #282C37;
+      --border-focus: #5C657A;
 
-      --text-main: #F1F5F9;
-      --text-muted: #94A3B8;
-      --text-faint: #64748B;
+      --text-main: #EDEDED;
+      --text-muted: #8C92A0;
+      --text-faint: #555B68;
 
-      --cyan: #00B4D8;
-      --cyan-glow: rgba(0, 180, 216, 0.15);
+      /* Soli 4 Colori Funzionali Semantici */
+      --color-primary: #3B82F6;
+      --color-primary-hover: #2563EB;
+      --color-success: #10B981;
+      --color-warning: #F59E0B;
+      --color-danger: #EF4444;
+
+      /* Retro-compatibilità pulita e sobria per variabili legacy */
+      --cyan: #3B82F6;
+      --cyan-glow: rgba(59, 130, 246, 0.10);
       --emerald: #10B981;
-      --emerald-glow: rgba(16, 185, 129, 0.2);
+      --emerald-glow: rgba(16, 185, 129, 0.12);
       --amber: #F59E0B;
       --coral: #EF4444;
-      --purple: #8B5CF6;
-
-      /* Ruoli Utente */
-      --user-andrea: #00D2FF;
-      --user-socio2: #6366F1;
-      --user-tu: #F59E0B;
-      --user-marco: #10B981;
-      --user-luca: #A855F7;
-      --user-condomini: #F97316;
+      --purple: #8C92A0;
 
       --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
       --radius-full: 9999px;
 
       --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
-      --shadow-card: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
-      --shadow-modal: 0 20px 40px -10px rgba(0, 0, 0, 0.8);
-      --transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.35);
+      --shadow-modal: 0 16px 36px -8px rgba(0, 0, 0, 0.7);
+      --transition: all 0.15s ease;
     }
 
     [data-theme="light"] {
-      --bg-base: #F8FAFC;
+      --bg-base: #F8F9FA;
       --bg-surface: #FFFFFF;
-      --bg-elevated: #F1F5F9;
-      --bg-hover: #E2E8F0;
-      --border-subtle: #CBD5E1;
-      --text-main: #0F172A;
-      --text-muted: #475569;
-      --text-faint: #94A3B8;
-      --shadow-card: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
-      --shadow-modal: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+      --bg-elevated: #F1F3F5;
+      --bg-hover: #E9ECEF;
+      --border-subtle: #E2E5E9;
+      --border-focus: #94A3B8;
+      --text-main: #1A1D23;
+      --text-muted: #5A6270;
+      --text-faint: #8E95A5;
+
+      --color-primary: #2563EB;
+      --color-primary-hover: #1D4ED8;
+      --color-success: #059669;
+      --color-warning: #D97706;
+      --color-danger: #DC2626;
+
+      --cyan: #2563EB;
+      --cyan-glow: rgba(37, 99, 235, 0.08);
+      --emerald: #059669;
+      --emerald-glow: rgba(5, 150, 105, 0.1);
+      --amber: #D97706;
+      --coral: #DC2626;
+      --purple: #5A6270;
+
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+      --shadow-modal: 0 16px 32px -8px rgba(0, 0, 0, 0.12);
     }
 
     * {
@@ -122,42 +138,42 @@
     }
 
     .brand-logo {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, #00B4D8 0%, #0077B6 100%);
-      border-radius: var(--radius-md);
+      width: 32px;
+      height: 32px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 16px var(--cyan-glow);
     }
 
     .brand-logo svg {
-      width: 22px;
-      height: 22px;
-      stroke: #FFFFFF;
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-main);
     }
 
     .brand-name {
       font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: 0.05em;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
       color: var(--text-main);
     }
 
     .brand-badge {
       font-size: 0.65rem;
-      color: var(--cyan);
+      color: var(--text-muted);
       font-family: var(--font-mono);
       display: block;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
     }
 
     .nav-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
       flex: 1;
     }
 
@@ -165,11 +181,11 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 12px;
-      border-radius: var(--radius-md);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.90rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: var(--transition);
       user-select: none;
@@ -183,50 +199,50 @@
 
     .nav-item.active {
       background-color: var(--bg-elevated);
-      color: var(--cyan);
+      color: var(--text-main);
       font-weight: 600;
-      border-left: 3px solid var(--cyan);
+      border-left: 2.5px solid var(--color-primary);
     }
 
     .nav-badge-count {
       margin-left: auto;
-      background: rgba(0, 180, 216, 0.15);
-      color: var(--cyan);
-      font-size: 0.72rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.70rem;
       font-family: var(--font-mono);
-      padding: 2px 7px;
+      padding: 1px 6px;
       border-radius: var(--radius-full);
       font-weight: 600;
     }
 
     .nav-item svg {
-      width: 19px;
-      height: 19px;
-      stroke-width: 2;
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.8;
     }
 
     .voice-btn-sidebar {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 119, 182, 0.25) 100%);
-      border: 1px solid var(--cyan);
-      color: var(--cyan);
-      padding: 12px;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      font-size: 0.88rem;
+      gap: 8px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: var(--transition);
       margin-top: auto;
-      box-shadow: 0 0 15px var(--cyan-glow);
     }
 
     .voice-btn-sidebar:hover {
-      background: var(--cyan);
-      color: #000;
-      box-shadow: 0 0 25px rgba(0, 180, 216, 0.4);
+      color: var(--text-main);
+      border-color: var(--border-focus);
+      background: var(--bg-hover);
     }
 
     /* MAIN WRAPPER */
@@ -263,14 +279,14 @@
       gap: 10px;
       background-color: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-full);
-      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
       transition: var(--transition);
     }
 
     .search-omnibar:focus-within {
-      border-color: var(--cyan);
-      box-shadow: 0 0 12px var(--cyan-glow);
+      border-color: var(--border-focus);
+      background-color: var(--bg-surface);
     }
 
     .search-omnibar input {
@@ -280,7 +296,7 @@
       width: 100%;
       color: var(--text-main);
       font-family: var(--font-ui);
-      font-size: 0.88rem;
+      font-size: 0.85rem;
     }
 
     .search-omnibar input::placeholder {
@@ -288,24 +304,24 @@
     }
 
     .search-kbd {
-      background-color: var(--bg-base);
+      background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 4px;
-      padding: 2px 6px;
-      font-size: 0.70rem;
+      padding: 1px 5px;
+      font-size: 0.68rem;
       font-family: var(--font-mono);
-      color: var(--text-faint);
+      color: var(--text-muted);
       flex-shrink: 0;
     }
 
     .search-results-dropdown {
       position: absolute;
-      top: calc(100% + 8px);
+      top: calc(100% + 6px);
       left: 0;
       width: 100%;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-sm);
       box-shadow: var(--shadow-modal);
       display: none;
       flex-direction: column;
@@ -318,14 +334,14 @@
     }
 
     .search-result-item {
-      padding: 10px 14px;
+      padding: 9px 12px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid var(--border-subtle);
       cursor: pointer;
       transition: var(--transition);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
     }
 
     .search-result-item:last-child {
@@ -339,76 +355,76 @@
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
     /* LIVE TIMER DOCK */
     .live-timer-dock {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
+      gap: 8px;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
       font-family: var(--font-mono);
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       transition: var(--transition);
       user-select: none;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
     }
 
     .live-timer-dock.running {
-      background: rgba(16, 185, 129, 0.10);
-      border: 1.5px solid var(--emerald);
-      box-shadow: 0 0 14px rgba(16, 185, 129, 0.25);
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.06);
     }
 
     .live-timer-dock.running .pulse-dot {
-      background-color: var(--emerald);
-      box-shadow: 0 0 10px var(--emerald);
-      animation: pulse-ring 1.6s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      background-color: var(--color-success);
+      box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+      animation: pulse-ring 1.8s ease infinite;
     }
 
     .live-timer-dock.running .timer-digits {
-      color: var(--emerald);
-      font-weight: 700;
+      color: var(--color-success);
+      font-weight: 600;
     }
 
     .live-timer-dock.paused {
-      background: rgba(245, 158, 11, 0.08);
-      border: 1.5px solid var(--amber);
-      box-shadow: none;
+      border-color: rgba(245, 158, 11, 0.35);
+      background: rgba(245, 158, 11, 0.06);
     }
 
     .live-timer-dock.paused .pulse-dot {
-      background-color: var(--amber);
+      background-color: var(--color-warning);
       box-shadow: none;
       animation: none;
     }
 
     .live-timer-dock.paused .timer-digits {
-      color: var(--amber);
+      color: var(--color-warning);
       font-weight: 600;
     }
 
     .pulse-dot {
-      width: 9px;
-      height: 9px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       flex-shrink: 0;
     }
 
     @keyframes pulse-ring {
       0% {
-        transform: scale(0.95);
+        transform: scale(0.9);
         opacity: 0.8;
       }
 
       50% {
-        transform: scale(1.35);
+        transform: scale(1.2);
         opacity: 1;
       }
 
       100% {
-        transform: scale(0.95);
+        transform: scale(0.9);
         opacity: 0.8;
       }
     }
@@ -416,8 +432,8 @@
     .timer-practice {
       color: var(--text-muted);
       font-family: var(--font-ui);
-      font-size: 0.82rem;
-      max-width: 150px;
+      font-size: 0.80rem;
+      max-width: 140px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -431,26 +447,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: var(--radius-full);
+      width: 24px;
+      height: 24px;
+      border-radius: var(--radius-sm);
       transition: var(--transition);
       margin-left: 2px;
     }
 
     .timer-ctrl-btn:hover {
-      background-color: var(--cyan);
-      color: #000;
-      border-color: var(--cyan);
+      background-color: var(--bg-hover);
+      border-color: var(--border-focus);
     }
 
     .theme-toggle-btn {
       background: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
       color: var(--text-muted);
-      width: 36px;
-      height: 36px;
-      border-radius: var(--radius-md);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -459,8 +474,9 @@
     }
 
     .theme-toggle-btn:hover {
-      color: var(--cyan);
-      border-color: var(--cyan);
+      color: var(--text-main);
+      border-color: var(--border-focus);
+      background: var(--bg-hover);
     }
 
     .user-profile-badge {
@@ -469,19 +485,21 @@
       gap: 10px;
       padding-left: 8px;
       border-left: 1px solid var(--border-subtle);
+      cursor: pointer;
     }
 
     .avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #00D2FF 0%, #0077B6 100%);
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: #000;
+      font-weight: 600;
+      font-size: 0.80rem;
+      color: var(--text-main);
     }
 
     .user-info-text {
@@ -492,12 +510,12 @@
 
     .user-name {
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
     }
 
     .user-role {
-      font-size: 0.70rem;
-      color: var(--user-andrea);
+      font-size: 0.68rem;
+      color: var(--text-muted);
       font-family: var(--font-mono);
     }
 
@@ -534,7 +552,441 @@
       }
     }
 
-    /* KPI CARDS */
+    /* ==========================================================================
+       STILI VISTA "OGGI" (TODAY FOCUS — MINIMAL ERGONOMICS)
+       ========================================================================== */
+    .today-greeting-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding-bottom: 4px;
+    }
+
+    .today-date-badge {
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .today-greeting-title {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+    }
+
+    .today-greeting-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* CARD FOCUS IN CORSO ADESSO */
+    .active-focus-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      transition: var(--transition);
+      border-left: 3px solid var(--color-success);
+    }
+
+    .active-focus-box.idle {
+      border-left: 3px solid var(--border-subtle);
+      opacity: 0.75;
+    }
+
+    .active-focus-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .active-focus-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.70rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--color-success);
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+
+    .active-focus-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .active-focus-sub {
+      font-size: 0.80rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .active-focus-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .active-focus-timer {
+      font-family: var(--font-mono);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--color-success);
+      min-width: 80px;
+      text-align: right;
+    }
+
+    /* SPLIT 2 COLONNE: 65% / 35% */
+    .today-split-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* COLONNA SINISTRA: I MIEI COMPITI DI OGGI */
+    .today-tasks-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .today-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+
+    .today-panel-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .today-count-badge {
+      font-size: 0.70rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+
+    .today-task-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .today-task-card:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-hover);
+    }
+
+    .today-task-card.is-completed {
+      opacity: 0.55;
+    }
+
+    .today-task-card.is-completed .today-task-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    .today-task-checkbox {
+      margin-top: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      border: 1.5px solid var(--border-focus);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+      color: transparent;
+    }
+
+    .today-task-checkbox:hover {
+      border-color: var(--color-success);
+    }
+
+    .today-task-card.is-completed .today-task-checkbox {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      color: #000;
+    }
+
+    .today-task-body {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .today-task-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .today-task-details {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .tag-mono {
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .today-task-side-action {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-quick-timer {
+      padding: 5px 10px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      border-radius: var(--radius-sm);
+      font-size: 0.74rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .btn-quick-timer:hover {
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+
+    .btn-quick-timer.running {
+      background: rgba(16, 185, 129, 0.10);
+      border-color: var(--color-success);
+      color: var(--color-success);
+    }
+
+    /* COLONNA DESTRA: SCADENZE & ORE */
+    .today-side-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .side-widget-card,
+    .today-side-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .side-widget-header,
+    .side-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 10px;
+    }
+
+    .side-widget-title,
+    .side-card-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hours-target-tag {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--color-primary);
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+    }
+
+    .today-hours-progress {
+      width: 100%;
+      height: 6px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      margin: 4px 0;
+    }
+
+    .hours-bar-fill {
+      height: 100%;
+      background: var(--color-primary);
+      border-radius: var(--radius-full);
+    }
+
+    .today-hours-summary {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .hours-sub-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hours-sub-item .sub-label {
+      color: var(--text-muted);
+    }
+
+    .hours-sub-item .sub-val {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .today-events-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .urgent-event-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .urgent-event-row:hover {
+      border-color: var(--border-focus);
+      background: var(--bg-hover);
+    }
+
+    .event-time-col {
+      flex-shrink: 0;
+    }
+
+    .event-time-val {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .event-info-col {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .event-title-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .event-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .event-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .tag-urgent {
+      background: rgba(239, 68, 68, 0.1);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: var(--color-danger);
+    }
+
+    /* KPI CARDS (USATE IN ALTRE SEZIONI) */
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -545,7 +997,7 @@
       background-color: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 20px;
+      padding: 18px 20px;
       box-shadow: var(--shadow-card);
       position: relative;
       overflow: hidden;
@@ -553,8 +1005,7 @@
     }
 
     .kpi-card:hover {
-      border-color: var(--cyan);
-      transform: translateY(-2px);
+      border-color: var(--border-focus);
     }
 
     .kpi-header {
@@ -562,14 +1013,14 @@
       align-items: center;
       justify-content: space-between;
       color: var(--text-muted);
-      font-size: 0.80rem;
+      font-size: 0.76rem;
       font-weight: 600;
       letter-spacing: 0.03em;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .kpi-value {
-      font-size: 1.85rem;
+      font-size: 1.7rem;
       font-weight: 700;
       font-family: var(--font-mono);
       color: var(--text-main);
@@ -579,8 +1030,8 @@
     }
 
     .kpi-subtext {
-      font-size: 0.78rem;
-      color: var(--emerald);
+      font-size: 0.74rem;
+      color: var(--text-muted);
       margin-top: 6px;
       display: flex;
       align-items: center;
@@ -599,15 +1050,15 @@
     }
 
     .panel-title {
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 700;
       color: var(--text-main);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -626,31 +1077,29 @@
     .presence-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .presence-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 10px 12px;
-      border-radius: var(--radius-md);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
       background-color: var(--bg-elevated);
-      border: 1px solid transparent;
+      border: 1px solid var(--border-subtle);
       transition: var(--transition);
     }
 
     .status-badge-dot {
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background-color: var(--emerald);
-      box-shadow: 0 0 8px var(--emerald);
+      background-color: var(--color-success);
     }
 
     .status-badge-dot.offline {
       background-color: var(--text-faint);
-      box-shadow: none;
     }
 
     .presence-details {
@@ -660,11 +1109,12 @@
 
     .presence-name {
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
+      color: var(--text-main);
     }
 
     .presence-task {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -674,8 +1124,8 @@
 
     .presence-time {
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--cyan);
+      font-size: 0.74rem;
+      color: var(--text-muted);
     }
 
     /* TIMELINE & RIGHELLO */
@@ -691,7 +1141,7 @@
       padding: 0 10px;
       margin-bottom: 4px;
       font-family: var(--font-mono);
-      font-size: 0.72rem;
+      font-size: 0.70rem;
       color: var(--text-muted);
       position: relative;
     }
@@ -706,7 +1156,7 @@
     .timeline-ruler span::after {
       content: "";
       width: 1px;
-      height: 6px;
+      height: 5px;
       background: var(--border-subtle);
       margin-top: 2px;
     }
@@ -714,63 +1164,64 @@
     .timeline-bar-track {
       background-color: var(--bg-elevated);
       border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 8px;
+      border-radius: var(--radius-sm);
+      padding: 6px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
       position: relative;
       overflow-x: auto;
     }
 
     .timeline-block {
-      height: 52px;
+      height: 46px;
       border-radius: var(--radius-sm);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 0 12px;
-      color: #FFF;
-      font-size: 0.78rem;
+      padding: 0 10px;
+      color: var(--text-main);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.76rem;
       cursor: pointer;
       transition: var(--transition);
     }
 
     .timeline-block:hover {
-      transform: scaleY(1.04);
-      filter: brightness(1.15);
+      border-color: var(--border-focus);
+      background: var(--bg-hover);
     }
 
     .tb-cila {
-      background: linear-gradient(135deg, #0077B6 0%, #00B4D8 100%);
+      border-left: 3px solid var(--color-primary);
       flex: 3;
     }
 
     .tb-catasto {
-      background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%);
+      border-left: 3px solid var(--text-muted);
       flex: 2;
     }
 
     .timeline-gap {
-      height: 52px;
-      border: 2px dashed var(--amber);
+      height: 46px;
+      border: 1px dashed var(--color-warning);
       border-radius: var(--radius-sm);
-      background-color: rgba(245, 158, 11, 0.05);
+      background-color: rgba(245, 158, 11, 0.04);
       flex: 2;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      color: var(--amber);
-      font-size: 0.78rem;
-      font-weight: 600;
+      color: var(--color-warning);
+      font-size: 0.76rem;
+      font-weight: 500;
       cursor: pointer;
       transition: var(--transition);
     }
 
     .timeline-gap:hover {
-      background: rgba(245, 158, 11, 0.15);
-      transform: scaleY(1.04);
+      background: rgba(245, 158, 11, 0.10);
     }
 
     /* ELENCO MIE ATTIVITÀ NELLA DASHBOARD (SENZA SPUNTA/CHECKBOX) */
@@ -1118,22 +1569,35 @@
       text-transform: uppercase;
     }
 
+    .pill-neutral,
+    .pill-mono {
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
     .pill-blue {
-      background: rgba(0, 180, 216, 0.12);
-      color: var(--cyan);
-      border: 1px solid rgba(0, 180, 216, 0.3);
+      background: rgba(59, 130, 246, 0.08);
+      color: var(--color-primary);
+      border: 1px solid rgba(59, 130, 246, 0.25);
     }
 
     .pill-green {
-      background: rgba(16, 185, 129, 0.12);
-      color: var(--emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.08);
+      color: var(--color-success);
+      border: 1px solid rgba(16, 185, 129, 0.25);
     }
 
     .pill-amber {
-      background: rgba(245, 158, 11, 0.12);
-      color: var(--amber);
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--color-warning);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .pill-red {
+      background: rgba(239, 68, 68, 0.08);
+      color: var(--color-danger);
+      border: 1px solid rgba(239, 68, 68, 0.25);
     }
 
     .action-btn-row {
@@ -1343,24 +1807,24 @@
     }
 
     .btn-print-report {
-      background: linear-gradient(135deg, rgba(0, 180, 216, 0.15) 0%, rgba(0, 119, 182, 0.25) 100%);
-      border: 1.5px solid var(--cyan);
-      color: var(--cyan);
-      padding: 10px 22px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 10px 20px;
       border-radius: var(--radius-md);
-      font-weight: 700;
+      font-weight: 600;
       font-size: 0.88rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 10px;
       transition: var(--transition);
-      box-shadow: 0 0 15px var(--cyan-glow);
     }
 
     .btn-print-report:hover {
-      background: var(--cyan);
-      color: #000;
+      background: var(--bg-hover);
+      border-color: var(--border-focus);
+      color: var(--text-main);
     }
 
     #practiceDrawer {
@@ -1547,33 +2011,38 @@
     }
 
     .ev-rilievo {
-      background: rgba(16, 185, 129, 0.18);
-      color: var(--emerald);
-      border-left: 2.5px solid var(--emerald);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--color-primary);
     }
 
     .ev-scadenza {
-      background: rgba(239, 68, 68, 0.2);
-      color: var(--coral);
-      border-left: 2.5px solid var(--coral);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--color-danger);
     }
 
     .ev-incontro {
-      background: rgba(0, 180, 216, 0.18);
-      color: var(--cyan);
-      border-left: 2.5px solid var(--cyan);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--border-focus);
     }
 
     .ev-catasto {
-      background: rgba(139, 92, 246, 0.2);
-      color: var(--purple);
-      border-left: 2.5px solid var(--purple);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--text-muted);
     }
 
     .ev-condominio {
-      background: rgba(249, 115, 22, 0.2);
-      color: var(--user-condomini);
-      border-left: 2.5px solid var(--user-condomini);
+      background: var(--bg-elevated);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--border-focus);
     }
 
     /* AGENDA LATERALE */
@@ -1763,10 +2232,10 @@
       width: 90%;
       max-width: 520px;
       background: var(--bg-surface);
-      border: 1px solid var(--cyan);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       padding: 36px 28px;
-      box-shadow: 0 0 50px rgba(0, 180, 216, 0.3);
+      box-shadow: var(--shadow-modal);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1790,9 +2259,9 @@
     }
 
     .wave-bar {
-      width: 6px;
+      width: 5px;
       height: 12px;
-      background: linear-gradient(180deg, var(--cyan) 0%, #0077B6 100%);
+      background: var(--color-primary);
       border-radius: var(--radius-full);
       transition: height 0.1s ease;
     }
@@ -1897,11 +2366,21 @@
     .btn-cancel {
       background: var(--bg-elevated);
       color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .btn-cancel:hover {
+      background: var(--bg-hover);
+      color: var(--text-main);
     }
 
     .btn-confirm {
-      background: var(--cyan);
-      color: #000;
+      background: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    .btn-confirm:hover {
+      background: var(--color-primary-hover);
     }
 
     /* ==========================================================================
@@ -1956,29 +2435,16 @@
     }
 
     .profile-hero-card {
-      background: linear-gradient(135deg, rgba(0, 180, 216, 0.12) 0%, rgba(20, 26, 36, 0.95) 55%, var(--bg-surface) 100%);
-      border: 1px solid rgba(0, 180, 216, 0.35);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
       padding: 24px 28px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      box-shadow: var(--shadow-card);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 20px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .profile-hero-card::after {
-      content: "";
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, rgba(0, 180, 216, 0.15) 0%, transparent 70%);
-      pointer-events: none;
     }
 
     .profile-hero-identity {
@@ -1988,32 +2454,30 @@
     }
 
     .profile-avatar-large {
-      width: 72px;
-      height: 72px;
+      width: 64px;
+      height: 64px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #00D2FF 0%, #0077B6 100%);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #000;
-      box-shadow: 0 0 25px rgba(0, 210, 255, 0.45);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
       position: relative;
       flex-shrink: 0;
-      border: 3px solid var(--bg-surface);
     }
 
     .profile-status-dot {
       position: absolute;
       bottom: 2px;
       right: 2px;
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background-color: var(--emerald);
-      border: 2.5px solid var(--bg-surface);
-      box-shadow: 0 0 10px var(--emerald);
+      background-color: var(--color-success);
+      border: 2px solid var(--bg-surface);
     }
 
     .profile-hero-info h2 {
@@ -2135,8 +2599,8 @@
     }
 
     .profile-input:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 10px var(--cyan-glow);
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
     }
 
     .profile-input-readonly {
@@ -2254,9 +2718,8 @@
     }
 
     .btn-danger-soft:hover {
-      background: var(--coral);
+      background: var(--color-danger);
       color: #FFF;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
     }
 
     /* ==========================================================================
@@ -2376,6 +2839,31 @@
 
       .kpi-label {
         font-size: 0.65rem;
+      }
+
+      .today-split-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .active-focus-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .focus-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+
+      .today-greeting-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
       }
 
       .dashboard-split {
@@ -2543,14 +3031,14 @@
         width: 48px;
         height: 48px;
         border-radius: 50%;
-        background: linear-gradient(135deg, var(--cyan) 0%, #0077B6 100%);
-        color: #000;
+        background: var(--color-primary);
+        color: #FFFFFF;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-top: -20px;
-        box-shadow: 0 4px 18px rgba(0, 180, 216, 0.45);
-        border: 3px solid var(--bg-surface);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        border: 2px solid var(--bg-surface);
         cursor: pointer;
         transition: transform 0.2s;
         flex-shrink: 0;
@@ -2693,22 +3181,19 @@
       <ul class="nav-list">
         <li class="nav-item active" id="nav-dashboard" onclick="switchView('dashboard')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
-          Dashboard Generale
+          Oggi & Compiti
+          <span class="nav-badge-count" id="navTodayBadge">4</span>
         </li>
 
         <li class="nav-item" id="nav-mie-attivita" onclick="switchView('mie-attivita')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <polyline points="16 11 18 13 22 9"></polyline>
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          Le Mie Attività
-          <span class="nav-badge-count">3</span>
+          Timeline & Ore
         </li>
 
         <li class="nav-item" id="nav-commesse" onclick="switchView('commesse')">
@@ -2818,303 +3303,272 @@
       <div class="content-viewport">
 
         <!-- ====================================================================
-             VISTA 1: DASHBOARD GENERALE (COMPLETA: KPI + SPLIT + TABELLA COMMESSE SOTTO)
+             VISTA 1: OGGI & COMPITI PERSONALI (MINIMALISTA, CALMA, AD ALTO FOCUS)
              ==================================================================== -->
         <div class="view-container active-view" id="view-dashboard">
 
-          <!-- 4 KPI CARDS -->
-          <section class="kpi-grid">
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>PRATICHE ATTIVE</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                </svg>
-              </div>
-              <div class="kpi-value">28</div>
-              <div class="kpi-subtext">🟢 4 in consegna questa settimana</div>
+          <!-- SALUTO & DATA DI OGGI -->
+          <div class="today-greeting-bar">
+            <div>
+              <div class="today-date-badge" id="todayDateDisplay">Lunedì, 14 Settembre 2026</div>
+              <h1 class="today-heading">Cosa c'è da fare oggi?</h1>
+              <p class="today-subheading">Buongiorno, Andrea. Hai <span id="todayPendingCount" style="color: var(--text-main); font-weight: 600;">4 attività</span> pianificate per la giornata.</p>
             </div>
-
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>SCADENZE SUE IMMINENTI</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <div class="today-actions-dock">
+              <button class="btn-action btn-cancel" style="padding: 8px 14px; font-size: 0.82rem;" onclick="switchView('mie-attivita')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="vertical-align: -2px; margin-right: 4px;">
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-              </div>
-              <div class="kpi-value" style="color: var(--amber);">3</div>
-              <div class="kpi-subtext" style="color: var(--amber);">⚠️ Integrazione Cuneo entro 48h</div>
+                Apri Timeline Studio
+              </button>
             </div>
+          </div>
 
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>LE MIE ORE OGGI</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <circle cx="12" cy="12" r="10"></circle>
-                  <path
-                    d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83">
-                  </path>
+          <!-- BOX COSA STO FACENDO ADESSO (ACTIVE FOCUS) -->
+          <div class="active-focus-box" id="todayActiveFocusBox">
+            <div class="focus-pulse-dot" id="focusPulseDot"></div>
+            <div class="focus-details">
+              <span class="focus-label">ATTIVITÀ IN CORSO IN QUESTO MOMENTO</span>
+              <div class="focus-task-title" id="focusTaskTitle">Redazione relazione tecnica asseverata CILA</div>
+              <div class="focus-task-sub" id="focusTaskSub">Pratica 2026-084 · CILA Via Roma 14 (Dott. Mario Rossi)</div>
+            </div>
+            <div class="focus-timer-display" id="focusTimerDigits">01:24:10</div>
+            <div class="focus-actions">
+              <button class="btn-focus-pause" id="btnFocusPause" onclick="toggleTodayFocusTimer()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" id="focusPlayPauseIcon">
+                  <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                  <rect x="14" y="4" width="4" height="16" rx="1"></rect>
                 </svg>
-              </div>
-              <div class="kpi-value">06h 30m <span style="font-size: 1rem; color: var(--text-muted);">/ 8h</span></div>
-              <div class="kpi-subtext">Studio totale: 24.5h registrate</div>
-            </div>
-
-            <div class="kpi-card">
-              <div class="kpi-header">
-                <span>CASSAFORTE BACKUP R2</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <span id="focusPauseBtnText">Pausa</span>
+              </button>
+              <button class="btn-focus-complete" onclick="completeCurrentFocusTask()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12"></polyline>
                 </svg>
-              </div>
-              <div class="kpi-value" style="color: var(--emerald); font-size: 1.4rem;">OK 03:00</div>
-              <div class="kpi-subtext">Backup automatico notturno salvato</div>
+                Completa
+              </button>
             </div>
-          </section>
+          </div>
 
-          <!-- DASHBOARD SPLIT: PRESENZE + TIMELINE CON MIE ATTIVITÀ PULITE (SENZA SPUNTA) -->
-          <section class="dashboard-split">
+          <!-- LAYOUT A 2 COLONNE (65% COMPITI / 35% SCADENZE & ORE) -->
+          <div class="today-split-layout">
 
-            <!-- PRESENZE LIVE -->
-            <div class="panel-card">
-              <div class="panel-title">
-                <span class="panel-title-text">Presenze Live Studio</span>
-                <span
-                  style="font-size: 0.75rem; color: var(--emerald); font-family: var(--font-mono); flex-shrink: 0;">● 4
-                  ATTIVI</span>
+            <!-- COLONNA PRINCIPALE (SINISTRA): COMPITI DI OGGI -->
+            <div class="today-tasks-panel">
+              <div class="today-panel-header">
+                <div>
+                  <h2 class="today-panel-title">I Miei Compiti di Oggi</h2>
+                  <span class="today-panel-caption">Spunta per segnare come completato o premi il timer per lavorare</span>
+                </div>
+                <span class="task-count-pill" id="todayTaskCountPill">4 DA FARE</span>
               </div>
-              <div class="presence-list">
-                <div class="presence-item">
-                  <span class="status-badge-dot"></span>
-                  <div class="presence-details">
-                    <div class="presence-name" style="color: var(--user-andrea);">Andrea (Socio)</div>
-                    <div class="presence-task">Rilievo quota Fraz. Tetti</div>
+
+              <!-- LISTA COMPITI -->
+              <div class="today-tasks-list" id="todayTasksList">
+
+                <!-- TASK 1 -->
+                <div class="today-task-card" id="taskCard-1">
+                  <input type="checkbox" class="today-task-checkbox" id="checkTask-1" onchange="toggleTaskToday('1', this.checked)">
+                  <div class="today-task-content" onclick="openSubtaskDetailModal('subtask-3', 'Redazione relazione tecnica asseverata CILA', 'Verifica quote di altezza sottotetto e aerazione', 'Andrea', '03h 00m', 'In Lavorazione', false, 'Immobile con altezza media ponderale sottotetto al limite dei 2.40m.')">
+                    <div class="today-task-title-line">
+                      <span class="today-task-title">Redazione relazione tecnica asseverata CILA</span>
+                    </div>
+                    <div class="today-task-meta">
+                      <span class="tag-mono tag-urgent">SCADE DOMANI</span>
+                      <span class="tag-mono">EDILIZIA</span>
+                      <span class="today-task-practice">Prat. 2026-084 · Mario Rossi</span>
+                      <span class="today-task-time-est">⏱ Stima 03h 00m</span>
+                    </div>
                   </div>
-                  <span class="presence-time">01:24:10</span>
+                  <div class="today-task-actions">
+                    <button class="btn-quick-timer is-running" id="btnQuickTimer-1" title="Timer in esecuzione" onclick="handleTaskTimerClick('1', 'Redazione relazione tecnica asseverata CILA', 'Prat. 2026-084 · Mario Rossi')">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                        <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+                      </svg>
+                      <span class="timer-digits-label">01:24:10</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div class="presence-item">
-                  <span class="status-badge-dot"></span>
-                  <div class="presence-details">
-                    <div class="presence-name" style="color: var(--user-marco);">Marco (CAD)</div>
-                    <div class="presence-task">Disegno Tavole Variante CILA</div>
+                <!-- TASK 2 -->
+                <div class="today-task-card" id="taskCard-2">
+                  <input type="checkbox" class="today-task-checkbox" id="checkTask-2" onchange="toggleTaskToday('2', this.checked)">
+                  <div class="today-task-content" onclick="openSubtaskDetailModal('subtask-2', 'Controllo libretto misure e calcolo superfici', 'Verifica coordinate topografiche stazione totale', 'Andrea', '02h 00m', 'In Corso', false, 'Coordinate verificate con GPS Leica')">
+                    <div class="today-task-title-line">
+                      <span class="today-task-title">Controllo libretto delle misure pregeo e coordinate GPS</span>
+                    </div>
+                    <div class="today-task-meta">
+                      <span class="tag-mono">CATASTO</span>
+                      <span class="today-task-practice">Prat. 2026-065 · Fam. Bianchi</span>
+                      <span class="today-task-time-est">⏱ Stima 02h 00m</span>
+                    </div>
                   </div>
-                  <span class="presence-time">03:10:45</span>
+                  <div class="today-task-actions">
+                    <button class="btn-quick-timer" id="btnQuickTimer-2" title="Avvia Timer su questa attività" onclick="handleTaskTimerClick('2', 'Controllo libretto misure pregeo', 'Prat. 2026-065 · Fam. Bianchi')">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="timer-digits-label">Avvia</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div class="presence-item">
-                  <span class="status-badge-dot"></span>
-                  <div class="presence-details">
-                    <div class="presence-name" style="color: var(--user-luca);">Luca (Tecnico)</div>
-                    <div class="presence-task">Accesso Atti Comune Mondovì</div>
+                <!-- TASK 3 -->
+                <div class="today-task-card" id="taskCard-3">
+                  <input type="checkbox" class="today-task-checkbox" id="checkTask-3" onchange="toggleTaskToday('3', this.checked)">
+                  <div class="today-task-content" onclick="openSubtaskDetailModal('subtask-4', 'Telefonata a tecnico comunale per protocollo', 'Sollecito visione fascicolo edilizio 1985', 'Andrea', '00h 45m', 'In Attesa', false, 'Sollecito ricerca fascicolo archivio storico')">
+                    <div class="today-task-title-line">
+                      <span class="today-task-title">Sollecito visione fascicolo edilizio archivio storico 1985</span>
+                    </div>
+                    <div class="today-task-meta">
+                      <span class="tag-mono">ACCESSO ATTI</span>
+                      <span class="today-task-practice">Prat. 2026-079 · Immobiliare Alpi</span>
+                      <span class="today-task-time-est">⏱ Stima 00h 45m</span>
+                    </div>
                   </div>
-                  <span class="presence-time">00:45:12</span>
+                  <div class="today-task-actions">
+                    <button class="btn-quick-timer" id="btnQuickTimer-3" title="Avvia Timer su questa attività" onclick="handleTaskTimerClick('3', 'Telefonata tecnico comunale fascicolo 1985', 'Prat. 2026-079 · Immobiliare Alpi')">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="timer-digits-label">Avvia</span>
+                    </button>
+                  </div>
                 </div>
 
-                <div class="presence-item">
-                  <span class="status-badge-dot offline"></span>
-                  <div class="presence-details">
-                    <div class="presence-name" style="color: var(--text-faint);">Addetto Condomini</div>
-                    <div class="presence-task">Fuori studio / Uscito ore 17:30</div>
+                <!-- TASK 4 -->
+                <div class="today-task-card" id="taskCard-4">
+                  <input type="checkbox" class="today-task-checkbox" id="checkTask-4" onchange="toggleTaskToday('4', this.checked)">
+                  <div class="today-task-content" onclick="openSubtaskDetailModal('subtask-5', 'Stesura computo metrico estimativo', 'Computo perizie danni infiltrazioni tetto', 'Andrea', '01h 30m', 'Da Iniziare', false, 'Prezziari regionali Piemonte 2026')">
+                    <div class="today-task-title-line">
+                      <span class="today-task-title">Stesura computo metrico estimativo danni infiltrazioni</span>
+                    </div>
+                    <div class="today-task-meta">
+                      <span class="tag-mono">PERIZIA</span>
+                      <span class="today-task-practice">Prat. 2026-091 · Sig. Paolo Verdi</span>
+                      <span class="today-task-time-est">⏱ Stima 01h 30m</span>
+                    </div>
                   </div>
-                  <span class="presence-time" style="color: var(--text-faint);">--:--</span>
+                  <div class="today-task-actions">
+                    <button class="btn-quick-timer" id="btnQuickTimer-4" title="Avvia Timer su questa attività" onclick="handleTaskTimerClick('4', 'Stesura computo metrico perizia', 'Prat. 2026-091 · Sig. Paolo Verdi')">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                      </svg>
+                      <span class="timer-digits-label">Avvia</span>
+                    </button>
+                  </div>
                 </div>
+
               </div>
-            </div>
 
-            <!-- TIMELINE CON RIGHELLO + ELENCO ATTIVITÀ PULITO (SENZA SPUNTE) -->
-            <div class="panel-card">
-              <div class="panel-title">
-                <span class="panel-title-text">Timeline Personale Oggi</span>
-                <button class="btn-action btn-cancel" style="padding: 5px 12px; font-size: 0.75rem; flex-shrink: 0;"
-                  onclick="switchView('mie-attivita')">
-                  Apri Schermata Completa ➔
+              <!-- PULSANTE AGGIUNGI COMPITO SOTTO LA LISTA -->
+              <div class="today-add-task-bar">
+                <button class="btn-add-today-task" onclick="openQuickFillModal('16:00', '17:30')">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                  <span>Aggiungi attività per oggi</span>
                 </button>
               </div>
 
-              <div class="timeline-wrapper">
-                <div class="mobile-scroll-hint">
-                  <span>👈 Scorri orizzontalmente la timeline 👉</span>
-                </div>
-                <div class="timeline-scroll-container">
-                  <div class="timeline-inner-flow">
-                    <div class="timeline-ruler">
-                      <span>08:30</span>
-                      <span>10:00</span>
-                      <span>11:30</span>
-                      <span>13:00</span>
-                      <span>14:30</span>
-                      <span>16:00</span>
-                      <span>17:30</span>
-                    </div>
+            </div>
 
-                    <div class="timeline-bar-track">
-                      <div class="timeline-block tb-cila"
-                        onclick="showToast('Pratica 2026-084: CILA Rossi (08:30 - 12:30 | 4h 00m)')">
-                        <strong>Pratica 2026-084</strong>
-                        <span>CILA Rossi (4h 00m)</span>
+            <!-- COLONNA LATERALE (DESTRA): SCADENZE & TEMPO REGISTRATO -->
+            <div class="today-side-column">
+
+              <!-- SCADENZE & APPUNTAMENTI DI OGGI -->
+              <div class="today-side-card">
+                <div class="side-card-header">
+                  <span class="side-card-title">Scadenze & Appuntamenti Oggi</span>
+                  <span class="tag-mono" style="font-size: 0.68rem;">3 EVENTI</span>
+                </div>
+                <div class="today-events-list">
+                  <div class="urgent-event-row" onclick="switchView('calendario')">
+                    <div class="event-time-col">
+                      <span class="event-time-val">12:00</span>
+                    </div>
+                    <div class="event-info-col">
+                      <div class="event-title-line">
+                        <span class="event-title">Termine integrazione SUE Cuneo</span>
+                        <span class="tag-mono tag-urgent">PERENTORIO</span>
                       </div>
-                      <div style="padding: 0 6px; font-size: 0.70rem; color: var(--text-faint); writing-mode: vertical-rl;">
-                        PAUSA</div>
-                      <div class="timeline-block tb-catasto"
-                        onclick="showToast('Pratica 2026-015: Frazionamento Terreni (13:30 - 16:00 | 2h 30m)')">
-                        <strong>Pratica 2026-015</strong>
-                        <span>Catasto (2h 30m)</span>
+                      <span class="event-sub">Pratica 2026-084 · CILA Rossi</span>
+                    </div>
+                  </div>
+
+                  <div class="urgent-event-row" onclick="switchView('calendario')">
+                    <div class="event-time-col">
+                      <span class="event-time-val">15:00</span>
+                    </div>
+                    <div class="event-info-col">
+                      <div class="event-title-line">
+                        <span class="event-title">Sopralluogo cantiere con geom. Rossi</span>
                       </div>
-                      <div class="timeline-gap" onclick="openQuickFillModal('16:00', '17:30')">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                          stroke-width="2.5">
-                          <line x1="12" y1="5" x2="12" y2="19"></line>
-                          <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        <span>BUCO 1h 30m (+ Inserisci)</span>
+                      <span class="event-sub">Corso Nizza 45, Cuneo</span>
+                    </div>
+                  </div>
+
+                  <div class="urgent-event-row" onclick="switchView('calendario')">
+                    <div class="event-time-col">
+                      <span class="event-time-val">17:30</span>
+                    </div>
+                    <div class="event-info-col">
+                      <div class="event-title-line">
+                        <span class="event-title">Telefonata coordinamento perizia</span>
                       </div>
+                      <span class="event-sub">Sig. Paolo Verdi (Dronero)</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <!-- ELENCO ATTIVITÀ PULITO (SENZA SPUNTE, CON CLICK PER MODIFICA) -->
-              <div class="my-tasks-dashboard-container">
-                <div class="my-tasks-dashboard-header">
-                  <span>Le Mie Attività Assegnate (In Corso)</span>
-                  <span style="color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem;">1 URGENTE</span>
+              <!-- ORE LAVORATE OGGI -->
+              <div class="today-side-card">
+                <div class="side-card-header">
+                  <span class="side-card-title">Ore Registrate Oggi</span>
+                  <span class="hours-target-tag" id="todayHoursTarget">4h 24m / 8h 00m</span>
                 </div>
-
-                <div class="task-item-clean-row"
-                  onclick="openSubtaskDetailModal('subtask-3', 'Redazione relazione tecnica asseverata CILA', 'Verifica quote di altezza sottotetto e aerazione', 'Andrea', '03h 00m', 'In Lavorazione', false, 'Immobile con altezza media ponderale sottotetto al limite dei 2.40m.')">
-                  <div>
-                    <span style="color: var(--coral); font-weight: bold; margin-right: 6px;">●</span>
-                    <strong>CILA Rossi:</strong> Redazione relazione tecnica asseverata
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Verifica quote di
-                      altezza sottotetto e aerazione</div>
-                  </div>
-                  <span class="task-deadline-badge dl-urgent">Scade Domani</span>
+                <div class="today-hours-progress">
+                  <div class="hours-bar-fill" style="width: 55%;"></div>
                 </div>
-
-                <div class="task-item-clean-row"
-                  onclick="openSubtaskDetailModal('subtask-2', 'Controllo libretto misure e calcolo superfici', 'Verifica coordinate topografiche stazione totale', 'Andrea', '02h 00m', 'In Corso', false, 'Coordinate verificate con GPS Leica')">
-                  <div>
-                    <span style="color: var(--amber); font-weight: bold; margin-right: 6px;">●</span>
-                    <strong>Catasto Bianchi:</strong> Controllo libretto delle misure pregeo
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Verifica coordinate
-                      topografiche stazione totale</div>
+                <div class="today-hours-summary">
+                  <div class="hours-sub-item">
+                    <span class="sub-label">CILA Rossi:</span>
+                    <span class="sub-val">2h 45m</span>
                   </div>
-                  <span class="task-deadline-badge dl-normal">18 Ott</span>
+                  <div class="hours-sub-item">
+                    <span class="sub-label">Pregeo Bianchi:</span>
+                    <span class="sub-val">1h 15m</span>
+                  </div>
+                  <div class="hours-sub-item">
+                    <span class="sub-label">Accesso Atti Mondovì:</span>
+                    <span class="sub-val">0h 24m</span>
+                  </div>
                 </div>
+                <div style="margin-top: 14px; text-align: center;">
+                  <button class="btn-action btn-cancel" style="width: 100%; padding: 8px; font-size: 0.78rem;" onclick="switchView('mie-attivita')">
+                    Vedi Timeline & Registrazioni ➔
+                  </button>
+                </div>
+              </div>
 
-                <div class="task-item-clean-row"
-                  onclick="openSubtaskDetailModal('subtask-4', 'Telefonata a tecnico comunale per protocollo', 'Sollecito visione fascicolo edilizio 1985', 'Andrea', '00h 45m', 'In Attesa', false, 'Sollecito ricerca fascicolo archivio storico')">
-                  <div>
-                    <span style="color: var(--cyan); font-weight: bold; margin-right: 6px;">●</span>
-                    <strong>Accesso Atti:</strong> Contatto telefonico con geom. comunale
-                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">Sollecito visione
-                      fascicolo edilizio 1985</div>
-                  </div>
-                  <span class="task-deadline-badge dl-normal">20 Ott</span>
+              <!-- STATO STUDIO DISCRETO -->
+              <div class="today-side-card" style="padding: 14px 16px;">
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem;">
+                  <span style="color: var(--text-muted); font-weight: 500;">Studio in linea:</span>
+                  <span style="color: var(--text-main); font-weight: 600; font-family: var(--font-mono);">3/4 Presenti</span>
+                </div>
+                <div style="font-size: 0.73rem; color: var(--text-muted); margin-top: 6px;">
+                  Marco (CAD) · Luca (Tecnico) · Andrea (Tu)
                 </div>
               </div>
 
             </div>
-          </section>
 
-          <!-- ELENCO TOTALE COMMESSE SOTTO LA DASHBOARD (COME INIZIO PER RIEMPIRE IL VUOTO) -->
-          <section class="practices-table-container">
-            <div class="table-toolbar">
-              <div class="filter-group">
-                <label style="font-size: 0.85rem; font-weight: 700; color: var(--text-main);">Tutte le Attività &
-                  Commesse dello Studio:</label>
-                <input type="text" class="filter-input-search" id="filterClienteInputDash"
-                  placeholder="🔍 Cerca cliente o commessa..." onkeyup="applyFiltersDash()">
-              </div>
-              <div style="font-size: 0.80rem; color: var(--text-muted);">
-                Totale: <strong>4</strong> commesse aperte
-              </div>
-            </div>
-
-            <table class="practices-table">
-              <thead>
-                <tr>
-                  <th>Codice</th>
-                  <th>Oggetto Commessa & Indirizzo</th>
-                  <th>Cliente</th>
-                  <th>Addetto Assegnato</th>
-                  <th>Stato Lavori</th>
-                  <th>Azioni Rapide</th>
-                </tr>
-              </thead>
-              <tbody id="dashTableBody">
-                <tr onclick="openDrawer('2026-084')">
-                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-084</td>
-                  <td>
-                    <div style="font-weight: 600;">CILA Ristrutturazione Alloggio & Sottotetto</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Corso Nizza 45, Cuneo (CN)</div>
-                  </td>
-                  <td>Dott. Mario Rossi</td>
-                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
-                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
-                  <td>
-                    <div class="action-btn-row" onclick="event.stopPropagation()">
-                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
-                        onclick="openProjectFolder('2026/084_Rossi')">📁</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr onclick="openDrawer('2026-079')">
-                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-079</td>
-                  <td>
-                    <div style="font-weight: 600;">Accesso agli Atti Pratiche Edilizie Storiche</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Comune di Mondovì (CN)</div>
-                  </td>
-                  <td>Immobiliare Alpi S.r.l.</td>
-                  <td><span style="color: var(--user-marco); font-weight: 600;">● Marco</span></td>
-                  <td><span class="pill-badge pill-amber">🟡 Attesa Riscontro</span></td>
-                  <td>
-                    <div class="action-btn-row" onclick="event.stopPropagation()">
-                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
-                        onclick="openProjectFolder('2026/079_Immobiliare')">📁</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr onclick="openDrawer('2026-065')">
-                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-065</td>
-                  <td>
-                    <div style="font-weight: 600;">Frazionamento Catastale Terreni & Confinazione</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Frazione Tetti, Boves (CN)</div>
-                  </td>
-                  <td>Fam. Bianchi Giovanni</td>
-                  <td><span style="color: var(--user-luca); font-weight: 600;">● Luca</span></td>
-                  <td><span class="pill-badge pill-green">✅ Completata</span></td>
-                  <td>
-                    <div class="action-btn-row" onclick="event.stopPropagation()">
-                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
-                        onclick="openProjectFolder('2026/065_Bianchi')">📁</button>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr onclick="openDrawer('2026-091')">
-                  <td style="font-family: var(--font-mono); font-weight: 600; color: var(--cyan);">2026-091</td>
-                  <td>
-                    <div style="font-weight: 600;">Perizia Estimativa Asseverata Fabbricato Rurale</div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted);">Via Val Maira 12, Dronero (CN)</div>
-                  </td>
-                  <td>Sig. Paolo Verdi</td>
-                  <td><span style="color: var(--user-andrea); font-weight: 600;">● Andrea</span></td>
-                  <td><span class="pill-badge pill-blue">🔵 In Corso</span></td>
-                  <td>
-                    <div class="action-btn-row" onclick="event.stopPropagation()">
-                      <button class="btn-icon-soft" title="Apri Cartella Documenti"
-                        onclick="openProjectFolder('2026/091_Verdi')">📁</button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          </div>
 
         </div>
 
@@ -4304,20 +4758,17 @@
       <nav class="mobile-bottom-bar">
         <div class="mobile-nav-item active" id="mob-dashboard" onclick="switchView('dashboard')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <rect x="3" y="3" width="7" height="7"></rect>
-            <rect x="14" y="3" width="7" height="7"></rect>
-            <rect x="14" y="14" width="7" height="7"></rect>
-            <rect x="3" y="14" width="7" height="7"></rect>
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
           </svg>
-          <span>Bacheca</span>
+          <span>Oggi</span>
         </div>
         <div class="mobile-nav-item" id="mob-mie-attivita" onclick="switchView('mie-attivita')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-            <circle cx="9" cy="7" r="4"></circle>
-            <polyline points="16 11 18 13 22 9"></polyline>
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
           </svg>
-          <span>Mie Attività</span>
+          <span>Timeline</span>
         </div>
 
         <div class="mobile-voice-fab" onclick="openVoiceAssistant()">
@@ -5084,12 +5535,35 @@
         }
 
         function startTimerLoop() {
+          clearInterval(timerInterval);
           timerInterval = setInterval(() => {
             timerSeconds++;
-            document.getElementById('timerDisplay').innerText = formatTime(timerSeconds);
+            const formatted = formatTime(timerSeconds);
+            const headerDisplay = document.getElementById('timerDisplay');
+            if (headerDisplay) headerDisplay.innerText = formatted;
+            const focusDigits = document.getElementById('focusTimerDigits');
+            if (focusDigits) focusDigits.innerText = formatted;
+            const runningTaskBtn = document.querySelector('.btn-quick-timer.is-running .timer-digits-label');
+            if (runningTaskBtn) runningTaskBtn.innerText = formatted;
           }, 1000);
         }
         startTimerLoop();
+
+        function syncTodayTimerUI() {
+          const pauseBtnText = document.getElementById('focusPauseBtnText');
+          const playPauseIcon = document.getElementById('focusPlayPauseIcon');
+          const pulseDot = document.getElementById('focusPulseDot');
+
+          if (timerRunning) {
+            if (pauseBtnText) pauseBtnText.innerText = 'Pausa';
+            if (playPauseIcon) playPauseIcon.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>';
+            if (pulseDot) pulseDot.style.background = 'var(--color-success)';
+          } else {
+            if (pauseBtnText) pauseBtnText.innerText = 'Riprendi';
+            if (playPauseIcon) playPauseIcon.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+            if (pulseDot) pulseDot.style.background = 'var(--color-warning)';
+          }
+        }
 
         function toggleTimer() {
           const dock = document.getElementById('liveTimerDock');
@@ -5099,19 +5573,125 @@
           if (timerRunning) {
             clearInterval(timerInterval);
             timerRunning = false;
-            dock.classList.remove('running');
-            dock.classList.add('paused');
-            iconSvg.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-            practiceLabel.innerText = 'IN PAUSA';
+            if (dock) {
+              dock.classList.remove('running');
+              dock.classList.add('paused');
+            }
+            if (iconSvg) iconSvg.innerHTML = '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
+            if (practiceLabel) practiceLabel.innerText = 'IN PAUSA';
             showToast('⏸️ Timer generale in pausa');
           } else {
             startTimerLoop();
             timerRunning = true;
-            dock.classList.remove('paused');
-            dock.classList.add('running');
-            iconSvg.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>';
-            practiceLabel.innerText = 'CILA Via Roma 14';
+            if (dock) {
+              dock.classList.remove('paused');
+              dock.classList.add('running');
+            }
+            if (iconSvg) iconSvg.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>';
+            if (practiceLabel) practiceLabel.innerText = 'CILA Via Roma 14';
             showToast('▶️ Timer riavviato');
+          }
+          syncTodayTimerUI();
+        }
+
+        function toggleTodayFocusTimer() {
+          toggleTimer();
+        }
+
+        function handleTaskTimerClick(taskId, taskTitle, practiceName) {
+          const btn = document.getElementById(`btnQuickTimer-${taskId}`);
+          const isCurrentlyRunning = btn && btn.classList.contains('is-running');
+
+          if (isCurrentlyRunning && timerRunning) {
+            toggleTimer();
+            return;
+          }
+
+          // Reset all quick-timer buttons in Today view
+          document.querySelectorAll('.btn-quick-timer').forEach(b => {
+            b.classList.remove('is-running');
+            b.innerHTML = `
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              <span class="timer-digits-label">Avvia</span>
+            `;
+          });
+
+          // Activate this button
+          if (btn) {
+            btn.classList.add('is-running');
+            btn.innerHTML = `
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+                <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+              </svg>
+              <span class="timer-digits-label">${formatTime(timerSeconds)}</span>
+            `;
+          }
+
+          // Update active focus box
+          const focusTitle = document.getElementById('focusTaskTitle');
+          const focusSub = document.getElementById('focusTaskSub');
+          const headerPracticeLabel = document.getElementById('timerPracticeLabel');
+          if (focusTitle) focusTitle.innerText = taskTitle;
+          if (focusSub) focusSub.innerText = practiceName;
+          if (headerPracticeLabel) headerPracticeLabel.innerText = taskTitle;
+
+          if (!timerRunning) {
+            startTimerLoop();
+            timerRunning = true;
+            const dock = document.getElementById('liveTimerDock');
+            if (dock) {
+              dock.classList.remove('paused');
+              dock.classList.add('running');
+            }
+            const iconSvg = document.getElementById('timerIconSvg');
+            if (iconSvg) {
+              iconSvg.innerHTML = '<rect x="6" y="4" width="4" height="16" rx="1"></rect><rect x="14" y="4" width="4" height="16" rx="1"></rect>';
+            }
+          }
+          syncTodayTimerUI();
+          showToast(`⏱️ Timer avviato su: ${taskTitle}`);
+        }
+
+        function toggleTaskToday(taskId, isChecked) {
+          const card = document.getElementById(`taskCard-${taskId}`);
+          if (!card) return;
+
+          if (isChecked) {
+            card.classList.add('is-completed');
+            showToast('✓ Attività contrassegnata come completata!');
+          } else {
+            card.classList.remove('is-completed');
+            showToast('Attività ripristinata tra i compiti di oggi');
+          }
+
+          // Update counter
+          const totalTasks = document.querySelectorAll('.today-task-card').length;
+          const completedTasks = document.querySelectorAll('.today-task-card.is-completed').length;
+          const pending = totalTasks - completedTasks;
+
+          const countPill = document.getElementById('todayTaskCountPill');
+          if (countPill) countPill.innerText = `${pending} DA FARE`;
+          const navBadge = document.getElementById('navTodayBadge');
+          if (navBadge) navBadge.innerText = pending;
+          const pendingSpan = document.getElementById('todayPendingCount');
+          if (pendingSpan) pendingSpan.innerText = `${pending} attività`;
+        }
+
+        function completeCurrentFocusTask() {
+          const activeTaskTitle = document.getElementById('focusTaskTitle') ? document.getElementById('focusTaskTitle').innerText : 'Attività';
+          showToast(`✓ Completata attività in corso: "${activeTaskTitle}". Ore registrate nella timeline.`);
+          // Spunta la prima card ancora incompleta
+          const firstPendingCard = document.querySelector('.today-task-card:not(.is-completed)');
+          if (firstPendingCard) {
+            const checkbox = firstPendingCard.querySelector('.today-task-checkbox');
+            if (checkbox) {
+              checkbox.checked = true;
+              const taskId = firstPendingCard.id.replace('taskCard-', '');
+              toggleTaskToday(taskId, true);
+            }
           }
         }
 
@@ -5146,6 +5726,7 @@
             btn.innerHTML = '<span>⏹ Ferma</span>';
             showToast(`▶ Avviato timer su: ${taskName}`);
           }
+          syncTodayTimerUI();
         }
 
         function toggleBilledState(labelEl) {
@@ -5791,7 +6372,9 @@
         }
 
         function applyFiltersDash() {
-          const q = document.getElementById('filterClienteInputDash').value.toLowerCase().trim();
+          const input = document.getElementById('filterClienteInputDash');
+          if (!input) return;
+          const q = input.value.toLowerCase().trim();
           const rows = document.querySelectorAll('#dashTableBody tr');
           rows.forEach(row => {
             const text = row.innerText.toLowerCase();
